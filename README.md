@@ -1,2 +1,3 @@
+- [C#/.NET/.NET Core优秀项目和框架精选](https://github.com/YSGStudyHards/DotNetGuide/blob/main/docs/DotNet/DotNetProjectPicks.md)
 - [开源工具包](https://gitcode.com/open-source-toolkit)
 - 
