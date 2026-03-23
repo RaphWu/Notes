@@ -1,5 +1,3 @@
-# 工控程式 Prompt 共同規範
-
 # Industrial Control Software Global Requirements (Level 5) – Copilot Shared Prompt
 
 請在設計與產生程式碼前，**完整遵守以下工控軟體共同規範**。此規範適用於：
@@ -88,21 +86,21 @@
 - **預設禁止使用 Fire-and-Forget**
 - 僅允許在「非關鍵、可容忍失敗」的場景使用
 - 不可用於：
-    - 控制流程（Motion Control / IO Control）
-    - 狀態同步
-    - 設備通訊
-    - Initialization / Shutdown 流程
+  - 控制流程（Motion Control / IO Control）
+  - 狀態同步
+  - 設備通訊
+  - Initialization / Shutdown 流程
 
 強制規範：
 
 - 不可使用裸 `Task.Run()` 作為 fire-and-forget
 - 所有 fire-and-forget 任務必須：
-    - 捕捉所有例外
-    - 回報 Logging（Calin.Logging）
-    - 支援 CancellationToken（若可控）
+  - 捕捉所有例外
+  - 回報 Logging（Calin.Logging）
+  - 支援 CancellationToken（若可控）
 - 不可忽略 Task（禁止未觀察 Task）
 
- 建議實作模式（標準化），必須使用統一封裝：
+建議實作模式（標準化），必須使用統一封裝：
 
 ```csharp
 public static class SafeTask
@@ -130,10 +128,10 @@ public static class SafeTask
 進階要求（Level 5 建議）：
 
 - fire-and-forget 任務應：
-    - 可被統計（數量 / 狀態）
-    - 可被監控（optional）
+  - 可被統計（數量 / 狀態）
+  - 可被監控（optional）
 - Runtime 可提供：
-    - Background Task Registry（進階）
+  - Background Task Registry（進階）
 
 優先使用以下模式取代 fire-and-forget：
 
@@ -311,8 +309,8 @@ public static class SafeTask
 - Copilot（無論是 Chat 或 Inline）都有 context window 限制
 - 你這份規範屬於「長系統提示（system-like prompt）」
 - 每次生成時可能會：
-    - 重複帶入（特別是 Chat）
-    - 或被部分截斷（Inline）
+  - 重複帶入（特別是 Chat）
+  - 或被部分截斷（Inline）
 
 結果：
 
@@ -342,8 +340,8 @@ public static class SafeTask
 
 - Inline Suggestion 通常只吃「附近幾百行 context」
 - 太長的 global prompt：
-    - 很可能**根本沒被吃進去**
-    - 或只吃到前半段
+  - 很可能**根本沒被吃進去**
+  - 或只吃到前半段
 
 ## 工控架構的最佳實務（重點）
 
@@ -387,9 +385,9 @@ public static class SafeTask
 每次叫 Copilot 時：
 
 - 明確說：
-    - 「這段是 polling loop」
-    - 「這段是 driver」
-    - 「這段是 fire-and-forget 禁止區」
+  - 「這段是 polling loop」
+  - 「這段是 driver」
+  - 「這段是 fire-and-forget 禁止區」
 
 👉 這比長規範有效 10 倍
 
@@ -406,16 +404,16 @@ public static class SafeTask
 
 - 保留這份完整規範 → 當 **Architecture Spec**
 - 抽出一份：
-    - **Copilot Core Rules（短版）**
+  - **Copilot Core Rules（短版）**
 - 再建立：
-    - **場景 Prompt（Runtime / Driver / Polling）**
+  - **場景 Prompt（Runtime / Driver / Polling）**
 
 ## 一句話結論
 
 - 是的，會吃 token
 - 但更嚴重的是：**會讓 Copilot 變笨，而不是變聰明**
 
- ---
+  ***
 
 # 精簡 → 分割
 
@@ -661,7 +659,7 @@ Copilot 專用 Markdown Prompt Pack（工控 Level 5）
 - public API 是否 thread-safe
 
 列出問題並提供修正後程式碼。
-````
+```
 
 ## Fire-and-Forget 專項審查 Prompt（強烈建議常用）
 
