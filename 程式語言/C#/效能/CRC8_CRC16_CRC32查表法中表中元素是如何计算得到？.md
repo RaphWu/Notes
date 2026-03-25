@@ -1,13 +1,10 @@
 ---
-aliases:
-date: 2020-09-04
+create: 2020-09-04
 update:
 author: 陈木
-language:
+language: CSharp
 sourceurl: https://www.cnblogs.com/muyi23333/articles/13490238.html
-tags:
-  - CSharp
-  - CRC
+tags: CSharp, CRC
 ---
 
 ```cpp

@@ -44,10 +44,10 @@ In general, the performance counter results are consistent across all processors
 
 - Pre-Windows Vista operating systems that run on certain processors might violate this consistency because of one of these reasons:
   在 Windows Vista 之前的操作系統中，如果運行在某些處理器上，可能會因為以下原因之一而違反這一一致性：
-    - The hardware processors have a non-invariant TSC and the BIOS doesn't indicate this condition correctly.
-      硬體處理器具有非不變的 TSC，而且 BIOS 並未正確指示這個條件。
-    - The TSC synchronization algorithm that was used wasn't suitable for systems with large numbers of processors.
-      所使用的 TSC 同步演算法不適用於擁有大量處理器的系統。
+  - The hardware processors have a non-invariant TSC and the BIOS doesn't indicate this condition correctly.
+    硬體處理器具有非不變的 TSC，而且 BIOS 並未正確指示這個條件。
+  - The TSC synchronization algorithm that was used wasn't suitable for systems with large numbers of processors.
+    所使用的 TSC 同步演算法不適用於擁有大量處理器的系統。
 - When you compare performance counter results that are acquired from different threads, consider values that differ by ± 1 tick to have an ambiguous ordering. If the time stamps are taken from the same thread, this ± 1 tick uncertainty doesn't apply. In this context, the term tick refers to a period of time equal to 1 ÷ (the frequency of the performance counter obtained from [**QueryPerformanceFrequency**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancefrequency)).
   當你比較從不同執行緒取得的效能計數器結果時，應考慮差異在 ± 1 個滴答的值具有模糊的排序。如果時間戳記是從同一執行緒取得的，這 ± 1 個滴答的不確定性就不適用。在這個語境中，所謂的滴答是指一段時間，等於 1 ÷ (從 `QueryPerformanceFrequency` 取得的效能計數器頻率)。
 
@@ -81,7 +81,7 @@ This example shows how to use [**QPC**](https://learn.microsoft.com/en-us/windo
 LARGE_INTEGER StartingTime, EndingTime, ElapsedMicroseconds;
 LARGE_INTEGER Frequency;
 
-QueryPerformanceFrequency(&Frequency); 
+QueryPerformanceFrequency(&Frequency);
 QueryPerformanceCounter(&StartingTime);
 
 // Activity to be timed
@@ -208,7 +208,7 @@ The following shows the TSC-INVARIANT info that is provided by the Windows Sysin
 以下顯示由 Windows Sysinternals Coreinfo.exe 工具提供的 TSC-INVARIANT 資訊（ www.sysinternals.com）。星號代表「True」。
 
 ```powershell
-> Coreinfo.exe 
+> Coreinfo.exe
 
 Coreinfo v3.2 - Dump information on system CPU and memory topology
 Copyright (C) 2008-2012 Mark Russinovich
@@ -353,9 +353,9 @@ The following two diagrams illustrate the impact of the ± 1 tick uncertainty by
 [**QueryPerformanceFrequency**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancefrequency) returns the frequency of [**QPC**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter), and the period and resolution are equal to the reciprocal of this value. The performance counter frequency that **QueryPerformanceFrequency** returns is determined during system initialization and doesn't change while the system is running.
 `QueryPerformanceFrequency` 會回傳 QPC 的頻率，其週期與解析度等於此值的倒數。`QueryPerformanceFrequency` 回傳的效能計數器頻率是在系統初始化時決定的，且在系統運行期間不會改變。
 
-> Note  注意
+>  Note  注意
 >
-> Often [**QueryPerformanceFrequency**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancefrequency) doesn't return the actual frequency of the hardware tick generator. For example, in some older versions of Windows, **QueryPerformanceFrequency** returns the TSC frequency divided by 1024; and when running under a [hypervisor](https://msdn.microsoft.com/library/Ff542584\(v=VS.85\).aspx) that implements the [hypervisor version 1.0 interface](https://msdn.microsoft.com/library/Ff541458\(v=VS.85\).aspx) (or always in some newer versions of Windows), the performance counter frequency is fixed to 10 MHz. As a result, don't assume that **QueryPerformanceFrequency** will return a value derived from the hardware frequency.
+> Often [**QueryPerformanceFrequency**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancefrequency) doesn't return the actual frequency of the hardware tick generator. For example, in some older versions of Windows, **QueryPerformanceFrequency** returns the TSC frequency divided by 1024; and when running under a [hypervisor](<https://msdn.microsoft.com/library/Ff542584(v=VS.85).aspx>) that implements the [hypervisor version 1.0 interface](<https://msdn.microsoft.com/library/Ff541458(v=VS.85).aspx>) (or always in some newer versions of Windows), the performance counter frequency is fixed to 10 MHz. As a result, don't assume that **QueryPerformanceFrequency** will return a value derived from the hardware frequency.
 > 經常 QueryPerformanceFrequency 並不會回傳硬體計時器的實際頻率。例如，在某些較舊的 Windows 版本中，QueryPerformanceFrequency 會回傳 TSC 頻率除以 1024；而在執行於實現 1.0 版本介面的虛擬機器器 (或某些較新的 Windows 版本中始終如此) 下，效能計數器的頻率固定為 10 MHz。因此，不要假設 QueryPerformanceFrequency 會回傳一個基於硬體頻率的值。
 
 [**QueryPerformanceCounter**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter) reads the performance counter and returns the total number of ticks that have occurred since the Windows operating system was started, including the time when the machine was in a sleep state such as standby, hibernate, or connected standby.
@@ -380,9 +380,9 @@ Tick Interval = 1/3,125,000 = 320 ns
 On the same machine as the preceding example, the difference of the values returned from two successive calls to [**QPC**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter) is 5. How much time has elapsed between the two calls? 5 ticks multiplied by 320 nanoseconds yields 1.6 microseconds.
 在先前範例的相同電腦上，從 QPC 兩次連續呼叫返回的值之差為 5。兩次呼叫之間經過多少時間？5 個刻度乘以 320 �納秒產生 1.6 微秒。
 
-ElapsedTime = Ticks * Tick Interval
+ElapsedTime = Ticks \* Tick Interval
 
-ElapsedTime = 5 * 320 ns = 1.6 μs
+ElapsedTime = 5 \* 320 ns = 1.6 μs
 
 It takes time to access (read) the tick counter from software, and this access time can reduce the precision of the of the time measurement. This is because the minimum interval time (the smallest time interval that can be measured) is the larger of the resolution and the access time.
 從軟體存取（讀取）滴答計數器需要時間，且此存取時間會降低時間測量的精確度。這是因為最小間隔時間（可測量的最小時間間隔）是解析度與存取時間中較大的那個值。
@@ -415,11 +415,11 @@ In practice, you can find time sources for which the time required to read the c
 This table provides info on the approximate resolution, access time, and precision of a variety of clocks. Note that some of the values will vary with different processors, hardware platforms, and processor speeds.
 這個表格提供了各種時鐘的大約解析度、存取時間和精度的資訊。請注意，其中一些值會因不同的處理器、硬體平台和處理器速度而有所不同。
 
-| Clock Source<br>時鐘來源                                                                              | Nominal Clock Frequency<br>標稱時鐘頻率 | Clock Resolution<br>時鐘解析度 | Access Time (Typical)<br>存取時間 (典型) | Precision<br>精確度 |
-| ------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------- | ---------------------------------- | ---------------- |
-| PC RTC                                                                                            | 64 Hz                             | 15.625 milliseconds       | N/A                                | N/A              |
-| Query performance counter using TSC with a 3 GHz processor clock<br>使用 TSC 查詢性能計數器，處理器頻率為 3 GHz   | 3 MHz                             | 333 nanoseconds           | 30 nanoseconds                     | 333 nanoseconds  |
-| **RDTSC** machine instruction on a system with a 3 GHz cycle time<br>在 3 GHz 週期時間的系統上的 RDTSC 機器指令 | 3 GHz                             | 333 picoseconds           | 30 nanoseconds                     | 30 nanoseconds   |
+| Clock Source<br>時鐘來源                                                                                        | Nominal Clock Frequency<br>標稱時鐘頻率 | Clock Resolution<br>時鐘解析度 | Access Time (Typical)<br>存取時間 (典型) | Precision<br>精確度 |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------- | ------------------------------ | ---------------------------------------- | ------------------- |
+| PC RTC                                                                                                          | 64 Hz                                   | 15.625 milliseconds            | N/A                                      | N/A                 |
+| Query performance counter using TSC with a 3 GHz processor clock<br>使用 TSC 查詢性能計數器，處理器頻率為 3 GHz | 3 MHz                                   | 333 nanoseconds                | 30 nanoseconds                           | 333 nanoseconds     |
+| **RDTSC** machine instruction on a system with a 3 GHz cycle time<br>在 3 GHz 週期時間的系統上的 RDTSC 機器指令 | 3 GHz                                   | 333 picoseconds                | 30 nanoseconds                           | 30 nanoseconds      |
 
 Because [**QPC**](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter) uses a hardware counter, when you understand some basic characteristics of hardware counters, you gain understanding about the capabilities and limitations of **QPC**.
 由於 QPC 使用硬體計數器，當您了解一些硬體計數器的基本特性時，您就能了解 QPC 的功能與限制。
@@ -442,14 +442,14 @@ A convenient reference is that a frequency error of 100 ppm causes an error of 8
 一個方便的參考資料是，頻率誤差為 100 ppm 會在 24 小時後造成 8.64 秒的誤差。這個表格顯示了由累積誤差所導致的測量不確定性，適用於更長的時間間隔。
 
 | Time interval duration<br>時間間隔持續時間 | Measurement uncertainty due to accumulated error with +/- 10 PPM frequency tolerance<br>累積誤差導致的測量不確定性，頻率容差為 +/- 10 PPM |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| 1 microsecond                      | ± 10 picoseconds (10<sup>-12</sup>)                                                                                    |
-| 1 millisecond                      | ± 10 nanoseconds (10<sup>-9</sup>)                                                                                     |
-| 1 second                           | ± 10 microseconds                                                                                                      |
-| 1 minute                           | ± 60 microseconds                                                                                                      |
-| 1 hour                             | ± 36 milliseconds                                                                                                      |
-| 1 day                              | ± 0.86 seconds                                                                                                         |
-| 1 week                             | ± 6.08 seconds                                                                                                         |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 microsecond                              | ± 10 picoseconds (10<sup>-12</sup>)                                                                                                       |
+| 1 millisecond                              | ± 10 nanoseconds (10<sup>-9</sup>)                                                                                                        |
+| 1 second                                   | ± 10 microseconds                                                                                                                         |
+| 1 minute                                   | ± 60 microseconds                                                                                                                         |
+| 1 hour                                     | ± 36 milliseconds                                                                                                                         |
+| 1 day                                      | ± 0.86 seconds                                                                                                                            |
+| 1 week                                     | ± 6.08 seconds                                                                                                                            |
 
 The preceding table shows that for small time intervals the frequency offset error can often be ignored. However for long time intervals, even a small frequency offset can result in a substantial measurement uncertainty.
 前表顯示，在短時間間隔內，頻率偏移誤差通常可以忽略。然而，在長時間間隔內，即使是很小的頻率偏移也可能導致顯著的測量不確定性。
@@ -476,8 +476,8 @@ Seconds in a day = 86400
 Frequency offset error = 50 ppm = 0.00005
 頻率偏移錯誤 = 50 ppm = 0.00005
 
-86,400 seconds * 0.00005 = 4.3 seconds
-86,400 秒 * 0.00005 = 4.3 秒
+86,400 seconds _ 0.00005 = 4.3 seconds
+86,400 秒 _ 0.00005 = 4.3 秒
 
 **Example 2  範例 2**
 
@@ -490,8 +490,8 @@ Seconds in a day = 86400
 Frequency offset error = 50 ppm = 0.00005
 頻率偏移錯誤 = 50 ppm = 0.00005
 
-86,400 seconds * 0.00005 = 4.3 seconds
-86,400 秒 * 0.00005 = 4.3 秒
+86,400 seconds _ 0.00005 = 4.3 seconds
+86,400 秒 _ 0.00005 = 4.3 秒
 
 This shows that a high resolution TSC clock doesn't necessarily provide more accurate measurements than a lower resolution clock.
 這表明高解析度的 TSC 時鐘不一定比低解析度的時鐘提供更準確的測量。
@@ -507,8 +507,8 @@ Seconds in a day = 86400
 Frequency offset error = ±50 ppm = ±0.00005
 頻率偏移誤差 = ±50 ppm = ±0.00005
 
-±(86,400 seconds * 0.00005) = ±4.3 seconds
-±(86400 秒 * 0.00005) = ±4.3 秒
+±(86,400 seconds _ 0.00005) = ±4.3 seconds
+±(86400 秒 _ 0.00005) = ±4.3 秒
 
 Maximum offset between the two systems = 8.6 seconds
 兩個系統之間的最大偏移 = 8.6 秒
@@ -573,11 +573,11 @@ Arm-based platforms provide a Performance Monitors Cycle Counter register (for e
 Documentation
 
 - [QueryPerformanceFrequency function - Win32 apps ](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancefrequency?source=recommendations)
-    Retrieves the frequency of the performance counter.
-    取得效能計數器的頻率。
+  Retrieves the frequency of the performance counter.
+  取得效能計數器的頻率。
 - [QueryPerformanceCounter function - Win32 apps](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter?source=recommendations)
-    Retrieves the current value of the performance counter, which is a high resolution (<1us) time stamp that can be used for time-interval measurements.
-    取得效能計數器的當前值，這是一個高解析度（<1us）的時間戳記，可用於時間間隔測量。
+  Retrieves the current value of the performance counter, which is a high resolution (<1us) time stamp that can be used for time-interval measurements.
+  取得效能計數器的當前值，這是一個高解析度（<1us）的時間戳記，可用於時間間隔測量。
 - [Profileapi.h header - Win32 apps](https://learn.microsoft.com/en-us/windows/win32/api/profileapi/?source=recommendations)
 
 ---
@@ -595,8 +595,8 @@ Multimedia Timer 有效，但「全系統降解析度」確實對電源管理、
 ### Stopwatch 的本質
 
 - Stopwatch 在 Windows 上即是：
-    - QueryPerformanceCounter
-    - QueryPerformanceFrequency
+  - QueryPerformanceCounter
+  - QueryPerformanceFrequency
 - 使用硬體高精度計時器（TSC / HPET，由 OS 抽象）
 - 不會影響系統全域時間解析度
 - 不會增加整機耗電
@@ -604,11 +604,11 @@ Multimedia Timer 有效，但「全系統降解析度」確實對電源管理、
 ### 與 Multimedia Timer 的根本差異
 
 - Multimedia Timer
-    - 改變系統排程解析度
-    - 所有 Thread 都受影響
+  - 改變系統排程解析度
+  - 所有 Thread 都受影響
 - QPC
-    - 只是「讀時間」
-    - 不介入 OS 排程
+  - 只是「讀時間」
+  - 不介入 OS 排程
 
 這就是為什麼工控、量測、DAQ 類軟體最後都回到 QPC。
 
@@ -691,10 +691,10 @@ private void SamplingLoop()
 
 - 平均週期：1.00–1.05ms
 - 抖動（Jitter）：
-    - 空載：約 ±0.1–0.3ms
-    - 重載：約 ±0.5–1.5ms
+  - 空載：約 ±0.1–0.3ms
+  - 重載：約 ±0.5–1.5ms
 - CPU 使用率：
-    - 單核心 5–15%（依 SpinWait 強度）
+  - 單核心 5–15%（依 SpinWait 強度）
 
 這是目前「不傷系統」能做到的上限。
 
@@ -739,8 +739,8 @@ else
 
 - 1ms 軟體取樣 ≠ 1ms 即時保護
 - 如果扭力爬升速度非常快
-    - 軟體只能當輔助
-    - 硬體門檻一定要存在
+  - 軟體只能當輔助
+  - 硬體門檻一定要存在
 
 如果你下一步是「驗證到底能不能達標」，我可以幫你：
 

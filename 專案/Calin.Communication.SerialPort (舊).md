@@ -1,14 +1,3 @@
----
-aliases:
-created: 
-update:
-author:
-language:
-sourceurl:
-tags:
-date:
----
-
 # 完整的生成 Prompt
 
 你是一位資深 .NET 架構師與企業級工控通訊框架設計專家。
@@ -98,17 +87,17 @@ Calin.SerialPort
 ## 【設計哲學】
 
 1. 分散式多實例模型
-
    - 每個設備自行建立 SerialPortService
    - 不提供 SerialPortManager
+
 2. 支援多實例並行
-
    - 不同 PortName 可同時運作
-3. 必須防止同一 PortName 被重複開啟
 
+3. 必須防止同一 PortName 被重複開啟
    - 使用 internal PortRegistry
    - 使用 ConcurrentDictionary\<string, byte>
    - 若重複開啟 → 拋 PortAlreadyInUseException
+
 4. 保留未來擴充為 TCP / Modbus / CAN / PLC 的能力
 5. 優先確保穩定性、相容性、低資源占用
 
@@ -775,9 +764,9 @@ Console 範例程式：
 ## **細節保留策略**
 
 - 每個 Step 都把原先完整 Prompt 裡對該專案或部分的「所有細節要求」保留下來，例如：
-    - Step 2 保留了 Interface Segregation、XML Summary、禁止 RJCP 等要求
-    - Step 4 保留了 SerialPortConfig 欄位、狀態機、背景 Task、PortRegistry、傳輸驗證、Dispose 等要求
-    - Step 5 保留了 README 的全部內容與 Mermaid 圖表要求
+  - Step 2 保留了 Interface Segregation、XML Summary、禁止 RJCP 等要求
+  - Step 4 保留了 SerialPortConfig 欄位、狀態機、背景 Task、PortRegistry、傳輸驗證、Dispose 等要求
+  - Step 5 保留了 README 的全部內容與 Mermaid 圖表要求
 
 換句話說，每段的內容是「針對該部分的完整規格」，所以**不會遺漏細節**。
 
@@ -804,49 +793,49 @@ Console 範例程式：
 
 - 方法簽名：`SerialPort.Write(string text)`
 - 行為：
-    - 內部會依據 SerialPort 的 **Encoding 屬性** 將 string 轉成 byte[]
-        - 預設是 `Encoding.Default`（依作業系統）
-        - 可改成 `Encoding.ASCII` 或 `Encoding.UTF8`
-    - 轉換完成後再呼叫底層 Write 送出 byte[]
+  - 內部會依據 SerialPort 的 **Encoding 屬性** 將 string 轉成 byte[]
+    - 預設是 `Encoding.Default`（依作業系統）
+    - 可改成 `Encoding.ASCII` 或 `Encoding.UTF8`
+  - 轉換完成後再呼叫底層 Write 送出 byte[]
 - 優點：
-    - 直接寫 string，程式碼簡單可讀
-    - 適合 ASCII / 可預測編碼
+  - 直接寫 string，程式碼簡單可讀
+  - 適合 ASCII / 可預測編碼
 - 缺點：
-    - 依賴 SerialPort.Encoding，若 Encoding 與設備不一致可能造成亂碼
-    - 每次寫入都會產生新的 byte[]，小訊息頻繁寫入會增加 GC 壓力
-    - 無法完全控制 byte[] 內容（無法手動插入特定控制字元）
+  - 依賴 SerialPort.Encoding，若 Encoding 與設備不一致可能造成亂碼
+  - 每次寫入都會產生新的 byte[]，小訊息頻繁寫入會增加 GC 壓力
+  - 無法完全控制 byte[] 內容（無法手動插入特定控制字元）
 
 ## 二、SerialPort.Write(byte[] buffer, int offset, int count)
 
 - 行為：
-    - 直接送 byte[]，完全由開發者控制
-    - 不經 Encoding 轉換
-    - 適合二進位資料或需要精準控制字元的情況
+  - 直接送 byte[]，完全由開發者控制
+  - 不經 Encoding 轉換
+  - 適合二進位資料或需要精準控制字元的情況
 - 優點：
-    - 完全控制送出的 byte 內容
-    - 避免 Encoding 轉換帶來的問題
-    - 在高頻 I/O 或長時間運作時，GC 壓力可降（可使用 ArrayPool）
+  - 完全控制送出的 byte 內容
+  - 避免 Encoding 轉換帶來的問題
+  - 在高頻 I/O 或長時間運作時，GC 壓力可降（可使用 ArrayPool）
 - 缺點：
-    - 程式碼可讀性較低，需要自行處理編碼
+  - 程式碼可讀性較低，需要自行處理編碼
 
 ## 三、效率比較
 
-|方法|編碼|GC 影響|精準度|適用情境|
-|---|---|---|---|---|
-|Write(string)|SerialPort.Encoding 轉 byte|每次轉 byte[]，高頻使用增加 GC|依 Encoding，可能出錯|ASCII/簡單文字，低頻 I/O|
-|Write(byte[])|無需轉換|可重複使用 buffer，低 GC|完全精準|二進位資料、高頻 I/O、精確控制尾端字元|
+| 方法          | 編碼                        | GC 影響                        | 精準度                | 適用情境                               |
+| ------------- | --------------------------- | ------------------------------ | --------------------- | -------------------------------------- |
+| Write(string) | SerialPort.Encoding 轉 byte | 每次轉 byte[]，高頻使用增加 GC | 依 Encoding，可能出錯 | ASCII/簡單文字，低頻 I/O               |
+| Write(byte[]) | 無需轉換                    | 可重複使用 buffer，低 GC       | 完全精準              | 二進位資料、高頻 I/O、精確控制尾端字元 |
 
 ## 四、實務建議（工控/長時間 RS-232 通訊）
 
 1. **ASCII 通訊、短字串、低頻**
-    - 可直接使用 `Write(string)`
-    - 設定 `SerialPort.Encoding = Encoding.ASCII` 確保一致
+   - 可直接使用 `Write(string)`
+   - 設定 `SerialPort.Encoding = Encoding.ASCII` 確保一致
 2. **高頻率或長時間運作**
-    - 建議 `Write(byte[])`
-    - 自行用 `Encoding.ASCII.GetBytes` 或 ArrayPool 取得 buffer
-    - 避免每次都產生新的 byte[]
+   - 建議 `Write(byte[])`
+   - 自行用 `Encoding.ASCII.GetBytes` 或 ArrayPool 取得 buffer
+   - 避免每次都產生新的 byte[]
 3. **需要尾端控制字元**
-    - 若固定 \r\n，可在 byte[] 中手動添加，避免 string 轉換不一致
+   - 若固定 \r\n，可在 byte[] 中手動添加，避免 string 轉換不一致
 4. **混合協定 / 二進位控制碼**
-    - 一律用 byte[]
-    - 可以更容易實作 Reconfigure / LineBuffer / Retry
+   - 一律用 byte[]
+   - 可以更容易實作 Reconfigure / LineBuffer / Retry
