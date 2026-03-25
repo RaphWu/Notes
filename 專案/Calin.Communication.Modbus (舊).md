@@ -1,14 +1,3 @@
----
-aliases:
-created: 
-update:
-author:
-language:
-sourceurl:
-tags:
-date:
----
-
 # Modbus 工控強化最終版（RTU + ASCII）
 
 ## 企業級最嚴謹完整版 PROMPT（技術條款 + 架構條款 + 約束矩陣 + Initialize 機制）
@@ -48,36 +37,34 @@ Calin.IO.Abstractions
 ## 二、三層架構（強制）
 
 1. 基礎父類庫：Calin.Modbus
-    
-    - 僅負責：
-        - Modbus 協定完整實作（RTU + ASCII）
-        - Frame 建構與解析
-        - Exception Code 精細化
-        - Retry 整合
-        - Health 回報
-        - 並發控制
-    - 不包含：
-        - AutoReconnect
-        - Background Polling
-        - Heartbeat
-        - UI
-        - 商業邏輯
-    - 不會自動生成任何設備子類
-        
-2. 子類專案（例如 Calin.Modbus.DeviceX）
-    
-    - 繼承 IModbusClient 或包裝為 Service Layer
-    - 可實作：
-        - 背景 Polling Task
-        - 事件封裝
-        - 狀態管理
-        - FakeDevice
-    - 不得修改父類庫
-        
-3. Application
-    
-    - 僅依賴抽象介面
-    - 不直接依賴 RTU/ASCII 實作
+
+- 僅負責：
+  - Modbus 協定完整實作（RTU + ASCII）
+  - Frame 建構與解析
+  - Exception Code 精細化
+  - Retry 整合
+  - Health 回報
+  - 並發控制
+- 不包含：
+  - AutoReconnect
+  - Background Polling
+  - Heartbeat
+  - UI
+  - 商業邏輯
+- 不會自動生成任何設備子類
+
+1. 子類專案（例如 Calin.Modbus.DeviceX）
+   - 繼承 IModbusClient 或包裝為 Service Layer
+   - 可實作：
+     - 背景 Polling Task
+     - 事件封裝
+     - 狀態管理
+     - FakeDevice
+   - 不得修改父類庫
+
+2. Application
+   - 僅依賴抽象介面
+   - 不直接依賴 RTU/ASCII 實作
 
 ## 三、DI 與 非 DI 雙模式（嚴格規範）
 
@@ -112,25 +99,25 @@ public interface IModbusClient : IDisposable
 規範：
 
 - 未呼叫 InitializeAsync 前：
-    - 所有 I/O API 必須丟出 InvalidOperationException
+  - 所有 I/O API 必須丟出 InvalidOperationException
 - InitializeAsync：
-    - 僅可成功一次
-    - 必須 thread-safe
-    - 不得阻塞呼叫執行緒
+  - 僅可成功一次
+  - 必須 thread-safe
+  - 不得阻塞呼叫執行緒
 - Dispose：
-    - 可重入
-    - 必須安全釋放資源
+  - 可重入
+  - 必須安全釋放資源
 - 所有 public 方法 thread-safe
 
 ### DI 註冊規範
 
 - 提供：
-    - AddModbus()
-    - RegisterModbusRtuClient()
-    - RegisterModbusAsciiClient()
+  - AddModbus()
+  - RegisterModbusRtuClient()
+  - RegisterModbusAsciiClient()
 - 註冊時：
-    - 不得建立 Serial 連線
-    - 不得建立背景 Task
+  - 不得建立 Serial 連線
+  - 不得建立背景 Task
 - 僅在 InitializeAsync 才建立內部 Transport
 
 ### 非 DI 用法

@@ -485,3 +485,137 @@ public class ModbusConfiguration
   - 透過 Device Layer 封裝設備語意
 
 ---
+
+# IModbusClient 與 Function Code + Broadcast 處理流程
+
+讓開發者能一眼看到請求到回應的整體流程。
+
+```mermaid
+flowchart LR
+    subgraph APP & Device Layer
+        A[Application / Device] --> B[IModbusClient]
+    end
+
+    subgraph Modbus Protocol Layer
+        B --> C[ModbusClient]
+        C --> D[FrameBuilder / Parser]
+        D --> E[Frame Validation & Exception Mapping]
+        E --> F[Retry Policy & Health Update]
+    end
+
+    subgraph Serial I/O
+        F --> G[ISerialPort]
+        G --> H[SerialPort Driver]
+    end
+
+    %% Function Code 處理
+    C --> FC01[01 Read Coils]
+    C --> FC02[02 Read Discrete Inputs]
+    C --> FC03[03 Read Holding Registers]
+    C --> FC04[04 Read Input Registers]
+    C --> FC05[05 Write Single Coil]
+    C --> FC06[06 Write Single Register]
+    C --> FC0F[15 Write Multiple Coils]
+    C --> FC10[16 Write Multiple Registers]
+    C --> FC11[17 Read/Write Multiple Registers]
+    C --> FC17[0x11 Report Slave ID]
+    C --> FC08["0x08 Diagnostics (RTU)"]
+
+    %% Broadcast 處理
+    subgraph Broadcast Handling
+        B -->|SlaveId=0| BC[Broadcast Request]
+        BC -->|Write only, no response, no retry| F
+    end
+
+    %% Response 流程
+    H -->|Response bytes| D
+    D --> E
+    E -->|ModbusException / Valid Data| B
+```
+
+### 說明
+
+- **APP & Device Layer**：依賴 `IModbusClient`，不直接操作 Frame。
+- **Modbus Protocol Layer**：
+  - `ModbusClient` 封裝 Function Code 呼叫。
+  - `FrameBuilder/Parser` 處理 RTU/ASCII Frame 生成與解析。
+  - `Frame Validation & Exception Mapping` 確保 FunctionCode 對應與 Exception 轉換。
+  - `Retry Policy & Health Update` 根據配置進行重試，更新健康狀態。
+
+- **Serial I/O**：所有 I/O 由 `ISerialPort` 封裝，支援多種底層串口。
+- **Function Code 支援**：完整列出 01~17、0x08、0x11。
+- **Broadcast Handling**：
+  - 只針對 SlaveId=0 的 Write 類 Function Code。
+  - 不等待 Response。
+  - 不執行 Retry。
+  - 直接視為成功。
+
+---
+
+# Sequence Diagram
+
+呈現單一 request 從 APP 呼叫 `IModbusClient` 到 SerialPort 回應，再到 Health 更新的完整流程，包含 Broadcast 與 Retry 情況。
+
+```mermaid
+sequenceDiagram
+    participant APP as Application / Device
+    participant Client as IModbusClient / ModbusClient
+    participant Builder as FrameBuilder
+    participant Parser as FrameParser
+    participant Validator as FrameValidator
+    participant Retry as RetryPolicy
+    participant Health as HealthStatus
+    participant Port as ISerialPort
+    participant Driver as SerialPort Driver
+
+    APP->>Client: 呼叫 Read/Write API
+    alt Broadcast (SlaveId=0)
+        Client->>Builder: Build Frame
+        Builder->>Port: Send bytes
+        Port->>Driver: Serial send
+        Note right of Client: 不等待回應\n不 retry\n視為成功
+        Client-->>APP: Return success
+    else Normal Request
+        Client->>Builder: Build Frame
+        Builder->>Port: Send bytes
+        Port->>Driver: Serial send
+        loop Response
+            Driver->>Port: Receive bytes
+            Port->>Parser: Append to buffer
+            Parser->>Validator: Validate Frame / CRC / LRC
+            alt Exception
+                Validator-->>Client: Throw ModbusException
+            else Valid Data
+                Validator-->>Client: Return data
+            end
+        end
+        Client->>Retry: Apply retry if configured
+        Client->>Health: Update Success / Failure / ResponseTime
+        Client-->>APP: Return final result
+    end
+```
+
+### 說明
+
+- **Broadcast 特殊處理**：
+  - 只針對 SlaveId=0
+  - 不等待回應
+  - 不執行 Retry
+  - 直接視為成功
+
+- **Normal Request**：
+  - Request → FrameBuilder → ISerialPort → Driver → Parser → Validator → Client → Retry → Health → 回傳 APP
+
+- **Parser / Validator**：
+  - 支援半包、黏包、異常 frame 處理
+  - Exception 轉 `ModbusException`
+
+- **Retry**：
+  - Timeout / Exception 根據設定可 retry
+  - Write 類操作預設不 retry（避免重複寫入）
+
+- **HealthStatus**：
+  - 每個 request 結束後更新
+  - 包含 SuccessCount、FailureCount、LastResponseTime、LastSuccessTime
+
+這個 Sequence Diagram 可以直接放在你的規範文件，對開發者說明 **Request 到 Response 完整流程**、Broadcast 與 Retry 特殊規則。
