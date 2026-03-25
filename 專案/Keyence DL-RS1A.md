@@ -1,14 +1,3 @@
----
-aliases:
-created: 
-update:
-author:
-language:
-sourceurl:
-tags:
-date:
----
-
 # Keyence DL_RS1A（DI + Factory 混合架構設計）
 
 你是一位資深 .NET 工控架構師，請在既有架構：
@@ -527,14 +516,14 @@ flowchart TD
 ## 說明
 
 - **錯誤模型**
-    - SerialPortService 對外公開
-    - DI 直接管理硬體 → 雙連線、Reconfigure 不安全
-    - 背景 Task 與 Dispose 散落
+  - SerialPortService 對外公開
+  - DI 直接管理硬體 → 雙連線、Reconfigure 不安全
+  - 背景 Task 與 Dispose 散落
 - **正確封裝模型**
-    - 對外公開只有 Service interface（IDL_RS1AService）
-    - 硬體（SerialPortService）由 Factory 建立、Service 管理
-    - Service 控制 Retry、Health、Reconfigure
-    - 生命週期與邊界清楚，APP 不直接操作硬體
+  - 對外公開只有 Service interface（IDL_RS1AService）
+  - 硬體（SerialPortService）由 Factory 建立、Service 管理
+  - Service 控制 Retry、Health、Reconfigure
+  - 生命週期與邊界清楚，APP 不直接操作硬體
 
 ---
 
