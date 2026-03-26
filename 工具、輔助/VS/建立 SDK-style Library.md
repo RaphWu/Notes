@@ -1,23 +1,12 @@
----
-aliases:
-created: 
-update:
-author:
-language:
-sourceurl:
-tags:
-date:
----
-
 # 建立 SDK-style Library
 
 # 最終範本
 
 - 要修改的部分
-    - 專案資訊內的參數。
-    - 確認有 `README.md` (有分大小寫)，且與 `.csproj` 在相同目錄。
-    - 若不需建置 NuGet 則拿掉 `NuGet`。
-    - 有*自動增加版本號*功能時，要加入 `UpdateVersion.ps1` 及 `Version.txt` 兩個檔案。
+  - 專案資訊內的參數。
+  - 確認有 `README.md` (有分大小寫)，且與 `.csproj` 在相同目錄。
+  - 若不需建置 NuGet 則拿掉 `NuGet`。
+  - 有*自動增加版本號*功能時，要加入 `UpdateVersion.ps1` 及 `Version.txt` 兩個檔案。
 
 ```xml title="工控系統 .csproj 基本設定"
 <Project Sdk="Microsoft.NET.Sdk">
@@ -36,7 +25,7 @@ date:
         <ImplicitUsings>disable</ImplicitUsings>
 
         <!-- 專案資訊 -->
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo> <!-- 若有自動增加版本號，則不要這一行 -->
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <Authors>佳凌科技股份有限公司 Calin Technology Co.,Ltd.</Authors>
         <Company>佳凌科技股份有限公司 Calin Technology Co.,Ltd.</Company>
         <Copyright>Copyright © 2026 Calin Technology Co.,Ltd.</Copyright>
@@ -52,7 +41,7 @@ date:
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <Version>0.0.1</Version>
     </PropertyGroup>
-    
+
     <!-- NuGet -->
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -61,7 +50,7 @@ date:
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     </PropertyGroup>
-    
+
     <!-- 讓 NuGet 包含 XML -->
     <ItemGroup>
         <None Include="$(OutputPath)\$(AssemblyName).xml"
@@ -69,25 +58,12 @@ date:
             Pack="true"
             PackagePath="lib\$(TargetFramework)" />
     </ItemGroup>
-    
+
     <!-- 將 README.md 包進 NuGet -->
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
-	<!-- 自動增加版本號 -->
-	<Target Name="UpdateAssemblyVersion" BeforeTargets="BeforeBuild">
-		<PropertyGroup>
-            <VersionFile>$(ProjectDir)version.txt</VersionFile>
-            <AssemblyInfoFile>$(ProjectDir)Properties\AssemblyInfo.cs</AssemblyInfoFile>
-        </PropertyGroup>
-		<ReadLinesFromFile File="$(VersionFile)">
-			<Output TaskParameter="Lines" PropertyName="NewVersion" />
-		</ReadLinesFromFile>
-		<Message Text="Updating AssemblyInfo.cs with version $(NewVersion)" Importance="high" />
-		<Exec Command="powershell -ExecutionPolicy Bypass -NoProfile -File &quot;$(ProjectDir)UpdateVersion.ps1&quot; &quot;$(NewVersion)&quot; &quot;$(AssemblyInfoFile)&quot;" />
-	</Target>
-    
 </Project>
 ```
 
@@ -152,7 +128,7 @@ date:
 
 ### ✔ 現代（SDK-style）
 
-| 專案類型                         | 說明        |
+| 專案類型                     | 說明      |
 | ---------------------------- | --------- |
 | **Console App (.NET)**       | SDK-style |
 | **Class Library (.NET)**     | SDK-style |
@@ -164,8 +140,8 @@ date:
 
 ## ❌ 哪些是舊式（非 SDK-style）
 
-| 專案類型                                   | 產生結果       |
-| -------------------------------------- | ---------- |
+| 專案類型                               | 產生結果     |
+| -------------------------------------- | ------------ |
 | Console App **(.NET Framework)**       | ❌ 舊 csproj |
 | Windows Forms App **(.NET Framework)** | ❌ 舊 csproj |
 | WPF App **(.NET Framework)**           | ❌ 舊 csproj |
@@ -203,14 +179,14 @@ date:
 1. **檔案 → 新增 → 專案**
 2. 搜尋你要的類型（例如：WinForms）
 3. **選「Windows Forms App (.NET)」**
+   - ❌ 不要選 `.NET Framework`
 
-   * ❌ 不要選 `.NET Framework`
 4. 下一步
 5. Framework 選：
+   - `.NET 6`
+   - `.NET 7`
+   - `.NET 8`
 
-   * `.NET 6`
-   * `.NET 7`
-   * `.NET 8`
 6. 建立完成 ✅
 
 ## 🔄 已有舊專案，能不能轉成 SDK-style？
@@ -221,8 +197,8 @@ date:
 
 如果你需要，我可以：
 
-* 幫你 **舊 `.csproj` → SDK-style** 範例
-* 或幫你判斷 **你目前專案適不適合轉**
+- 幫你 **舊 `.csproj` → SDK-style** 範例
+- 或幫你判斷 **你目前專案適不適合轉**
 
 ## 🧭 總整理（記住這個就好）
 
@@ -239,17 +215,17 @@ date:
 
 也就是說：
 
-* ✔ `.NET Framework 4.x` **可以**用 SDK-style
-* ❌ **但 VS「新建專案」時不會直接給你 SDK-style 的 `.NET Framework Class Library`**
+- ✔ `.NET Framework 4.x` **可以**用 SDK-style
+- ❌ **但 VS「新建專案」時不會直接給你 SDK-style 的 `.NET Framework Class Library`**
 
 ## 🧠 為什麼會這樣？
 
 ### 1️⃣ SDK-style 是為 **.NET Core / .NET (5+)** 設計的主流格式
 
-* 微軟的方向是：
-  * **新專案 → .NET**
-  * **舊系統相容 → .NET Framework**
-* 所以 VS 範本刻意不「鼓勵」用 SDK-style + .NET Framework
+- 微軟的方向是：
+  - **新專案 → .NET**
+  - **舊系統相容 → .NET Framework**
+- 所以 VS 範本刻意不「鼓勵」用 SDK-style + .NET Framework
 
 ### 2️⃣ 技術上「支援」，但不是預設
 
@@ -274,7 +250,8 @@ date:
 1. **新建專案**
 2. 選：
 
-   > **Class Library (.NET)**  ← 重點！
+   > **Class Library (.NET)** ← 重點！
+
 3. 建立後
 4. 打開 `.csproj`
 5. 把：
@@ -291,15 +268,15 @@ date:
 
 ✔ 專案立刻變成：
 
-* SDK-style
-* .NET Framework 4.8
-* 可被舊 WinForms / WPF 使用
+- SDK-style
+- .NET Framework 4.8
+- 可被舊 WinForms / WPF 使用
 
 ## ✅ 正確做法二（從舊專案轉）
 
 如果你已經有：
 
-* `Class Library (.NET Framework)`（舊 csproj）
+- `Class Library (.NET Framework)`（舊 csproj）
 
 可以 **手動轉成 SDK-style**
 
@@ -315,21 +292,21 @@ date:
 
 然後：
 
-* 刪掉：
-  * `<Compile Include=...>`
-  * `<Reference Include=...>`（GAC 的除外）
-* NuGet 改用 `<PackageReference>`
+- 刪掉：
+  - `<Compile Include=...>`
+  - `<Reference Include=...>`（GAC 的除外）
+- NuGet 改用 `<PackageReference>`
 
 ⚠ **大型專案要小心測**
 
 ## ❌ 哪些情況「不適合」SDK-style + .NET Framework？
 
-| 情況              | 建議     |
-| --------------- | ------ |
-| 大量 COM、老第三方 DLL | 保留舊格式  |
-| WebForms        | 不建議轉   |
-| 超舊 Build Script | 不建議轉   |
-| 新共用 Library     | ✔ 非常適合 |
+| 情況                   | 建議       |
+| ---------------------- | ---------- |
+| 大量 COM、老第三方 DLL | 保留舊格式 |
+| WebForms               | 不建議轉   |
+| 超舊 Build Script      | 不建議轉   |
+| 新共用 Library         | ✔ 非常適合 |
 
 ## 🧭 判斷準則（很實用）
 
@@ -352,10 +329,10 @@ date:
 
 **你的條件：**
 
-* ✔ 共用 DLL
-* ✔ WinForms 使用
-* ✔ .NET Framework **4.6.2**
-* ✔ 新專案
+- ✔ 共用 DLL
+- ✔ WinForms 使用
+- ✔ .NET Framework **4.6.2**
+- ✔ 新專案
 
 👉 **強烈建議：使用「SDK-style `.csproj`」**
 
@@ -368,7 +345,8 @@ date:
 1. **新建專案**
 2. 選擇：
 
-   > **Class Library (.NET)**  ← 一定要這個
+   > **Class Library (.NET)** ← 一定要這個
+
 3. 下一步
 4. Framework 先隨便選（例如 .NET 8）
 5. 建立完成
@@ -384,9 +362,9 @@ date:
 
 ✅ 完成後你得到的是：
 
-* SDK-style 專案
-* .NET Framework 4.6.2
-* 可被 WinForms (.NET 4.6.2) 直接引用
+- SDK-style 專案
+- .NET Framework 4.6.2
+- 可被 WinForms (.NET 4.6.2) 直接引用
 
 ## 🔧 WinForms 共用 DLL 常用設定（建議加）
 
@@ -424,12 +402,12 @@ date:
 
 ## ❌ 不要做的事（很重要）
 
-| 行為                                 | 原因             |
-| ---------------------------------- | -------------- |
-| 建 `Class Library (.NET Framework)` | 會是舊 csproj     |
-| 混用 `packages.config`               | SDK-style 不建議  |
-| 手動列出 `<Compile Include>`           | SDK-style 會自動抓 |
-| TargetFramework 設太低                | net462 已是安全下限  |
+| 行為                                | 原因                |
+| ----------------------------------- | ------------------- |
+| 建 `Class Library (.NET Framework)` | 會是舊 csproj       |
+| 混用 `packages.config`              | SDK-style 不建議    |
+| 手動列出 `<Compile Include>`        | SDK-style 會自動抓  |
+| TargetFramework 設太低              | net462 已是安全下限 |
 
 ---
 
@@ -450,9 +428,9 @@ date:
 ✔ `net462` 很適合
 如果未來可能給：
 
-* Console
-* Service
-* 其他工具
+- Console
+- Service
+- 其他工具
 
 👉 可以考慮：
 
@@ -487,7 +465,8 @@ date:
 1. **新建專案**
 2. 選：
 
-   > **Class Library (.NET)**  ← 一定是這個
+   > **Class Library (.NET)** ← 一定是這個
+
 3. 建立後，修改 `.csproj`：
 
 ```xml
@@ -503,20 +482,20 @@ date:
 
 ✅ 這樣你就得到：
 
-* ✔ SDK-style
-* ✔ .NET Framework 4.6.2
-* ✔ 可放 `Form / UserControl`
-* ✔ 可被 WinForms 主程式引用
-* ✔ **真正的「含 UI 共用 DLL」**
+- ✔ SDK-style
+- ✔ .NET Framework 4.6.2
+- ✔ 可放 `Form / UserControl`
+- ✔ 可被 WinForms 主程式引用
+- ✔ **真正的「含 UI 共用 DLL」**
 
 ## 🧩 為什麼不是選 WinForms App？
 
-| 類型                             | 問題               |
-| ------------------------------ | ---------------- |
-| WinForms App (.NET Framework)  | ❌ 會產生 exe        |
+| 類型                           | 問題                        |
+| ------------------------------ | --------------------------- |
+| WinForms App (.NET Framework)  | ❌ 會產生 exe               |
 | WinForms App (.NET)            | ❌ 目的是應用程式，不是 DLL |
-| Class Library (.NET Framework) | ❌ 舊 csproj       |
-| **Class Library (.NET)**       | ✅ 正確             |
+| Class Library (.NET Framework) | ❌ 舊 csproj                |
+| **Class Library (.NET)**       | ✅ 正確                     |
 
 👉 **UI ≠ App**
 👉 **共用 UI 元件 = Library**
@@ -564,8 +543,8 @@ dlg.ShowDialog();
 
 ➡️ 會出現：
 
-* 找不到 `Form`
-* 找不到 `System.Windows.Forms`
+- 找不到 `Form`
+- 找不到 `System.Windows.Forms`
 
 ### ❌ 用 `Microsoft.NET.Sdk`
 
@@ -623,15 +602,15 @@ MyApp.Core      → 純邏輯 DLL（不含 UI）
 
 ### ✔ UI 類型
 
-* `Form`
-* `UserControl`
-* 自訂控制項（繼承 `Control`）
+- `Form`
+- `UserControl`
+- 自訂控制項（繼承 `Control`）
 
 ### ✔ 共用 UI 工具
 
-* 樣式（字型 / 顏色）
-* UI Helper
-* 共用對話框
+- 樣式（字型 / 顏色）
+- UI Helper
+- 共用對話框
 
 ## 🛠 新增 UI 檔案的正確方式（很重要）
 
@@ -643,8 +622,8 @@ MyApp.Core      → 純邏輯 DLL（不含 UI）
 
 然後選：
 
-* **Windows Form**
-* **User Control**
+- **Windows Form**
+- **User Control**
 
 👉 VS 會自動幫你產 `.Designer.cs`
 👉 設計器可正常使用
@@ -661,12 +640,12 @@ MyApp.Core      → 純邏輯 DLL（不含 UI）
 
 ## ⚠ 常見錯誤快速檢查表
 
-| 問題       | 檢查                                        |
-| -------- | ----------------------------------------- |
-| 找不到 Form | `<UseWindowsForms>true</UseWindowsForms>` |
-| 設計器不能開   | `Microsoft.NET.Sdk.WindowsDesktop`        |
-| 不能編譯     | 主程式 TargetFramework 必須 ≥ net462           |
-| 參考失敗     | DLL 與主專案 Framework 不一致                    |
+| 問題         | 檢查                                      |
+| ------------ | ----------------------------------------- |
+| 找不到 Form  | `<UseWindowsForms>true</UseWindowsForms>` |
+| 設計器不能開 | `Microsoft.NET.Sdk.WindowsDesktop`        |
+| 不能編譯     | 主程式 TargetFramework 必須 ≥ net462      |
+| 參考失敗     | DLL 與主專案 Framework 不一致             |
 
 ## 🧭 建議的專案結構（實務）
 
@@ -715,10 +694,10 @@ Solution
 ## 說明
 
 - `<ImplicitUsings>enable</ImplicitUsings>`
-    啟用後，專案會自動生成一個隱含的檔案（類似 `_Imports.razor` 或自動 usings）來引入常用命名空間。
+  啟用後，專案會自動生成一個隱含的檔案（類似 `_Imports.razor` 或自動 usings）來引入常用命名空間。
 
 - `<ImplicitUsings>disable</ImplicitUsings>`
-    不自動加入，需手動在每個檔案加入 `using`。
+  不自動加入，需手動在每個檔案加入 `using`。
 
 ## 支援情況
 

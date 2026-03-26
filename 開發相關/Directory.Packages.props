@@ -56,10 +56,10 @@
 		<PackageVersion Include="Autofac" Version="6.5.0" />
 
 		<!-- 序列化 -->
+		<PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageVersion Include="MessagePack" Version="3.1.4" />
 		<PackageVersion Include="MessagePackAnalyzer" Version="3.1.4" />
 		<PackageVersion Include="MessagePack.Annotations" Version="3.1.4" />
-		<PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
 
 		<!-- MVVM -->
 		<PackageVersion Include="CommunityToolkit.Mvvm" Version="7.1.2" />
