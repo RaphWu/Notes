@@ -1,12 +1,71 @@
----
-aliases:
-created: 
-update:
-author:
-language:
-sourceurl:
-tags:
-date:
+# 目錄
+
+- [目錄](#目錄)
+- [Busy Wait 的迴圈](#busy-wait-的迴圈)
+  - [基本寫法：等待指定時間](#基本寫法等待指定時間)
+    - [使用](#使用)
+    - [說明](#說明)
+  - [更精準寫法（Tick 級）](#更精準寫法tick-級)
+  - [常見高效寫法（避免多次屬性取值）](#常見高效寫法避免多次屬性取值)
+  - [高頻交易 / 即時系統常見寫法](#高頻交易--即時系統常見寫法)
+- [Stopwatch + SpinWait 的典型用途](#stopwatch--spinwait-的典型用途)
+- [.NET 8 更好的方法（如果只是等時間）](#net-8-更好的方法如果只是等時間)
+  - [1️⃣ C# 微秒級高精度 delay（最佳寫法）](#1️⃣-c-微秒級高精度-delay最佳寫法)
+    - [高精度 delay (µs)](#高精度-delay-µs)
+    - [精度](#精度)
+  - [2️⃣ Stopwatch + SpinWait 高效能最佳實務（低 GC）](#2️⃣-stopwatch--spinwait-高效能最佳實務低-gc)
+    - [核心優化點](#核心優化點)
+    - [最佳實務版本（推薦）](#最佳實務版本推薦)
+  - [3️⃣ Hybrid 高精度等待（最推薦）](#3️⃣-hybrid-高精度等待最推薦)
+  - [4️⃣ .NET `SpinWait` Runtime 實作原理](#4️⃣-net-spinwait-runtime-實作原理)
+    - [Spin 行為分三階段](#spin-行為分三階段)
+      - [第一階段：純 CPU spin](#第一階段純-cpu-spin)
+      - [第二階段：Yield](#第二階段yield)
+      - [第三階段：Sleep](#第三階段sleep)
+    - [.NET runtime pseudo code](#net-runtime-pseudo-code)
+  - [5️⃣ 為什麼 `SpinWait` 比 `Thread.SpinWait` 好](#5️⃣-為什麼-spinwait-比-threadspinwait-好)
+  - [6️⃣ Stopwatch 的實際來源](#6️⃣-stopwatch-的實際來源)
+  - [7️⃣ 超高效版本（HFT / Game Engine）](#7️⃣-超高效版本hft--game-engine)
+  - [8️⃣ 精度極限](#8️⃣-精度極限)
+- [總結（推薦方案）](#總結推薦方案)
+  - [1️⃣ Ultra Low Latency Timer（核心版本）](#1️⃣-ultra-low-latency-timer核心版本)
+  - [2️⃣ 更進階版本（Hybrid Timer）](#2️⃣-更進階版本hybrid-timer)
+  - [3️⃣ 更穩定的做法（Deadline Timer）](#3️⃣-更穩定的做法deadline-timer)
+  - [4️⃣ CPU 指令層級發生什麼](#4️⃣-cpu-指令層級發生什麼)
+  - [5️⃣ Stopwatch 的真實精度](#5️⃣-stopwatch-的真實精度)
+  - [6️⃣ 業界進一步優化（超低延遲）](#6️⃣-業界進一步優化超低延遲)
+    - [CPU pinning](#cpu-pinning)
+    - [關閉 CPU power saving](#關閉-cpu-power-saving)
+    - [使用 isolated core](#使用-isolated-core)
+  - [7️⃣ 極限版本（0 jitter trading timer）](#7️⃣-極限版本0-jitter-trading-timer)
+  - [8️⃣ C# delay 方法精度比較](#8️⃣-c-delay-方法精度比較)
+- [三個 **.NET 高階低延遲技巧**（很多 C# 工程師其實不知道）](#三個-net-高階低延遲技巧很多-c-工程師其實不知道)
+  - [1️⃣ 如何讓 `Stopwatch` 再快 ~30–40%](#1️⃣-如何讓-stopwatch-再快-3040)
+    - [常見優化](#常見優化)
+    - [更好的方式：避免乘除](#更好的方式避免乘除)
+  - [2️⃣ C# pseudo "nanosecond timer"](#2️⃣-c-pseudo-nanosecond-timer)
+  - [3️⃣ 為什麼 `SpinWait` 20 次後突然變慢](#3️⃣-為什麼-spinwait-20-次後突然變慢)
+    - [避免方法](#避免方法)
+  - [4️⃣ 業界常見的 Ultra Low Latency Loop](#4️⃣-業界常見的-ultra-low-latency-loop)
+  - [5️⃣ 再進階：避免 Thread Migration](#5️⃣-再進階避免-thread-migration)
+  - [6️⃣ .NET timer latency 排名](#6️⃣-net-timer-latency-排名)
+  - [7️⃣ 如果你要做到 \<1µs jitter](#7️⃣-如果你要做到-1µs-jitter)
+- [TSC (`RDTSC`) 的超低延遲 Timer](#tsc-rdtsc-的超低延遲-timer)
+  - [1️⃣ 什麼是 TSC (`RDTSC`)](#1️⃣-什麼是-tsc-rdtsc)
+  - [2️⃣ C# 呼叫 `RDTSC`](#2️⃣-c-呼叫-rdtsc)
+  - [3️⃣ 建立 TSC Timer](#3️⃣-建立-tsc-timer)
+  - [4️⃣ 使用](#4️⃣-使用)
+  - [5️⃣ 精度](#5️⃣-精度)
+  - [6️⃣ TSC vs Stopwatch](#6️⃣-tsc-vs-stopwatch)
+  - [7️⃣ TSC 的重要注意事項](#7️⃣-tsc-的重要注意事項)
+  - [8️⃣ 最佳實務（非常重要）](#8️⃣-最佳實務非常重要)
+    - [1️⃣ pin thread 到 CPU](#1️⃣-pin-thread-到-cpu)
+    - [2️⃣ 關閉 CPU power saving](#2️⃣-關閉-cpu-power-saving)
+    - [3️⃣ server CPU jitter 更小](#3️⃣-server-cpu-jitter-更小)
+  - [9️⃣ 業界實際 loop](#9️⃣-業界實際-loop)
+  - [🔟 Stopwatch 為什麼比較慢](#-stopwatch-為什麼比較慢)
+  - [11 如果做到極限低延遲](#11-如果做到極限低延遲)
+
 ---
 
 # Busy Wait 的迴圈
@@ -40,11 +99,11 @@ BusyWait(10); // 忙等待約 10ms
 
 ### 說明
 
-* `Stopwatch`：高精度計時
-* `SpinWait`：避免純 CPU 空轉，會逐步：
-  * 先 busy spin
-  * 再 `Thread.Yield`
-  * 最後 `Sleep(1)`
+- `Stopwatch`：高精度計時
+- `SpinWait`：避免純 CPU 空轉，會逐步：
+  - 先 busy spin
+  - 再 `Thread.Yield`
+  - 最後 `Sleep(1)`
 
 ## 更精準寫法（Tick 級）
 
@@ -120,15 +179,15 @@ while (sw.ElapsedMilliseconds < ms)
 
 適合：
 
-* 低延遲系統
-* 遊戲 loop
-* lock-free algorithm
-* micro-benchmark
+- 低延遲系統
+- 遊戲 loop
+- lock-free algorithm
+- micro-benchmark
 
 不適合：
 
-* 長時間等待（>10ms）
-* 一般商業程式
+- 長時間等待（>10ms）
+- 一般商業程式
 
 因為 **會吃 CPU**。
 
@@ -162,9 +221,9 @@ Windows / .NET 沒有原生 **microsecond sleep**，唯一可靠方式是：
 
 因為：
 
-* `Thread.Sleep()` ≈ 1–15ms
-* `Task.Delay()` ≈ 1ms+
-* Windows scheduler resolution ≈ 0.5–1ms
+- `Thread.Sleep()` ≈ 1–15ms
+- `Task.Delay()` ≈ 1ms+
+- Windows scheduler resolution ≈ 0.5–1ms
 
 ### 高精度 delay (µs)
 
@@ -199,7 +258,7 @@ HighPrecisionDelay.DelayMicroseconds(50); // ~50µs
 
 典型結果：
 
-| 目標     | 實際         |
+| 目標   | 實際       |
 | ------ | ---------- |
 | 10 µs  | 10–15 µs   |
 | 50 µs  | 50–55 µs   |
@@ -267,11 +326,11 @@ public static class PrecisionDelay
 
 特性：
 
-* ❌ no allocation
-* ❌ no TimeSpan
-* ❌ no GC
-* ✔ 高精度
-* ✔ CPU friendly spin strategy
+- ❌ no allocation
+- ❌ no TimeSpan
+- ❌ no GC
+- ✔ 高精度
+- ✔ CPU friendly spin strategy
 
 ## 3️⃣ Hybrid 高精度等待（最推薦）
 
@@ -302,9 +361,9 @@ public static void HybridDelay(TimeSpan delay)
 
 這是：
 
-* trading system
-* game engine
-* realtime engine
+- trading system
+- game engine
+- realtime engine
 
 常見做法。
 
@@ -344,9 +403,9 @@ PAUSE
 
 作用：
 
-* 減少 pipeline stall
-* 降低 power
-* 改善 SMT
+- 減少 pipeline stall
+- 降低 power
+- 改善 SMT
 
 #### 第二階段：Yield
 
@@ -358,7 +417,7 @@ Thread.Yield()
 
 把 CPU 讓給：
 
-* 同 core thread
+- 同 core thread
 
 但不讓給 OS scheduler。
 
@@ -401,9 +460,9 @@ public void SpinOnce()
 
 因為：
 
-| 方法              | 問題               |
+| 方法            | 問題             |
 | --------------- | ---------------- |
-| Thread.SpinWait | 永遠 busy          |
+| Thread.SpinWait | 永遠 busy        |
 | SpinWait        | adaptive backoff |
 
 所以
@@ -431,7 +490,7 @@ QueryPerformanceCounter (QPC)
 
 精度：
 
-| 平台      | 精度                 |
+| 平台    | 精度               |
 | ------- | ------------------ |
 | Windows | ~100ns             |
 | Linux   | clock_gettime      |
@@ -456,18 +515,18 @@ public static void DelayUs(long us)
 
 優點：
 
-* 最低 overhead
-* 最低 branch
+- 最低 overhead
+- 最低 branch
 
 缺點：
 
-* CPU 100%
+- CPU 100%
 
 ## 8️⃣ 精度極限
 
 Windows user-space delay 極限大約：
 
-| 目標    | 實際       |
+| 目標  | 實際     |
 | ----- | -------- |
 | 1 µs  | 2–10 µs  |
 | 5 µs  | 5–15 µs  |
@@ -475,13 +534,13 @@ Windows user-space delay 極限大約：
 
 原因：
 
-* OS scheduling
-* CPU frequency scaling
-* interrupt
+- OS scheduling
+- CPU frequency scaling
+- interrupt
 
 # 總結（推薦方案）
 
-| 用途            | 方案                  |
+| 用途          | 方案                |
 | ------------- | ------------------- |
 | < 200µs delay | pure spin           |
 | 200µs–2ms     | SpinWait            |
@@ -489,28 +548,28 @@ Windows user-space delay 極限大約：
 
 下面給你一個 **業界常見的 C# Ultra-Low Latency Timer 設計**，常見於：
 
-* 交易撮合引擎 (matching engine)
-* 即時遊戲 loop
-* market data feed handler
-* 高頻計時 (<10µs jitter)
+- 交易撮合引擎 (matching engine)
+- 即時遊戲 loop
+- market data feed handler
+- 高頻計時 (<10µs jitter)
 
 核心目標：
 
-* **微秒級 delay**
-* **誤差 <10µs**
-* **0 GC allocation**
-* **固定 CPU latency**
-* **避免 Stopwatch 重複計算**
+- **微秒級 delay**
+- **誤差 <10µs**
+- **0 GC allocation**
+- **固定 CPU latency**
+- **避免 Stopwatch 重複計算**
 
 ## 1️⃣ Ultra Low Latency Timer（核心版本）
 
 關鍵優化：
 
-* 快取 `Stopwatch.Frequency`
-* 只使用 `Stopwatch.GetTimestamp()`
-* 避免 `TimeSpan`
-* 避免 allocation
-* 使用 `Thread.SpinWait`
+- 快取 `Stopwatch.Frequency`
+- 只使用 `Stopwatch.GetTimestamp()`
+- 避免 `TimeSpan`
+- 避免 allocation
+- 使用 `Thread.SpinWait`
 
 ```csharp
 using System;
@@ -545,7 +604,7 @@ UltraLowLatencyTimer.DelayMicroseconds(50);
 
 精度通常：
 
-| 目標    | 實際        |
+| 目標  | 實際      |
 | ----- | --------- |
 | 20µs  | 20–28µs   |
 | 50µs  | 50–60µs   |
@@ -584,8 +643,8 @@ public static class HybridPrecisionTimer
 
 策略：
 
-| delay       | 策略           |
-| -------- | ------------ |
+| delay       | 策略         |
+| ----------- | ------------ |
 | <100µs      | pure spin    |
 | 100µs–500µs | SpinWait     |
 | >500µs      | Sleep + spin |
@@ -621,7 +680,7 @@ public class PrecisionLoopTimer
 
     public PrecisionLoopTimer(long microseconds)
     {
-        intervalTicks = (long)(microseconds * 
+        intervalTicks = (long)(microseconds *
             (Stopwatch.Frequency / 1_000_000.0));
 
         next = Stopwatch.GetTimestamp();
@@ -653,9 +712,9 @@ while (true)
 
 優點：
 
-* **不會 drift**
-* jitter 更小
-* 常用於 game loop / trading engine
+- **不會 drift**
+- jitter 更小
+- 常用於 game loop / trading engine
 
 ## 4️⃣ CPU 指令層級發生什麼
 
@@ -669,9 +728,9 @@ PAUSE
 
 作用：
 
-* 減少 pipeline stall
-* 降低 power
-* 提高 hyperthreading 效率
+- 減少 pipeline stall
+- 降低 power
+- 提高 hyperthreading 效率
 
 實際 CPU pipeline：
 
@@ -697,7 +756,7 @@ QueryPerformanceCounter
 
 解析度通常：
 
-| CPU   | 精度     |
+| CPU   | 精度   |
 | ----- | ------ |
 | Intel | ~0.3µs |
 | AMD   | ~0.2µs |
@@ -718,9 +777,9 @@ Stopwatch.Frequency
 
 如果你真的在做：
 
-* HFT
-* ultra realtime
-* lock-free engine
+- HFT
+- ultra realtime
+- lock-free engine
 
 會再做：
 
@@ -769,21 +828,21 @@ while (true)
 
 這是：
 
-* matching engine
-* exchange gateway
-* low latency feed
+- matching engine
+- exchange gateway
+- low latency feed
 
 常見 loop。
 
 ## 8️⃣ C# delay 方法精度比較
 
-| 方法             | 精度     | CPU |
+| 方法           | 精度   | CPU |
 | -------------- | ------ | --- |
-| Thread.Sleep   | 1–15ms | 低   |
-| Task.Delay     | 1ms+   | 低   |
-| SpinWait       | ~50µs  | 中   |
-| Stopwatch spin | ~5µs   | 高   |
-| deadline loop  | ~3µs   | 高   |
+| Thread.Sleep   | 1–15ms | 低  |
+| Task.Delay     | 1ms+   | 低  |
+| SpinWait       | ~50µs  | 中  |
+| Stopwatch spin | ~5µs   | 高  |
+| deadline loop  | ~3µs   | 高  |
 
 ✅ **實務結論**
 
@@ -823,8 +882,8 @@ long now = Stopwatch.GetTimestamp();
 
 原因是：
 
-* `Stopwatch.GetTimestamp()` 是 **static method call**
-* JIT 雖然 inline，但仍有少量開銷
+- `Stopwatch.GetTimestamp()` 是 **static method call**
+- JIT 雖然 inline，但仍有少量開銷
 
 在極端場景可以 **快取 frequency + 直接使用 timestamp loop**。
 
@@ -852,8 +911,8 @@ while (now < target);
 
 優點：
 
-* 減少一次 timestamp call
-* JIT 會產生更簡單的 branch
+- 減少一次 timestamp call
+- JIT 會產生更簡單的 branch
 
 ### 更好的方式：避免乘除
 
@@ -915,13 +974,13 @@ while (true)
 
 這種 loop 的特性：
 
-* **不 drift**
-* jitter 很小
-* latency 穩定
+- **不 drift**
+- jitter 很小
+- latency 穩定
 
 典型 jitter：
 
-| 系統              | jitter |
+| 系統            | jitter |
 | --------------- | ------ |
 | Windows desktop | 5–15µs |
 | Server CPU      | 3–8µs  |
@@ -946,7 +1005,7 @@ else
 
 也就是：
 
-| 次數    | 行為           |
+| 次數  | 行為         |
 | ----- | ------------ |
 | 0–10  | CPU spin     |
 | 10–20 | Thread.Yield |
@@ -1015,17 +1074,17 @@ while (true)
 
 優點：
 
-* ❌ 沒有 allocation
-* ❌ 沒有 timer object
-* ❌ 沒有 GC
-* ✔ jitter 很小
-* ✔ latency 穩定
+- ❌ 沒有 allocation
+- ❌ 沒有 timer object
+- ❌ 沒有 GC
+- ✔ jitter 很小
+- ✔ latency 穩定
 
 很多：
 
-* game engine
-* trading engine
-* real-time simulation
+- game engine
+- trading engine
+- real-time simulation
 
 都是這種架構。
 
@@ -1055,14 +1114,14 @@ Thread.BeginThreadAffinity();
 
 這會：
 
-* 避免 core migration
-* 降低 jitter
+- 避免 core migration
+- 降低 jitter
 
 ## 6️⃣ .NET timer latency 排名
 
 大概延遲排名：
 
-| 方法                     | 延遲        |
+| 方法                   | 延遲      |
 | ---------------------- | --------- |
 | Thread.Sleep           | 1–15 ms   |
 | Task.Delay             | 1–10 ms   |
@@ -1098,10 +1157,10 @@ P/Invoke + intrinsic
 下面給你一個 **C# 使用 CPU TSC (`RDTSC`) 的超低延遲 Timer**。
 這種方法常見於：
 
-* 高頻交易 (HFT)
-* 遊戲引擎 timing
-* 超低延遲 messaging
-* lock-free engine
+- 高頻交易 (HFT)
+- 遊戲引擎 timing
+- 超低延遲 messaging
+- lock-free engine
 
 它比 `Stopwatch.GetTimestamp()` **快約 5–10 倍**，jitter 也更低。
 
@@ -1123,7 +1182,7 @@ RDTSC
 
 特性：
 
-| 方法        | 成本             |
+| 方法      | 成本           |
 | --------- | -------------- |
 | RDTSC     | ~20 cycles     |
 | Stopwatch | ~80–150 cycles |
@@ -1200,7 +1259,7 @@ TscTimer.DelayMicroseconds(20);
 
 在一般桌機 CPU：
 
-| 目標     | 實際         |
+| 目標   | 實際       |
 | ------ | ---------- |
 | 10 µs  | 10–12 µs   |
 | 50 µs  | 50–53 µs   |
@@ -1214,12 +1273,12 @@ jitter 通常：
 
 ## 6️⃣ TSC vs Stopwatch
 
-| 特性       | TSC      | Stopwatch |
-| ----- | -------- | --------- |
-| 速度       | ⭐⭐⭐⭐⭐    | ⭐⭐⭐       |
-| 精度       | ⭐⭐⭐⭐⭐    | ⭐⭐⭐⭐      |
-| portable | x86 only | 跨平台       |
-| 複雜度      | 高        | 低         |
+| 特性     | TSC        | Stopwatch |
+| -------- | ---------- | --------- |
+| 速度     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐    |
+| 精度     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐  |
+| portable | x86 only   | 跨平台    |
+| 複雜度   | 高         | 低        |
 
 ## 7️⃣ TSC 的重要注意事項
 
@@ -1238,8 +1297,8 @@ Invariant TSC
 
 例如：
 
-* Intel Nehalem+
-* AMD Zen+
+- Intel Nehalem+
+- AMD Zen+
 
 所以 **跨 core 仍然同步**。
 
@@ -1298,9 +1357,9 @@ while (true)
 
 這個 loop：
 
-* 幾乎 **0 jitter**
-* 沒有 allocation
-* 沒有 timer interrupt
+- 幾乎 **0 jitter**
+- 沒有 allocation
+- 沒有 timer interrupt
 
 ## 🔟 Stopwatch 為什麼比較慢
 
@@ -1351,7 +1410,7 @@ TSC timer
 
 低延遲 timer 排名：
 
-| 方法             | 延遲        |
+| 方法           | 延遲      |
 | -------------- | --------- |
 | Thread.Sleep   | 1–15 ms   |
 | Task.Delay     | 1–10 ms   |
@@ -1361,9 +1420,9 @@ TSC timer
 
 如果你願意，我可以再給你一個 **真正 production 等級的 C# Low-Latency Timer（HFT style）**，它會包含：
 
-* `TSC + deadline loop`
-* `CPU affinity`
-* `no branch jitter`
-* `cache friendly design`
+- `TSC + deadline loop`
+- `CPU affinity`
+- `no branch jitter`
+- `cache friendly design`
 
 那個版本的 **jitter 可以壓到 ~1µs**，比一般 `Stopwatch` 寫法穩定很多。
