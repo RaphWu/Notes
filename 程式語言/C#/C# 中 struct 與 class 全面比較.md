@@ -1,21 +1,3 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
----
-
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
-
 # C## 中 struct 與 class 全面比較
 
 以下以 .NET CLR 實作模型說明，包含記憶體配置、GC 行為、語意差異與實務建議。

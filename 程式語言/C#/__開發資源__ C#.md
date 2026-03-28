@@ -1,31 +1,75 @@
----
-aliases:
-created: 
-update:
-author: Raphael Wu
-language:
-sourceurl:
-tags:
-date:
+# 目錄
+
+- [目錄](#目錄)
+- [名詞](#名詞)
+- [.NET / C#](#net--c)
+  - [Source Code](#source-code)
+  - [規範](#規範)
+  - [XML Documentation](#xml-documentation)
+    - [Sandcastle Help File Builder](#sandcastle-help-file-builder)
+  - [Collections](#collections)
+  - [多執行緒](#多執行緒)
+  - [非同步程式設計](#非同步程式設計)
+  - [設計模式](#設計模式)
+  - [DEBUG 相關](#debug-相關)
+  - [綜合](#綜合)
+- [專題](#專題)
+  - [序列化 Serializer](#序列化-serializer)
+  - [數值運算](#數值運算)
+    - [Math.NET Numerics](#mathnet-numerics)
+  - [Obfuscar](#obfuscar)
+  - [QR Code](#qr-code)
+- [控制反轉 (IoC)、相依性注入 (DI)](#控制反轉-ioc相依性注入-di)
+  - [Autofac](#autofac)
+    - [網路文章](#網路文章)
+  - [Unity](#unity)
+    - [網路文章](#網路文章-1)
+- [Prism](#prism)
+  - [官方沒在說明檔內的更新資料](#官方沒在說明檔內的更新資料)
+- [網路文章](#網路文章-2)
+  - [舊版參考資料](#舊版參考資料)
+- [FP 函數式程式設計](#fp-函數式程式設計)
+- [Logger (Serilog)](#logger-serilog)
+- [文檔](#文檔)
+  - [CsvHelper](#csvhelper)
+  - [MiniExcel](#miniexcel)
+  - [PDFsharp \& MigraDoc 6](#pdfsharp--migradoc-6)
+  - [PdfSharpCore](#pdfsharpcore)
+- [外接介面](#外接介面)
+  - [TouchSocket](#touchsocket)
+  - [IoTClient](#iotclient)
+  - [Serial Port](#serial-port)
+- [測試](#測試)
+- [Blog](#blog)
+- [Visual Studio](#visual-studio)
+  - [延伸模組](#延伸模組)
+  - [Costura.Fody](#costurafody)
+  - [程式目標版本選擇](#程式目標版本選擇)
+  - [網路文章](#網路文章-3)
+- [Visual Studio Code](#visual-studio-code)
+  - [延伸模組](#延伸模組-1)
+  - [Markdown](#markdown)
+  - [其他文章](#其他文章)
+
 ---
 
 # 名詞
 
-| 英文             | 中文  | 其他常見翻譯 |
-| -------------- | --- | ------ |
-| Abstraction    | 抽象  |        |
-| Encapsulation  | 封裝  |        |
-| Inheritance    | 繼承  |        |
-| Polymorphism   | 多型  | 多態性    |
-| Implementation | 實現  |        |
-| Association    | 關聯  |        |
-| Dependency     | 依賴  |        |
-| Aggregation    | 聚合  |        |
-| Composition    | 組合  |        |
-| Base           | 基底  |        |
-| Derived        | 衍生  | 派生     |
-| override       | 覆寫  | 覆蓋     |
-| virtual        | 虛擬  |        |
+| 英文           | 中文 | 其他常見翻譯 |
+| -------------- | ---- | ------------ |
+| Abstraction    | 抽象 |              |
+| Encapsulation  | 封裝 |              |
+| Inheritance    | 繼承 |              |
+| Polymorphism   | 多型 | 多態性       |
+| Implementation | 實現 |              |
+| Association    | 關聯 |              |
+| Dependency     | 依賴 |              |
+| Aggregation    | 聚合 |              |
+| Composition    | 組合 |              |
+| Base           | 基底 |              |
+| Derived        | 衍生 | 派生         |
+| override       | 覆寫 | 覆蓋         |
+| virtual        | 虛擬 |              |
 
 ---
 

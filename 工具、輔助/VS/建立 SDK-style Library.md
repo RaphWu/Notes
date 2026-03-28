@@ -1,4 +1,8 @@
-# 建立 SDK-style Library
+# 建立 SDK-Style Library
+
+# 在 .Net Framework 使用 SDK-Style 專案
+
+所需
 
 # 最終範本
 
@@ -12,7 +16,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net48;net8.0</TargetFrameworks>
+        <TargetFrameworks>net48</TargetFrameworks>
         <PlatformTarget>AnyCPU</PlatformTarget>
         <LangVersion>9.0</LangVersion>
         <Nullable>disable</Nullable>
@@ -73,13 +77,12 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
     <PropertyGroup>
-        <!-- 多目標 Framework -->
-        <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
-        <LangVersion>latest</LangVersion>
+          ...
+
         <OutputType>WinExe</OutputType>
         <UseWindowsForms>true</UseWindowsForms>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+
+          ...
     </PropertyGroup>
 
 </Project>
@@ -89,13 +92,11 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
     <PropertyGroup>
-        <!-- 多目標 Framework -->
-        <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
-        <LangVersion>latest</LangVersion>
+          ...
         <OutputType>WinExe</OutputType>
         <UseWPF>true</UseWPF>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+
+          ...
     </PropertyGroup>
 
 </Project>

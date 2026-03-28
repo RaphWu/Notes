@@ -1,12 +1,63 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
-  - NuGet
+# 目錄
+
+- [目錄](#目錄)
+- [NuGet 的 README.md 模版](#nuget-的-readmemd-模版)
+  - [建議的 NuGet README.md 結構](#建議的-nuget-readmemd-結構)
+    - [1️⃣ 套件簡介（1–2 行）](#1️⃣-套件簡介12-行)
+    - [2️⃣ 安裝方式](#2️⃣-安裝方式)
+    - [5️⃣ 文件 / Repo 連結](#5️⃣-文件--repo-連結)
+    - [6️⃣ License（可選）](#6️⃣-license可選)
+  - [不建議放在 NuGet README 的內容](#不建議放在-nuget-readme-的內容)
+  - [最推薦的 NuGet README 模板（實務版）](#最推薦的-nuget-readme-模板實務版)
+    - [Quick Example](#quick-example)
+    - [Features](#features)
+    - [Documentation](#documentation)
+    - [Quick Start](#quick-start)
+    - [Features](#features-1)
+    - [Configuration (Optional)](#configuration-optional)
+    - [Documentation](#documentation-1)
+    - [License](#license)
+  - [這個模板為什麼適合 NuGet](#這個模板為什麼適合-nuget)
+  - [NuGet README 的最佳長度](#nuget-readme-的最佳長度)
+  - [很多熱門套件的策略](#很多熱門套件的策略)
+  - [進階技巧（強烈推薦）](#進階技巧強烈推薦)
+    - [NuGet README](#nuget-readme)
+    - [GitHub README](#github-readme)
+    - [1️⃣ README（主要說明）](#1️⃣-readme主要說明)
+    - [2️⃣ 版本變更紀錄](#2️⃣-版本變更紀錄)
+    - [3️⃣ 授權條款](#3️⃣-授權條款)
+    - [4️⃣ 貢獻指南](#4️⃣-貢獻指南)
+    - [5️⃣ 行為準則](#5️⃣-行為準則)
+    - [6️⃣ 安全漏洞回報](#6️⃣-安全漏洞回報)
+    - [7️⃣ FAQ（可選）](#7️⃣-faq可選)
+    - [8️⃣ 詳細文件（docs 資料夾）](#8️⃣-詳細文件docs-資料夾)
+  - [典型 NuGet Library 專案結構](#典型-nuget-library-專案結構)
+  - [最常見（最小集合）](#最常見最小集合)
+  - [一個成熟 NuGet Library Repo 的文件結構](#一個成熟-nuget-library-repo-的文件結構)
+  - [每個文件的角色](#每個文件的角色)
+    - [README.md（GitHub 版）](#readmemdgithub-版)
+    - [README.NUGET.md（NuGet 版）](#readmenugetmdnuget-版)
+  - [docs 資料夾（最重要）](#docs-資料夾最重要)
+  - [CHANGELOG.md](#changelogmd)
+  - [UPGRADING.md（很多人忽略但很重要）](#upgradingmd很多人忽略但很重要)
+  - [CONTRIBUTING.md](#contributingmd)
+  - [SECURITY.md](#securitymd)
+  - [最推薦的文件策略](#最推薦的文件策略)
+  - [成熟專案常見的小技巧](#成熟專案常見的小技巧)
+- [建議的內容分層策略](#建議的內容分層策略)
+  - [README.md（NuGet 上顯示的）— 保持簡潔](#readmemdnuget-上顯示的-保持簡潔)
+    - [完整說明放哪裡？](#完整說明放哪裡)
+    - [實務上主流套件怎麼做](#實務上主流套件怎麼做)
+    - [推薦的完整文件工具](#推薦的完整文件工具)
+- [企業場景！內部 NuGet 不能連外部網站](#企業場景內部-nuget-不能連外部網站)
+  - [解決方案：把文件打包進 NuGet 套件內](#解決方案把文件打包進-nuget-套件內)
+    - [專案結構建議](#專案結構建議)
+    - [`.csproj` 設定：把 docs 打包進去](#csproj-設定把-docs-打包進去)
+    - [使用者安裝後在哪裡找到文件？](#使用者安裝後在哪裡找到文件)
+    - [README.md 內容改成指向本地路徑](#readmemd-內容改成指向本地路徑)
+    - [更進一步：搭配 XML 註解自動文件](#更進一步搭配-xml-註解自動文件)
+    - [總結](#總結)
+
 ---
 
 # NuGet 的 README.md 模版
@@ -76,7 +127,7 @@ var result = await client.GetDataAsync();
 ```md
 ### Documentation
 
-Full documentation:  
+Full documentation:
 https://github.com/your-org/MyLibrary
 ```
 
@@ -124,15 +175,15 @@ client.DoSomething();
 
 ### Features
 
-* Feature A
-* Feature B
-* Feature C
+- Feature A
+- Feature B
+- Feature C
 
 ### Documentation
 
 [https://github.com/your-org/MyLibrary](https://github.com/your-org/MyLibrary)
 
-```csharp
+````csharp
 
 通常 **30–60 行內最佳**。
 
@@ -148,10 +199,10 @@ client.DoSomething();
 
 完整文件 + 架構 + 教學
 
-例如像  
-- :contentReference[oaicite:3]{index=3}  
-- :contentReference[oaicite:4]{index=4}  
-- :contentReference[oaicite:5]{index=5}  
+例如像
+- :contentReference[oaicite:3]{index=3}
+- :contentReference[oaicite:4]{index=4}
+- :contentReference[oaicite:5]{index=5}
 
 都是 **NuGet 簡版 + GitHub 完整版** 的模式。
 
@@ -176,7 +227,7 @@ Install via .NET CLI:
 
 ```bash
 dotnet add package MyLibrary
-```
+````
 
 Or install from **NuGet Package Manager**.
 
@@ -194,9 +245,9 @@ Console.WriteLine(result);
 
 ### Features
 
-* Simple and lightweight API
-* Async-first design
-* Works with .NET 6+
+- Simple and lightweight API
+- Async-first design
+- Works with .NET 6+
 
 ### Configuration (Optional)
 
@@ -229,14 +280,14 @@ MIT
 
 所以 README 只保留：
 
-| 區塊          | 必要性     |
-| -- | - |
-| Description | 必須      |
-| Install     | 必須      |
+| 區塊        | 必要性     |
+| ----------- | ---------- |
+| Description | 必須       |
+| Install     | 必須       |
 | Quick Start | **最重要** |
-| Features    | 建議      |
-| Docs Link   | 建議      |
-| License     | 可選      |
+| Features    | 建議       |
+| Docs Link   | 建議       |
+| License     | 可選       |
 
 ## NuGet README 的最佳長度
 
@@ -258,10 +309,10 @@ MIT
 
 像這些 .NET 套件其實都用 **短 README + 完整 GitHub 文件**：
 
-* Dapper
-* Serilog
-* Polly
-* Newtonsoft.Json
+- Dapper
+- Serilog
+- Polly
+- Newtonsoft.Json
 
 NuGet README：
 
@@ -303,8 +354,8 @@ README.md
 
 這樣：
 
-* NuGet 顯示 **精簡版**
-* GitHub 顯示 **完整版**
+- NuGet 顯示 **精簡版**
+- GitHub 顯示 **完整版**
 
 如果你把 **NuGet README 做成精簡版**，那通常會搭配一套 **常見的文件命名規則**，讓專案在 GitHub 或 GitLab 上看起來清楚、專業，也方便使用者找到資料。
 
@@ -318,9 +369,9 @@ README.md
 
 用途：
 
-* GitHub 專案首頁
-* 完整介紹
-* 架構、使用方式、範例
+- GitHub 專案首頁
+- 完整介紹
+- 架構、使用方式、範例
 
 如果 NuGet 要用簡版：
 
@@ -342,8 +393,8 @@ CHANGELOG.md
 
 用途：
 
-* 記錄每個版本修改內容
-* NuGet 套件常見
+- 記錄每個版本修改內容
+- NuGet 套件常見
 
 範例：
 
@@ -375,8 +426,8 @@ LICENSE.md
 
 例如：
 
-* MIT
-* Apache 2.0
+- MIT
+- Apache 2.0
 
 ### 4️⃣ 貢獻指南
 
@@ -386,9 +437,9 @@ CONTRIBUTING.md
 
 用途：
 
-* Pull Request 規範
-* Coding style
-* Issue 提交流程
+- Pull Request 規範
+- Coding style
+- Issue 提交流程
 
 ### 5️⃣ 行為準則
 
@@ -406,8 +457,8 @@ SECURITY.md
 
 說明：
 
-* 如何回報漏洞
-* 是否支援舊版本
+- 如何回報漏洞
+- 是否支援舊版本
 
 ### 7️⃣ FAQ（可選）
 
@@ -417,8 +468,8 @@ FAQ.md
 
 例如：
 
-* 常見錯誤
-* 常見設定
+- 常見錯誤
+- 常見設定
 
 ### 8️⃣ 詳細文件（docs 資料夾）
 
@@ -503,9 +554,9 @@ UPGRADING.md
 
 目標是：
 
-* **NuGet 使用者 → 快速上手**
-* **GitHub 使用者 → 找得到完整文件**
-* **維護者 → 文件不混亂**
+- **NuGet 使用者 → 快速上手**
+- **GitHub 使用者 → 找得到完整文件**
+- **維護者 → 文件不混亂**
 
 ## 一個成熟 NuGet Library Repo 的文件結構
 
@@ -602,13 +653,13 @@ docs/
 
 說明：
 
-| 文件                      | 用途    |
-| -- | -- |
-| getting-started.md      | 詳細入門  |
-| configuration.md        | 設定方式  |
-| dependency-injection.md | DI 整合 |
-| advanced-usage.md       | 進階用法  |
-| architecture.md         | 架構設計  |
+| 文件                    | 用途     |
+| ----------------------- | -------- |
+| getting-started.md      | 詳細入門 |
+| configuration.md        | 設定方式 |
+| dependency-injection.md | DI 整合  |
+| advanced-usage.md       | 進階用法 |
+| architecture.md         | 架構設計 |
 
 ## CHANGELOG.md
 
@@ -734,6 +785,173 @@ DependencyInjection.md
 
 原因：
 
-* URL 比較乾淨
-* 跨平台一致
-* GitHub 習慣
+- URL 比較乾淨
+- 跨平台一致
+- GitHub 習慣
+
+[🔝](#目錄)
+
+---
+
+# 建議的內容分層策略
+
+## README.md（NuGet 上顯示的）— 保持簡潔
+
+專注於「讓人快速上手」，建議控制在 **100～200 行以內**：
+
+```markdown
+# YourPackage
+
+一句話說明這個套件做什麼。
+
+## 安裝
+dotnet add package YourPackage
+
+## 快速開始
+// 最簡單的使用範例，5～10 行內搞定
+
+## 主要功能
+- 功能 A
+- 功能 B
+- 功能 C
+
+## 文件
+完整文件請參考：https://yourproject.github.io/docs
+
+## 授權
+MIT
+```
+
+### 完整說明放哪裡？
+
+| 層級              | 放置位置                                     | 內容                        |
+| ----------------- | -------------------------------------------- | --------------------------- |
+| **快速預覽**      | `README.md`（NuGet 顯示）                    | 安裝、Quick Start、功能列表 |
+| **完整文件**      | GitHub repo 的 `README.md` 或 `docs/` 資料夾 | 所有 API、進階用法、範例    |
+| **詳細 API 參考** | GitHub Pages / DocFX / GitBook               | 每個方法的完整說明          |
+| **更新紀錄**      | `CHANGELOG.md`                               | 版本異動內容                |
+
+### 實務上主流套件怎麼做
+
+**Serilog、Newtonsoft.Json** 等大型套件的做法：
+
+- NuGet README → 極簡，只有安裝指令 + 一個範例 + 文件連結
+- 詳細內容 → 導向 GitHub Wiki 或官網
+
+**關鍵原則：**
+
+> NuGet README 的任務是「讓人決定要不要用」＋「讓人立刻能跑起來」，不是取代文件網站。
+
+### 推薦的完整文件工具
+
+如果你的套件較複雜，可以搭配：
+
+- **[DocFX](https://dotnet.github.io/docfx/)** — .NET 官方文件產生工具，可從 XML 註解自動產生 API 文件
+- **GitHub Pages** — 免費託管靜態文件網站
+- **GitHub Wiki** — 輕量選擇，適合中小型套件
+
+這樣 NuGet README 只需一行連結，讀者自然會去找完整說明。
+
+[🔝](#目錄)
+
+---
+
+# 企業場景！內部 NuGet 不能連外部網站
+
+## 解決方案：把文件打包進 NuGet 套件內
+
+### 專案結構建議
+
+```
+YourPackage/
+├── YourPackage.csproj
+├── README.md              ← NuGet 顯示的簡短說明
+├── docs/
+│   ├── FULL_README.md     ← 完整說明
+│   ├── CHANGELOG.md       ← 版本異動
+│   └── examples/
+│       ├── BasicUsage.md
+│       └── AdvancedUsage.md
+└── src/
+    └── ...
+```
+
+### `.csproj` 設定：把 docs 打包進去
+
+```xml
+<PropertyGroup>
+  <PackageId>YourPackage</PackageId>
+  <PackageReadmeFile>README.md</PackageReadmeFile>
+  <GenerateDocumentationFile>true</GenerateDocumentationFile> <!-- 產生 XML 註解文件 -->
+</PropertyGroup>
+
+<ItemGroup>
+  <!-- NuGet 顯示的 README -->
+  <None Include="README.md" Pack="true" PackagePath="\" />
+
+  <!-- 完整文件，打包進套件的 docs 資料夾 -->
+  <None Include="docs\**\*" Pack="true" PackagePath="docs\" />
+</ItemGroup>
+```
+
+### 使用者安裝後在哪裡找到文件？
+
+安裝後文件會出現在：
+
+```
+%USERPROFILE%\.nuget\packages\yourpackage\1.0.0\docs\
+```
+
+或專案內：
+
+```
+packages/yourpackage.1.0.0/docs/    ← 舊版 packages.config 方式
+```
+
+### README.md 內容改成指向本地路徑
+
+```markdown
+## 文件
+
+完整說明請參考套件內的 docs 資料夾：
+- 完整說明：`docs/FULL_README.md`
+- 更新紀錄：`docs/CHANGELOG.md`
+- 範例：`docs/examples/`
+
+安裝後可在 NuGet 快取目錄找到：
+`%USERPROFILE%\.nuget\packages\yourpackage\{版本}\docs\`
+```
+
+### 更進一步：搭配 XML 註解自動文件
+
+在程式碼加上完整 XML 註解，讓 IDE 直接顯示說明，減少查文件的需求：
+
+```csharp
+/// <summary>
+/// 初始化連線，使用預設逾時 30 秒。
+/// </summary>
+/// <param name="connectionString">資料庫連線字串，格式為 Server=...;Database=...</param>
+/// <param name="timeout">逾時秒數，預設 30，最大 300。</param>
+/// <returns>回傳已初始化的 Client 實例。</returns>
+/// <example>
+/// <code>
+/// var client = new YourClient("Server=localhost;Database=test", timeout: 60);
+/// </code>
+/// </example>
+public YourClient Init(string connectionString, int timeout = 30) { ... }
+```
+
+啟用後 `.xml` 會一起打包，開發者在 VS 中 hover 方法就能看到說明。
+
+### 總結
+
+| 說明類型 | 存放位置             | 開發者如何取得      |
+| -------- | -------------------- | ------------------- |
+| 快速摘要 | `README.md`          | VS 管理介面直接顯示 |
+| 完整文件 | `docs/` 打包進套件   | NuGet 快取資料夾    |
+| API 說明 | XML 註解 → `.xml` 檔 | VS Hover 提示       |
+| 版本紀錄 | `docs/CHANGELOG.md`  | NuGet 快取資料夾    |
+
+這樣即使完全離線、不依賴任何外部空間，所有文件都隨套件走。
+
+[🔝](#目錄)

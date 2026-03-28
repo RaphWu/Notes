@@ -1,11 +1,27 @@
----
-aliases:
-date:
-update:
-author: Raphael Wu
-language:
-sourceurl:
-tags:
+# 目錄
+
+- [目錄](#目錄)
+- [UI /UX](#ui-ux)
+  - [Krypton-Suite](#krypton-suite)
+  - [SunnyUI.NET](#sunnyuinet)
+  - [HZHControls](#hzhcontrols)
+  - [ReaLTaiizor](#realtaiizor)
+  - [MaterialSkin 2 for .NET WinForms](#materialskin-2-for-net-winforms)
+  - [MaterialSkin for .NET WinForms](#materialskin-for-net-winforms)
+  - [Siticone UI](#siticone-ui)
+  - [DockPanel Suite](#dockpanel-suite)
+    - [網路文章](#網路文章)
+- [DataGridView](#datagridview)
+  - [SourceGrid](#sourcegrid)
+    - [網路文章](#網路文章-1)
+  - [DynamicGrid](#dynamicgrid)
+  - [AdvancedDataGridView](#advanceddatagridview)
+    - [Zuby’s TreeGridView for WinForms](#zubys-treegridview-for-winforms)
+  - [ObjectListView](#objectlistview)
+- [2D 繪圖](#2d-繪圖)
+  - [ScottPlot.NET](#scottplotnet)
+  - [ZedGraph](#zedgraph)
+
 ---
 
 # UI /UX
@@ -13,13 +29,14 @@ tags:
 ## Krypton-Suite
 
 [GitHub](https://github.com/orgs/Krypton-Suite/repositories)
+
 - [Standard Toolkit](https://github.com/Krypton-Suite/Standard-Toolkit)
-	- [Standard-Toolkit-Online-Help](https://krypton-suite.github.io/Standard-Toolkit-Online-Help/Source/Help/Output/index.html)
-	- [Standard-Toolkit-Demos](https://github.com/Krypton-Suite/Standard-Toolkit-Demos)
+  - [Standard-Toolkit-Online-Help](https://krypton-suite.github.io/Standard-Toolkit-Online-Help/Source/Help/Output/index.html)
+  - [Standard-Toolkit-Demos](https://github.com/Krypton-Suite/Standard-Toolkit-Demos)
 - [Extended Toolkit](https://github.com/Krypton-Suite/Extended-Toolkit)
-[API Reference](https://github.com/Krypton-Suite/Documentation/tree/main/Documents/API%20Reference)
+  [API Reference](https://github.com/Krypton-Suite/Documentation/tree/main/Documents/API%20Reference)
 - [Krypton.Toolkit Namespace](https://github.com/Krypton-Suite/Documentation/blob/main/Documents/API%20Reference/Standard%20Toolkit/79d2eac2-21f4-54ff-7552-b20c33c30600.md)
-- 
+-
 
 ## SunnyUI.NET
 
@@ -58,7 +75,7 @@ tags:
 
 ## Siticone UI
 
- [官方網站](https://www.siticoneframework.com/start)
+[官方網站](https://www.siticoneframework.com/start)
 
 - 特色：提供 260 多個現代化 UI 控制項，支援 Visual Studio 設計器。
 - 授權：免費版本可用於個人與小型商業用途，需註冊取得授權。
@@ -83,14 +100,15 @@ tags:
 
 ## SourceGrid
 
- [GitHub - siemens](https://github.com/siemens/sourcegrid)
- [GitHub - huanlin](https://github.com/braillekit/SourceGrid)
+[GitHub - siemens](https://github.com/siemens/sourcegrid)
+[GitHub - huanlin](https://github.com/braillekit/SourceGrid)
+
 - 特色
-	- 功能非常強大的 Grid 控制項，不依賴 DataGridView。
-	- 支援 分組、樹狀節點、篩選、格式化、虛擬模式。
-	- 可高度自訂儲存格（甚至可放控件）。
+  - 功能非常強大的 Grid 控制項，不依賴 DataGridView。
+  - 支援 分組、樹狀節點、篩選、格式化、虛擬模式。
+  - 可高度自訂儲存格（甚至可放控件）。
 - 缺點
-	- 學習曲線比較高，API 和 DataGridView 完全不同。
+  - 學習曲線比較高，API 和 DataGridView 完全不同。
 
 ### 網路文章
 
@@ -116,12 +134,12 @@ DynamicGrid 的限制：
 [GitHub](https://github.com/davidegironi/advanceddatagridview)
 
 - 特色
-	- 基於標準 DataGridView，完全免費。
-	- 支援 Filter 和 Sort 下拉選單（像 Excel 那樣）。
-	- 支援 樹狀折疊 (TreeGrid)。
-	- API 與原生 DataGridView 類似，容易上手。
+  - 基於標準 DataGridView，完全免費。
+  - 支援 Filter 和 Sort 下拉選單（像 Excel 那樣）。
+  - 支援 樹狀折疊 (TreeGrid)。
+  - API 與原生 DataGridView 類似，容易上手。
 - 適合場景
-	- 如果你想要「保留 DataGridView 的用法」但增加 Excel 式的篩選、群組、折疊功能。
+  - 如果你想要「保留 DataGridView 的用法」但增加 Excel 式的篩選、群組、折疊功能。
 
 ### Zuby’s TreeGridView for WinForms
 
@@ -129,14 +147,15 @@ DynamicGrid 的限制：
 
 ## ObjectListView
 
- [官方網站](https://objectlistview.sourceforge.net/cs/index.html)
+[官方網站](https://objectlistview.sourceforge.net/cs/index.html)
+
 - 特色
-	- 雖然是基於 ListView，但在 WinForms 常用來取代 DataGridView。
-	- 支援 排序、過濾、群組、樹狀結構 (TreeList)。
-	- 支援 列格式化、圖片、CheckBox。
-	- 比 DataGridView 容易操作、外觀也更漂亮。
+  - 雖然是基於 ListView，但在 WinForms 常用來取代 DataGridView。
+  - 支援 排序、過濾、群組、樹狀結構 (TreeList)。
+  - 支援 列格式化、圖片、CheckBox。
+  - 比 DataGridView 容易操作、外觀也更漂亮。
 - 缺點
-	- 若你一定要基於 DataGridView，這可能不適合，因為它是 ListView 的封裝。
+  - 若你一定要基於 DataGridView，這可能不適合，因為它是 ListView 的封裝。
 
 ---
 
@@ -146,6 +165,8 @@ DynamicGrid 的限制：
 
 - [官方網站](https://scottplot.net/)
 - [GitHub](https://github.com/ScottPlot/ScottPlot)
+- [ScottPlot 5.0 Cookbook](https://scottplot.net/cookbook/5/)
+- [ScottPlot 4.1 Cookbook](https://scottplot.net/cookbook/4.1/)
 
 ## ZedGraph
 

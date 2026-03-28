@@ -5,7 +5,9 @@ X 生成程式碼指令風格
 產生可給 Github Copilot 用於生成程式碼的 Prompt
 使用 Markdown 語法風格 (程式碼區塊使用 csharp；powershell 指令用 bash；一般文字區塊使用 text)，圖表使用 Mermaid，標題之間不要使用分隔線
 
+因為 NuGet 的引用版本改為中央管理，請移除所有專案檔中的 NuGet 版本號
 套件版本是由中央管理，專案檔中勿加入版本號
+檢查 XXX 專案檔，採用「最小外部依賴面（Minimal Surface）」原則，為不需要傳遞給依賴專案的套件加上 PrivateAssets="all"
 
 只編譯 XXX，其它專案不可變更、不須編輯，亦忽略其它專案的編譯錯誤
 
@@ -14,9 +16,15 @@ X 生成程式碼指令風格
 
 使用 #file:'Calin.Logging.csproj' 專案做為日誌
 
-檢查 XXX 專案檔，為不需要傳遞給依賴專案的套件加上 PrivateAssets="all"
-
 Copyright ©2026 佳凌科技股份有限公司 Calin Technology Co.,Ltd.
+
+請收集所有專案的 README.md 檔：
+
+- 撰寫一個簡介，用來介紹 #CALIN.sln 方案
+- 各所有 README.md 都移到所屬專案的根目錄：
+  - 依 NuGet README 模板撰寫簡介，放置於所屬專案的根目錄的 README.md
+  - 將完整的功能說明、API，放置於所屬專案的根目錄的 Document.md
+- 完成撰寫後，刪除不在各專案根目錄的 README.md
 
 重構 #file:'R:\OneDrive\MyCodes\Projects\ScrewFastening\Calin\Calin.csproj' ：
 

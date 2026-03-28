@@ -11,6 +11,14 @@
 	-->
 	<ItemGroup>
 
+		<!-- Calin 內部套件。內部 NuGet 開發時移除自己和不參考的部分 -->
+		<PackageVersion Include="Calin" Version="0.1.0" />
+		<PackageVersion Include="Calin.Logging" Version="0.1.0" />
+		<PackageVersion Include="Calin.DependencyInjection" Version="0.1.0" />
+		<PackageVersion Include="Calin.Navigation" Version="0.1.0" />
+		<PackageVersion Include="Calin.WinForms" Version="0.1.0" />
+		<PackageVersion Include="Calin.Coordination" Version="0.1.0" />
+
 		<!-- Microsoft.Extensions 套件 -->
 		<PackageVersion Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
 		<PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
