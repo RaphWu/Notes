@@ -32,9 +32,9 @@
 		<PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="6.0.0" />
 
 		<!-- BCL 基礎類別庫 (Stable Line) -->
-		<PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
+		<PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+		<PackageVersion Include="System.Collections.Immutable" Version="6.0.0" />
 		<PackageVersion Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
-		<PackageVersion Include="System.Collections.Immutable" Version="8.0.0" />
 
 		<PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageVersion Include="System.Buffers" Version="4.6.1" />

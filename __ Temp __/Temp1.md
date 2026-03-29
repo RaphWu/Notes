@@ -1,14 +1,11 @@
-<TargetFrameworks>net48</TargetFrameworks>
-<PlatformTarget>AnyCPU</PlatformTarget>
-<LangVersion>9.0</LangVersion>
-<Nullable>disable</Nullable>
-<Deterministic>true</Deterministic>
-<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-<ImplicitUsings>disable</ImplicitUsings>
+請在 #class:'Calin.ScrewFastening.Views.DataAnalysis':130-596 中加入功能：
 
-<!-- 專案資訊 -->
-
-<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-<Authors>佳凌科技股份有限公司 Calin Technology Co.,Ltd.</Authors>
-<Company>佳凌科技股份有限公司 Calin Technology Co.,Ltd.</Company>
-<Copyright>Copyright © 2026 Calin Technology Co.,Ltd.</Copyright>
+- 檔案讀取使用CSVHELPER
+- 當 #class:'Calin.ScrewFastening.Views.DataAnalysis':130-596 LOAD時，讀取紀錄列表：
+  - 檔名為 `AppPaths.GetDataPath($"{[日期]:yyyyMMdd}.csv")`
+  - 設計為方法，可由APP輸入日期做為參數，預設使用今天日期
+  - 讀取的資料顯示 #field:'Calin.ScrewFastening.Views.DataAnalysis.dgvRecordList':5224-5280 ，顯示除 Records 以外的資料
+- 當點選 #field:'Calin.ScrewFastening.Views.DataAnalysis.dgvRecordList':5224-5280 任一筆時：
+  - 將該筆紀錄的 Record 資料在檔名為 `AppPaths.GetDataPath($"{[日期]:yyyyMMdd_HHmmdd}.csv")`
+  - 將該筆紀錄的 Record LIST顯示在 #field:'Calin.ScrewFastening.Views.DataAnalysis.dgvDataList':5290-5344
+  - 將該筆紀錄的 Record LIST顯示在 #field:'Calin.ScrewFastening.Views.DataAnalysis.plotRecords':5423-5463

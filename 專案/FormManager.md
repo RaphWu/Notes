@@ -1,24 +1,14 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
----
+# Calin.WinForms.FormManager 專案 GitHub Copilot 生成 PROMPT
 
-# Calin.UI.FormManager 專案 GitHub Copilot 生成 PROMPT
+你是一位資深 .NET WinForms 工控系統架構師，請在以下條件下，設計並產出完整 `Calin.WinForms.FormManager` 專案實作。
 
-你是一位資深 .NET WinForms 工控系統架構師，請在以下條件下，設計並產出完整 `Calin.UI.FormManager` 專案實作。
+目標是建立一個專門用於 **集中管理 WinForms 子視窗生命週期與 reference** 的管理元件，適用於：
 
-目標是建立一個專門用於 **集中管理 WinForms 視窗生命週期與 reference** 的管理元件，適用於：
-
-- .NET Framework 4.6.2 ~ 4.8
+- .NET Framework 4.8
 - Windows 7 / Windows 10
 - 24/7 工控長時間運轉環境
 
-本專案只負責 UI 視窗生命週期控制，不承擔業務邏輯、不做背景處理、不涉及設備通訊。
+本專案只負責 WinForms 子視窗生命週期控制，不承擔業務邏輯、不做背景處理、不涉及設備通訊。
 
 請產出完整程式碼與設計說明。
 
@@ -91,10 +81,10 @@ Form 生命週期：
 # 三、專案定位
 
 專案名稱：
-Calin.UI.FormManager
+Calin.WinForms.FormManager
 
 性質：
-基礎 UI 管理類別庫（Class Library）
+基礎 WinForms 管理類別庫（Class Library）
 
 設計核心：
 
@@ -130,6 +120,7 @@ ShowModal(Func factory, Form owner)
 6. 不可改尺寸
 7. 關閉後立即 Dispose
 8. 不保留 reference
+9. 當主視窗最小化時，關閉此視窗
 
 行為要求：
 
@@ -148,13 +139,14 @@ ShowTool(string id, Func factory, Form owner)
 特性：
 
 1. 可與主畫面同時操作
-2. Owner = 主畫面
-3. TopMost = true
+2. 提供 alwaysOnTop 參數，true 時 Owner = 主畫面，false時不設定 Owner
+3. TopMost = false
 4. 可同時多個
 5. 使用 string ID 識別
 6. 關閉後 Dispose
 7. 關閉時記錄位置
 8. 下次重建時還原位置
+9. 當主視窗最小化時，關閉此視窗
 
 管理方式：
 
@@ -184,8 +176,9 @@ DisposeAllPersistent()
 1. 已存在 → Show + Activate
 2. FormClosing → Cancel + Hide
 3. 關閉時寫入 JSON
-4. Owner 必須指定
-5. TopMost = true
+4. 提供 alwaysOnTop 參數，true 時 Owner = 主畫面，false時不設定 Owner
+5. TopMost = false
+6. 當主視窗最小化時，僅 Hide
 
 # 五、位置持久化設計
 
@@ -198,11 +191,11 @@ LocationStore
 1. 使用 JSON
 2. 不使用外部套件
 3. 記錄：
-    - ID
-    - X
-    - Y
-    - Width
-    - Height
+   - ID
+   - X
+   - Y
+   - Width
+   - Height
 4. 啟動時載入
 5. 關閉時寫入
 6. Thread-safe
@@ -213,7 +206,7 @@ LocationStore
 
 1. FormManager 建立時記錄 UI SynchronizationContext
 2. 所有 public API：
-    - 若非 UI Thread → 自動 Invoke
+   - 若非 UI Thread → 自動 Invoke
 3. 不使用背景執行緒
 4. Dictionary 操作需安全
 5. 不鎖 UI 執行緒
