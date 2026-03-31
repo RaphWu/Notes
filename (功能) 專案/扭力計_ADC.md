@@ -379,8 +379,3 @@ Gain = (Torque1 - Torque0) / (ADC1 - ADC0)
 - 非線性校正（LUT / 分段線性）
 - 峰值保持（Peak Hold）
 - 旋入判定（扭力上升率）
-
-如果你要，我可以幫你把這套整理成：
-
-- 可直接用的 `.NET Class`
-- 或符合你 Calin 架構的 Interface 設計（含 DI）
