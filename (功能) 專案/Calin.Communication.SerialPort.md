@@ -1,3 +1,47 @@
+# 目錄
+
+[🔝](#目錄)
+
+- [目錄](#目錄)
+- [Calin.Communication.SerialPort 架構規劃（工控 LEVEL 5）](#calincommunicationserialport-架構規劃工控-level-5)
+  - [專案名稱](#專案名稱)
+  - [目標](#目標)
+  - [環境](#環境)
+  - [核心設計原則](#核心設計原則)
+  - [與 SerialCore 關係](#與-serialcore-關係)
+  - [非同步與 Thread 安全](#非同步與-thread-安全)
+  - [I/O 與錯誤處理](#io-與錯誤處理)
+  - [串列通訊實作細節](#串列通訊實作細節)
+  - [TransmissionProbe 擴充（Modbus 基礎）](#transmissionprobe-擴充modbus-基礎)
+  - [狀態機整合（強制）](#狀態機整合強制)
+  - [類別結構建議](#類別結構建議)
+  - [RS-485 特殊規範](#rs-485-特殊規範)
+  - [USB-Serial 斷線處理](#usb-serial-斷線處理)
+  - [Write / Read 行為強化](#write--read-行為強化)
+  - [設定擴充](#設定擴充)
+  - [Dispose 強化規範](#dispose-強化規範)
+  - [DI 與非 DI 註冊](#di-與非-di-註冊)
+    - [ISerialPort 介面](#iserialport-介面)
+    - [核心強化規範](#核心強化規範)
+- [GitHub Copilot Prompt for Calin.Communication.SerialPort](#github-copilot-prompt-for-calincommunicationserialport)
+  - [核心設計原則](#核心設計原則-1)
+  - [與 SerialCore 關係](#與-serialcore-關係-1)
+  - [非同步與 Thread 安全](#非同步與-thread-安全-1)
+  - [I/O 與錯誤處理](#io-與錯誤處理-1)
+  - [串列通訊實作細節](#串列通訊實作細節-1)
+  - [TransmissionProbe 擴充（Modbus 基礎）](#transmissionprobe-擴充modbus-基礎-1)
+  - [狀態機整合](#狀態機整合)
+  - [類別結構建議](#類別結構建議-1)
+  - [RS-485 特殊規範](#rs-485-特殊規範-1)
+  - [USB-Serial 斷線處理](#usb-serial-斷線處理-1)
+  - [Write / Read 行為強化](#write--read-行為強化-1)
+  - [設定擴充](#設定擴充-1)
+  - [Dispose 強化規範](#dispose-強化規範-1)
+  - [DI 與非 DI 註冊](#di-與非-di-註冊-1)
+  - [ISerialPort 介面](#iserialport-介面-1)
+
+---
+
 # Calin.Communication.SerialPort 架構規劃（工控 LEVEL 5）
 
 ## 專案名稱

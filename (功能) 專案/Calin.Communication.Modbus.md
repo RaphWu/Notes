@@ -1,3 +1,52 @@
+# 目錄
+
+[🔝](#目錄)
+
+- [目錄](#目錄)
+- [Calin.Communication.Modbus 架構規劃（工控 LEVEL 5）](#calincommunicationmodbus-架構規劃工控-level-5)
+  - [專案名稱](#專案名稱)
+  - [目標](#目標)
+  - [環境](#環境)
+  - [核心設計原則](#核心設計原則)
+  - [與 SerialPort 關係](#與-serialport-關係)
+  - [非同步與 Thread 安全](#非同步與-thread-安全)
+  - [Modbus 協定實作](#modbus-協定實作)
+    - [RTU](#rtu)
+    - [ASCII](#ascii)
+    - [RTU Timing](#rtu-timing)
+    - [Broadcast](#broadcast)
+    - [Response Validation](#response-validation)
+    - [Endianness](#endianness)
+    - [Frame Size 限制](#frame-size-限制)
+    - [Parser Reset 策略](#parser-reset-策略)
+    - [Request 前處理](#request-前處理)
+  - [Function Code 支援（最少）](#function-code-支援最少)
+  - [Exception Code 精細化](#exception-code-精細化)
+  - [Retry 策略（內建）](#retry-策略內建)
+    - [Retry 限制](#retry-限制)
+  - [Health 回報](#health-回報)
+  - [Timeout 與通訊控制](#timeout-與通訊控制)
+  - [類別結構建議](#類別結構建議)
+  - [Frame Builder / Parser 設計](#frame-builder--parser-設計)
+  - [並發控制（關鍵）](#並發控制關鍵)
+    - [多 Slave 建議](#多-slave-建議)
+  - [錯誤模型](#錯誤模型)
+  - [Logging 規範](#logging-規範)
+  - [狀態管理規範](#狀態管理規範)
+  - [DI 與非 DI 註冊](#di-與非-di-註冊)
+    - [IModbusClient](#imodbusclient)
+    - [DI 註冊](#di-註冊)
+  - [設定物件](#設定物件)
+  - [Dispose 規範](#dispose-規範)
+  - [子類專案規範（強制）](#子類專案規範強制)
+  - [Application 使用規範](#application-使用規範)
+- [IModbusClient 與 Function Code + Broadcast 處理流程](#imodbusclient-與-function-code--broadcast-處理流程)
+    - [說明](#說明)
+- [Sequence Diagram](#sequence-diagram)
+    - [說明](#說明-1)
+
+---
+
 # Calin.Communication.Modbus 架構規劃（工控 LEVEL 5）
 
 ## 專案名稱
