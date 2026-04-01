@@ -1,24 +1,3 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
----
-
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
-  - Prompt
-  - 專案
-  - TOYO
-  - 工控
 
 # 📘 TOYO 電動缸控制 Framework
 
