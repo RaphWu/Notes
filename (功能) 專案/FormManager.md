@@ -1,3 +1,29 @@
+# 目錄
+
+- [目錄](#目錄)
+- [Calin.WinForms.FormManager 專案 GitHub Copilot 生成 PROMPT](#calinwinformsformmanager-專案-github-copilot-生成-prompt)
+- [一、架構邊界與責任宣告（必須明確實作）](#一架構邊界與責任宣告必須明確實作)
+  - [1. DI 邊界原則（極重要）](#1-di-邊界原則極重要)
+- [二、全域設計優先原則（強制遵守）](#二全域設計優先原則強制遵守)
+- [三、專案定位](#三專案定位)
+- [四、三種視窗型別設計](#四三種視窗型別設計)
+  - [1️⃣ ModalForm（阻斷流程視窗）](#1️⃣-modalform阻斷流程視窗)
+  - [2️⃣ ToolForm Type 1（監控視窗 - 每次重建）](#2️⃣-toolform-type-1監控視窗---每次重建)
+  - [3️⃣ ToolForm Type 2（Persistent Tool 視窗）](#3️⃣-toolform-type-2persistent-tool-視窗)
+- [五、位置持久化設計](#五位置持久化設計)
+- [六、UI Thread 與 Thread-Safe 設計](#六ui-thread-與-thread-safe-設計)
+- [七、穩定性強化機制](#七穩定性強化機制)
+  - [1️⃣ ValidateLocation](#1️⃣-validatelocation)
+  - [2️⃣ Z-Order 控制](#2️⃣-z-order-控制)
+  - [3️⃣ GDI / Handle 安全](#3️⃣-gdi--handle-安全)
+  - [4️⃣ GC 壓力控制](#4️⃣-gc-壓力控制)
+- [八、Debug 安全機制（#if DEBUG）](#八debug-安全機制if-debug)
+- [九、README 必須包含](#九readme-必須包含)
+- [十、輸出內容](#十輸出內容)
+- [十一、程式碼必須符合](#十一程式碼必須符合)
+
+---
+
 # Calin.WinForms.FormManager 專案 GitHub Copilot 生成 PROMPT
 
 你是一位資深 .NET WinForms 工控系統架構師，請在以下條件下，設計並產出完整 `Calin.WinForms.FormManager` 專案實作。
@@ -286,3 +312,5 @@ Release 不增加額外負擔。
 10. 可安全 24/7 長期運行
 
 請開始生成完整專案實作。
+
+[🔝](#目錄)
