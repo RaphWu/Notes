@@ -1,11 +1,37 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
+# 目錄
+
+- [目錄](#目錄)
+- [MessageBox / Toast Notification / MessageTip](#messagebox--toast-notification--messagetip)
+- [使用建議（實務）](#使用建議實務)
+- [Round 1：Toast MVP（最小可用實作）PROMPT](#round-1toast-mvp最小可用實作prompt)
+  - [目標](#目標)
+  - [功能需求](#功能需求)
+  - [視覺與尺寸](#視覺與尺寸)
+  - [架構要求](#架構要求)
+  - [技術限制](#技術限制)
+  - [DI 與 NuGet 預留](#di-與-nuget-預留)
+  - [產出要求](#產出要求)
+- [Round 1（Toast MVP）專用：Copilot 修正追問 PROMPT](#round-1toast-mvp專用copilot-修正追問-prompt)
+  - [**使用順序建議**（很重要）](#使用順序建議很重要)
+  - [一句實務總結](#一句實務總結)
+  - [追問 1：修正架構責任（最常用）](#追問-1修正架構責任最常用)
+  - [追問 2：尺寸計算是否真的由內容驅動（關鍵）](#追問-2尺寸計算是否真的由內容驅動關鍵)
+  - [追問 3：避免未來重構困難的寫法](#追問-3避免未來重構困難的寫法)
+  - [追問 4：多個 Toast 關閉後的重排正確性](#追問-4多個-toast-關閉後的重排正確性)
+  - [追問 5：確保不影響主視窗焦點](#追問-5確保不影響主視窗焦點)
+  - [追問 6：確認 MVP 邊界（防止過度設計）](#追問-6確認-mvp-邊界防止過度設計)
+- [Round 2：抽出共用核心（MessageStyle / LayoutEngine）PROMPT](#round-2抽出共用核心messagestyle--layoutengineprompt)
+  - [核心重點](#核心重點)
+  - [命名與架構](#命名與架構)
+  - [產出要求](#產出要求-1)
+- [Round 3：完整系統補齊（Dialog / Button / Tip / NuGet / AutoFac / README.md）PROMPT](#round-3完整系統補齊dialog--button--tip--nuget--autofac--readmemdprompt)
+  - [核心要求](#核心要求)
+  - [DialogButtonDefinition / DialogButtonSet](#dialogbuttondefinition--dialogbuttonset)
+  - [MessageTip / Toast](#messagetip--toast)
+  - [NuGet 與 Target Framework](#nuget-與-target-framework)
+  - [AutoFac DI](#autofac-di)
+  - [產出要求](#產出要求-2)
+
 ---
 
 # MessageBox / Toast Notification / MessageTip
@@ -15,9 +41,9 @@ tags:
 - 三輪 PROMPT 可以一次準備好
 - 實際使用時請「一輪一貼」
 - 每一輪完成後先檢視：
-    - 是否有寫死尺寸
-    - 是否混入不必要抽象
-    - 是否破壞前一輪行為
+  - 是否有寫死尺寸
+  - 是否混入不必要抽象
+  - 是否破壞前一輪行為
 
 如果你下一步想要，我可以再幫你做：
 
@@ -61,8 +87,8 @@ tags:
 
 - 命名空間：`Calin.Infrastructure.MessageSystem.Presenter.Toast`
 - 拆出：
-    - ToastForm（只負責顯示）
-    - ToastManager（負責堆疊與位置計算）
+  - ToastForm（只負責顯示）
+  - ToastManager（負責堆疊與位置計算）
 - Timer 控制生命週期
 - 不做動畫、主題、Icon、Button
 
@@ -125,9 +151,9 @@ tags:
 
 - ToastForm 只負責顯示與關閉事件
 - ToastManager 專責：
-    - 記錄目前顯示中的 Toast
-    - 計算右下角堆疊位置
-    - 在 Toast 關閉後重新排列
+  - 記錄目前顯示中的 Toast
+  - 計算右下角堆疊位置
+  - 在 Toast 關閉後重新排列
 
 請給出重構後的類別責任與必要程式碼，不新增任何新功能。
 更新 README.md。
@@ -214,14 +240,14 @@ tags:
 ## 核心重點
 
 - **MessageStyle** 需支援：
-    - TitleFont / TitleFontSize / TitleForeColor / TitleBackColor
-    - ContentFont / ContentFontSize / ContentForeColor / ContentBackColor
-    - ButtonFont / ButtonFontSize / ButtonForeColor / ButtonBackColor
-    - Padding / Spacing
-    - Icon（預留）
+  - TitleFont / TitleFontSize / TitleForeColor / TitleBackColor
+  - ContentFont / ContentFontSize / ContentForeColor / ContentBackColor
+  - ButtonFont / ButtonFontSize / ButtonForeColor / ButtonBackColor
+  - Padding / Spacing
+  - Icon（預留）
 - **MessageLayoutEngine**：
-    - 輸入：MessageStyle、Title 文字、Content 文字、Button 集合、最大寬度
-    - 輸出：TitleBounds、ContentBounds、ButtonBounds、IconBounds、TotalSize
+  - 輸入：MessageStyle、Title 文字、Content 文字、Button 集合、最大寬度
+  - 輸出：TitleBounds、ContentBounds、ButtonBounds、IconBounds、TotalSize
 
 ## 命名與架構
 
@@ -249,9 +275,9 @@ tags:
 
 - Dialog / Toast / MessageTip 都必須套用 **MessageStyle**
 - 使用者可自訂：
-    - 標題列字型、字體尺寸、文字顏色、背景顏色
-    - 內容字型、字體尺寸、文字顏色、背景顏色
-    - 按鈕字型、字體尺寸、文字顏色、背景顏色
+  - 標題列字型、字體尺寸、文字顏色、背景顏色
+  - 內容字型、字體尺寸、文字顏色、背景顏色
+  - 按鈕字型、字體尺寸、文字顏色、背景顏色
 - LayoutEngine 自動計算 Title / Content / Button 尺寸與位置
 
 ## DialogButtonDefinition / DialogButtonSet
@@ -269,9 +295,9 @@ tags:
 
 - NuGet 封裝：`Calin.Infrastructure.MessageSystem`
 - 支援：
-    - net462
-    - net48
-    - net8.0-windows
+  - net462
+  - net48
+  - net8.0-windows
 
 ## AutoFac DI
 
@@ -288,11 +314,11 @@ tags:
 6. AutoFac 註冊範例
 7. NuGet 專案結構與 multi-target 設定說明
 8. 撰寫完整 README.md
-    - 說明三種訊息形式使用方式
-    - DialogButtonSet 建立與使用方法
-    - Toast / MessageTip 使用示範
-    - DI AutoFac 註冊方式
-    - **標題列 / 內容 / 按鈕字型、字體大小與顏色自訂示範**
-    - 支援 .NET462 / .NET48 / .NET8
-    - NuGet 使用方式
-    - 圖表使用 Mermaid 格式
+   - 說明三種訊息形式使用方式
+   - DialogButtonSet 建立與使用方法
+   - Toast / MessageTip 使用示範
+   - DI AutoFac 註冊方式
+   - **標題列 / 內容 / 按鈕字型、字體大小與顏色自訂示範**
+   - 支援 .NET462 / .NET48 / .NET8
+   - NuGet 使用方式
+   - 圖表使用 Mermaid 格式
