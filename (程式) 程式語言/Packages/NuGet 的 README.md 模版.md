@@ -1,6 +1,36 @@
 # 目錄
 
 - [目錄](#目錄)
+- [NuGet 文件分類，存放，展示](#nuget-文件分類存放展示)
+  - [目錄結構（標準化）](#目錄結構標準化)
+  - [1. NuGet README（發佈層）](#1-nuget-readme發佈層)
+    - [規則](#規則)
+    - [內容限制（強制精簡）](#內容限制強制精簡)
+    - [禁止](#禁止)
+    - [原則](#原則)
+  - [2. 完整文件（使用層）](#2-完整文件使用層)
+    - [存放](#存放)
+    - [文件分類](#文件分類)
+    - [展示策略](#展示策略)
+    - [API 文件策略](#api-文件策略)
+  - [3. 開發文件（開發層）](#3-開發文件開發層)
+    - [存放](#存放-1)
+    - [內容分類](#內容分類)
+    - [規則](#規則-1)
+    - [ADR（Architecture Decision Record）建議格式](#adrarchitecture-decision-record建議格式)
+  - [4. 文件流動關係（關鍵）](#4-文件流動關係關鍵)
+    - [規則](#規則-2)
+  - [5. NuGet 打包控制](#5-nuget-打包控制)
+    - [預設行為](#預設行為)
+    - [控制方式](#控制方式)
+    - [確保不打包](#確保不打包)
+    - [若有例外（明確排除）](#若有例外明確排除)
+  - [6. Git 與展示策略](#6-git-與展示策略)
+    - [GitHub 顯示優先順序](#github-顯示優先順序)
+    - [建議](#建議)
+  - [7. 實務準則（強制）](#7-實務準則強制)
+  - [8. 常見錯誤](#8-常見錯誤)
+  - [9. 最小落地方案](#9-最小落地方案)
 - [NuGet 的 README.md 模版](#nuget-的-readmemd-模版)
   - [建議的 NuGet README.md 結構](#建議的-nuget-readmemd-結構)
     - [1️⃣ 套件簡介（1–2 行）](#1️⃣-套件簡介12-行)
@@ -57,6 +87,221 @@
     - [README.md 內容改成指向本地路徑](#readmemd-內容改成指向本地路徑)
     - [更進一步：搭配 XML 註解自動文件](#更進一步搭配-xml-註解自動文件)
     - [總結](#總結)
+
+---
+
+# NuGet 文件分類，存放，展示
+
+文件需拆為三層：
+
+- 發佈層（NuGet 顯示）
+- 使用層（外部工程師完整文件）
+- 開發層（內部設計與重構紀錄）
+
+三者**物理分離、責任單一、來源一致（可由同一份結構生成）**
+
+## 目錄結構（標準化）
+
+```
+/ (Repo Root)
+├─ README.md                  → NuGet 顯示用（精簡版）
+├─ src/
+├─ tests/
+├─ docs/                      → 對外完整文件
+│  ├─ index.md
+│  ├─ getting-started.md
+│  ├─ api/
+│  ├─ design/
+│  └─ faq.md
+├─ dev-docs/                  → 內部文件（不對外）
+│  ├─ refactor/
+│  ├─ decisions/
+│  ├─ experiments/
+│  └─ notes.md
+├─ build/
+└─ .github/
+```
+
+## 1. NuGet README（發佈層）
+
+### 規則
+
+- 檔案：`/README.md`
+- 由 `.csproj` 指定：
+
+```
+<PackageReadmeFile>README.md</PackageReadmeFile>
+```
+
+### 內容限制（強制精簡）
+
+- 專案簡介（1段）
+- 安裝方式
+- 最小可執行範例（Minimal Example）
+- API 快速入口（連到 docs）
+- 版本/相依說明（必要才放）
+
+### 禁止
+
+- ✘ 長篇說明
+- ✘ 設計細節
+- ✘ 內部架構
+- ✘ 完整 API 列表
+
+### 原則
+
+- README = **入口索引 + 快速上手**
+- 所有詳細內容 → `docs/`
+
+## 2. 完整文件（使用層）
+
+### 存放
+
+- `/docs/`
+- 建議搭配：
+  - GitHub Pages
+  - DocFX / MkDocs / Docusaurus
+
+### 文件分類
+
+```
+docs/
+├─ index.md              → 文件首頁（導覽）
+├─ getting-started.md    → 快速上手
+├─ api/                  → API 分類說明（非自動產生）
+├─ design/               → 對外可公開設計（架構、流程）
+├─ advanced/             → 進階用法
+└─ faq.md
+```
+
+### 展示策略
+
+- README → 只放入口
+- README 中明確導向：
+
+```
+完整文件：https://xxx.github.io/your-repo/
+```
+
+### API 文件策略
+
+- ✔ XML Doc + DocFX（或同類工具）
+- ✔ 手寫「使用導向 API 文件」
+- ✘ 不可只靠自動生成（缺語意）
+
+## 3. 開發文件（開發層）
+
+### 存放
+
+- `/dev-docs/`（或 `/internal/`）
+
+### 內容分類
+
+```
+dev-docs/
+├─ refactor/         → 重構記錄（before/after、原因）
+├─ decisions/        → 架構決策（ADR）
+├─ experiments/      → 測試性實作
+├─ benchmarks/       → 效能測試
+└─ notes.md          → 雜項紀錄
+```
+
+### 規則
+
+- 不發佈到 NuGet
+- 不放 README 連結
+- 不保證穩定性（允許草稿）
+
+### ADR（Architecture Decision Record）建議格式
+
+```
+- Context
+- Decision
+- Consequences
+```
+
+## 4. 文件流動關係（關鍵）
+
+```
+dev-docs →（整理/萃取）→ docs →（摘要）→ README
+```
+
+### 規則
+
+- dev-docs = 原始思考（雜）
+- docs = 結構化知識（穩定）
+- README = 最小入口（極簡）
+
+## 5. NuGet 打包控制
+
+### 預設行為
+
+- 只有指定檔案會進 NuGet
+
+### 控制方式
+
+```
+<ItemGroup>
+  <None Include="README.md" Pack="true" PackagePath="" />
+</ItemGroup>
+```
+
+### 確保不打包
+
+```
+docs/**        → 預設不會進
+dev-docs/**    → 預設不會進
+```
+
+### 若有例外（明確排除）
+
+```
+<ItemGroup>
+  <None Include="docs\**" Pack="false" />
+  <None Include="dev-docs\**" Pack="false" />
+</ItemGroup>
+```
+
+## 6. Git 與展示策略
+
+### GitHub 顯示優先順序
+
+- Repo 首頁 → `/README.md`
+- 詳細文件 → `/docs/`
+
+### 建議
+
+- 啟用 GitHub Pages 指向 `/docs/`
+- README 僅做導流
+
+## 7. 實務準則（強制）
+
+- README ≤ 200 行
+- docs 必須可「不看原始碼就能使用」
+- dev-docs 不需對外可讀
+- 所有設計結論需從 dev-docs 萃取到 docs
+- README 不允許成為文件主體
+
+## 8. 常見錯誤
+
+- ✘ README 過長 → 使用者無法快速定位
+- ✘ docs 缺失 → 使用者只能讀原始碼
+- ✘ dev-docs 混入 docs → 汙染對外文件
+- ✘ 將 docs 打包進 NuGet → 無法被使用者看到
+- ✘ API 文件完全自動生成 → 缺語意與案例
+
+## 9. 最小落地方案
+
+若不導入文件系統：
+
+- README.md（精簡）
+- docs/getting-started.md
+- docs/api.md
+- dev-docs/notes.md
+
+即可形成完整三層架構
+
+[🔝](#目錄)
 
 ---
 

@@ -1,14 +1,3 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
-  - Packages
----
-
 # 套件版本與相依性
 
 正確順序很重要。
@@ -21,9 +10,9 @@ dotnet nuget locals all --clear
 
 👉 這會清掉：
 
-* global-packages（最重要）
-* http-cache
-* temp
+- global-packages（最重要）
+- http-cache
+- temp
 
 ### 🔍 如果只想清 global-packages
 
@@ -178,9 +167,7 @@ nuget help
 nuget locals global-packages -list
 ```
 
-取得快取路徑
-3. 將 global-packages 複製到工控機
-4. 設定 NuGet.Config 指向本機來源
+取得快取路徑 3. 將 global-packages 複製到工控機 4. 設定 NuGet.Config 指向本機來源
 
 範例 NuGet.Config：
 
@@ -303,6 +290,7 @@ msbuild YourSolution.sln /t:Build
 
 世代完全對齊的 .NET6 生態線。
 在 .NET Framework 4.8 下：
+
 - BindingRedirect 數量會**大幅下降**
 - 不會再出現跨 8.x / 10.x BCL 衝突
 - Loader 行為可預測
@@ -426,13 +414,13 @@ Channels --> TasksExt
 
 因此：
 
-|項目|風險|
-|---|---|
-|MissingMethodException|低|
-|FileLoadException|低|
-|TypeLoadException|低|
-|Loader deadlock|極低|
-|長時間記憶體穩定性|高|
+| 項目                   | 風險 |
+| ---------------------- | ---- |
+| MissingMethodException | 低   |
+| FileLoadException      | 低   |
+| TypeLoadException      | 低   |
+| Loader deadlock        | 極低 |
+| 長時間記憶體穩定性     | 高   |
 
 ## 五、如果你想確認 100% 真實 redirect
 

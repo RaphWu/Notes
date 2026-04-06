@@ -1,13 +1,3 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
----
-
 # GitHub Copilot
 
 - [GitHub Copilot 文档](https://docs.github.com/zh/copilot)
