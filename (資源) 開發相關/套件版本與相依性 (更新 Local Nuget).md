@@ -1,3 +1,40 @@
+# 目錄
+
+- [目錄](#目錄)
+- [套件版本與相依性](#套件版本與相依性)
+  - [1️⃣ 清 cache](#1️⃣-清-cache)
+    - [🔍 如果只想清 global-packages](#-如果只想清-global-packages)
+  - [2️⃣ 重新 restore（確保版本乾淨）](#2️⃣-重新-restore確保版本乾淨)
+  - [3️⃣ 建離線庫](#3️⃣-建離線庫)
+  - [✅ 新增單一套件到 Local Feed](#-新增單一套件到-local-feed)
+    - [為什麼要用 `nuget add`（而不是直接 copy）](#為什麼要用-nuget-add而不是直接-copy)
+    - [`nuget add` 做了什麼？](#nuget-add-做了什麼)
+    - [⚠️ 搭配 CPM（中央管理）注意](#️-搭配-cpm中央管理注意)
+      - [記得版本要對上](#記得版本要對上)
+      - [更新版本流程](#更新版本流程)
+- [使用 NuGet 指令進行 Restore](#使用-nuget-指令進行-restore)
+  - [一、使用 `nuget.exe`（適用 .NET Framework 專案）](#一使用-nugetexe適用-net-framework-專案)
+  - [二、使用 `dotnet restore`（若為 SDK-style 專案）](#二使用-dotnet-restore若為-sdk-style-專案)
+  - [三、使用 MSBuild Restore（CI/CD 常用）](#三使用-msbuild-restorecicd-常用)
+  - [四、中央控版（Directory.Packages.props）注意事項](#四中央控版directorypackagesprops注意事項)
+  - [五、工控環境建議 Restore 模式](#五工控環境建議-restore-模式)
+  - [六、如何確認 Restore 是否正確](#六如何確認-restore-是否正確)
+  - [精準建議（依你目前架構）](#精準建議依你目前架構)
+- [.NET Framework 4.8](#net-framework-48)
+  - [核心邏輯](#核心邏輯)
+  - [結論](#結論)
+  - [一、預測仍可能出現的 BindingRedirect 清單](#一預測仍可能出現的-bindingredirect-清單)
+    - [高機率（幾乎必有）](#高機率幾乎必有)
+    - [中機率](#中機率)
+    - [低機率](#低機率)
+  - [二、理論產生的 BindingRedirect 範例](#二理論產生的-bindingredirect-範例)
+  - [三、Assembly Load Chain 預測圖](#三assembly-load-chain-預測圖)
+  - [四、Loader 風險評估](#四loader-風險評估)
+  - [五、如果你想確認 100% 真實 redirect](#五如果你想確認-100-真實-redirect)
+  - [最終評語](#最終評語)
+
+---
+
 # 套件版本與相依性
 
 正確順序很重要。
@@ -57,6 +94,72 @@ nuget init C:\Users\<使用者>\.nuget\packages D:\OfflineNuget
 ```bash
 nuget init C:\Users\08525\.nuget\packages D:\OfflineNuget
 ```
+
+## ✅ 新增單一套件到 Local Feed
+
+```bash
+nuget add xxx.nupkg -source xxx
+```
+
+```bash
+nuget add YourPackage.1.0.0.nupkg -source D:\OfflineNuget
+```
+
+- 用途：**新增 / 更新單一套件**
+- 不會重建整個 feed
+
+### 為什麼要用 `nuget add`（而不是直接 copy）
+
+你可能會想：
+
+👉 「我直接把 `.nupkg` 複製進去不行嗎？」
+
+✔ 可以，但有差：
+
+| 方法        | 是否推薦  | 原因                   |
+| ----------- | --------- | ---------------------- |
+| 直接 copy   | ⚠️ 勉強可 | 不會建立正確資料夾結構 |
+| `nuget add` | ✅ 建議   | 會自動整理版本與結構   |
+
+### `nuget add` 做了什麼？
+
+假設你加這個：
+
+```bash
+nuget add MyLib.1.2.3.nupkg -source D:\OfflineNuget
+```
+
+會變成：
+
+```
+D:\OfflineNuget\
+  MyLib\
+    1.2.3\
+      MyLib.1.2.3.nupkg
+```
+
+👉 這就是標準 Local Feed 結構
+
+### ⚠️ 搭配 CPM（中央管理）注意
+
+你用 **NuGet 的 Central Package Management** 時：
+
+#### 記得版本要對上
+
+```xml
+<PackageVersion Include="MyLib" Version="1.2.3" />
+```
+
+#### 更新版本流程
+
+```bash
+dotnet pack -c Release
+nuget add bin\Release\MyLib.1.2.4.nupkg -source D:\OfflineNuget
+```
+
+👉 不需要刪舊版本（NuGet 會自己選版本）
+
+[🔝](#目錄)
 
 ---
 
@@ -214,6 +317,8 @@ msbuild YourSolution.sln /t:Build
 ```
 
 這樣可以確保 BindingRedirect 與實際解析版本一致。
+
+[🔝](#目錄)
 
 ---
 
@@ -450,3 +555,5 @@ app.config
 
 - 畫出「錯誤世代混用時」的崩潰鏈對比圖
 - 或給你一份 Loader 診斷腳本（fuslogvw + PowerShell 分析流程）
+
+[🔝](#目錄)
