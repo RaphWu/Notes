@@ -3,6 +3,7 @@
 - [目錄](#目錄)
 - [UserControl 實現 Dispose 的方式](#usercontrol-實現-dispose-的方式)
 - [Program, AppStartupContext](#program-appstartupcontext)
+- [取得取得控制項所在的Form](#取得取得控制項所在的form)
 
 ---
 
@@ -286,6 +287,23 @@ public sealed class AppStartupContext : ApplicationContext
         }));
     }
 }
+```
+
+[🔝](#目錄)
+
+---
+
+# 取得取得控制項所在的Form
+
+[Control.FindForm Method](https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.control.findform)
+
+```csharp
+ var ownerForm = this.FindForm();
+ if (ownerForm == null)
+ {
+     MessageBox.Show("無法取得父視窗", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     return;
+ }
 ```
 
 [🔝](#目錄)

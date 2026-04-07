@@ -1,3 +1,85 @@
+# 目錄
+
+- [目錄](#目錄)
+- [建立 SDK-Style Library](#建立-sdk-style-library)
+- [在 .Net Framework 使用 SDK-Style 專案](#在-net-framework-使用-sdk-style-專案)
+- [最終範本](#最終範本)
+  - [需要 UI 的](#需要-ui-的)
+  - [**編譯不正常的時候**](#編譯不正常的時候)
+- [如何選擇 SDK 格式的.csproj 檔?](#如何選擇-sdk-格式的csproj-檔)
+  - [✅ 一句話判斷法（最重要）](#-一句話判斷法最重要)
+  - [🔍 哪些範本「一定是 SDK-style」](#-哪些範本一定是-sdk-style)
+    - [✔ 現代（SDK-style）](#-現代sdk-style)
+  - [❌ 哪些是舊式（非 SDK-style）](#-哪些是舊式非-sdk-style)
+  - [🧪 如何快速確認是不是 SDK-style？](#-如何快速確認是不是-sdk-style)
+    - [✅ SDK-style](#-sdk-style)
+    - [❌ 舊格式](#-舊格式)
+  - [🛠 VS 中正確建立 SDK-style 的「實際步驟」](#-vs-中正確建立-sdk-style-的實際步驟)
+  - [🔄 已有舊專案，能不能轉成 SDK-style？](#-已有舊專案能不能轉成-sdk-style)
+  - [🧭 總整理（記住這個就好）](#-總整理記住這個就好)
+- [.NET Framework 的 Class Library 範本](#net-framework-的-class-library-範本)
+  - [✅ 結論先講（重點）](#-結論先講重點)
+  - [🧠 為什麼會這樣？](#-為什麼會這樣)
+    - [1️⃣ SDK-style 是為 **.NET Core / .NET (5+)** 設計的主流格式](#1️⃣-sdk-style-是為-net-core--net-5-設計的主流格式)
+    - [2️⃣ 技術上「支援」，但不是預設](#2️⃣-技術上支援但不是預設)
+  - [✅ 正確做法一（最推薦）](#-正確做法一最推薦)
+    - [🎯 用 SDK-style 建立「.NET Framework Class Library」](#-用-sdk-style-建立net-framework-class-library)
+      - [步驟](#步驟)
+  - [✅ 正確做法二（從舊專案轉）](#-正確做法二從舊專案轉)
+    - [最小可用範例](#最小可用範例)
+  - [❌ 哪些情況「不適合」SDK-style + .NET Framework？](#-哪些情況不適合sdk-style--net-framework)
+  - [🧭 判斷準則（很實用）](#-判斷準則很實用)
+  - [📌 總整理（記住這句）](#-總整理記住這句)
+- [共用 DLL/WINFORM/.NET462/新專案](#共用-dllwinformnet462新專案)
+  - [✅ 結論（先看這段就好）](#-結論先看這段就好)
+  - [🛠 最推薦建立方式（一步到位）](#-最推薦建立方式一步到位)
+    - [🎯 方法一（最乾淨、最少問題）【推薦】](#-方法一最乾淨最少問題推薦)
+  - [🔧 WinForms 共用 DLL 常用設定（建議加）](#-winforms-共用-dll-常用設定建議加)
+    - [📌 建議加這些屬性（穩定又實用）](#-建議加這些屬性穩定又實用)
+  - [📦 NuGet / DLL 參考（SDK-style 正確方式）](#-nuget--dll-參考sdk-style-正確方式)
+    - [✔ NuGet（推薦）](#-nuget推薦)
+    - [✔ 引用其他 DLL](#-引用其他-dll)
+  - [❌ 不要做的事（很重要）](#-不要做的事很重要)
+  - [🧪 如何確認你是 SDK-style？](#-如何確認你是-sdk-style)
+  - [🧭 延伸建議（實務經驗）](#-延伸建議實務經驗)
+  - [🎯 最後一句總結](#-最後一句總結)
+- [含 UI 的 LIB 要選那個?](#含-ui-的-lib-要選那個)
+  - [✅ 一句話結論（先記這個）](#-一句話結論先記這個)
+  - [🏆 正確選擇（最推薦）](#-正確選擇最推薦)
+    - [🎯 建立方式](#-建立方式)
+  - [🧩 為什麼不是選 WinForms App？](#-為什麼不是選-winforms-app)
+  - [🧱 你可以在這個 DLL 放什麼？](#-你可以在這個-dll-放什麼)
+    - [範例](#範例)
+  - [🛠 常見補充設定（建議）](#-常見補充設定建議)
+  - [⚠ 常見踩雷提醒（重要）](#-常見踩雷提醒重要)
+    - [❌ 忘了 `<UseWindowsForms>true</UseWindowsForms>`](#-忘了-usewindowsformstrueusewindowsforms)
+    - [❌ 用 `Microsoft.NET.Sdk`](#-用-microsoftnetsdk)
+  - [🧭 延伸建議（架構層面）](#-延伸建議架構層面)
+  - [✅ 最後總結（記住這段）](#-最後總結記住這段)
+- [「可直接用的 WinForms UI 共用 DLL（SDK-style / .NET 4.6.2）」標準範本](#可直接用的-winforms-ui-共用-dllsdk-style--net-462標準範本)
+  - [✅ WinForms UI Library（SDK-style）範本](#-winforms-ui-librarysdk-style範本)
+    - [📄 `MyCompany.MyApp.UI.Shared.csproj`](#-mycompanymyappuisharedcsproj)
+  - [🧱 專案裡你可以放什麼？](#-專案裡你可以放什麼)
+    - [✔ UI 類型](#-ui-類型)
+    - [✔ 共用 UI 工具](#-共用-ui-工具)
+  - [🛠 新增 UI 檔案的正確方式（很重要）](#-新增-ui-檔案的正確方式很重要)
+  - [🔗 主 WinForms 專案如何引用？](#-主-winforms-專案如何引用)
+    - [在主專案](#在主專案)
+  - [⚠ 常見錯誤快速檢查表](#-常見錯誤快速檢查表)
+  - [🧭 建議的專案結構（實務）](#-建議的專案結構實務)
+- [Deterministic](#deterministic)
+  - [用途](#用途)
+  - [範例（SDK-style）](#範例sdk-style)
+  - [注意](#注意)
+- [ImplicitUsings](#implicitusings)
+  - [說明](#說明)
+  - [支援情況](#支援情況)
+  - [範例](#範例-1)
+
+[🔝](#目錄)
+
+---
+
 # 建立 SDK-Style Library
 
 # 在 .Net Framework 使用 SDK-Style 專案
@@ -108,6 +190,8 @@
 2. 刪除 `.vs` 資料夾。
 3. 進入 Visual Studio，重建方案。
 
+[🔝](#目錄)
+
 ---
 
 # 如何選擇 SDK 格式的.csproj 檔?
@@ -205,6 +289,8 @@
 
 > **選「(.NET)」 = SDK-style**
 > **選「(.NET Framework)」 = 舊格式**
+
+[🔝](#目錄)
 
 ---
 
@@ -319,6 +405,8 @@
 > **.NET Framework「不是不能用 SDK-style」
 > 而是「VS 不主動給你」**
 
+[🔝](#目錄)
+
 ---
 
 # 共用 DLL/WINFORM/.NET462/新專案
@@ -410,6 +498,8 @@
 | 手動列出 `<Compile Include>`        | SDK-style 會自動抓  |
 | TargetFramework 設太低              | net462 已是安全下限 |
 
+[🔝](#目錄)
+
 ---
 
 ## 🧪 如何確認你是 SDK-style？
@@ -445,6 +535,8 @@
 
 > **「共用 DLL + WinForms + .NET 4.6.2 + 新專案」
 > 👉 SDK-style 是最佳解**
+
+[🔝](#目錄)
 
 ---
 
@@ -575,6 +667,8 @@ MyApp.Core      → 純邏輯 DLL（不含 UI）
 > `<UseWindowsForms>true</UseWindowsForms>` +
 > `net462`**
 
+[🔝](#目錄)
+
 ---
 
 # 「可直接用的 WinForms UI 共用 DLL（SDK-style / .NET 4.6.2）」標準範本
@@ -657,6 +751,8 @@ Solution
  └─ MyApp.Core           (純邏輯 DLL)
 ```
 
+[🔝](#目錄)
+
 ---
 
 # Deterministic
@@ -685,6 +781,8 @@ Solution
 
 - 對 .NET Framework 專案可用，但對某些舊式工具鏈（如 VS2015/2017 非 SDK-style）可能不支援。
 - 對 exe 專案尤其有用，如果想保證重現性，建議保留 `true`。
+
+[🔝](#目錄)
 
 ---
 
