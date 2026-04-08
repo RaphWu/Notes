@@ -18,6 +18,7 @@
   - [SourceGrid](#sourcegrid)
     - [網路文章](#網路文章-1)
   - [DynamicGrid](#dynamicgrid)
+  - [🔝](#)
   - [AdvancedDataGridView](#advanceddatagridview)
     - [Zuby’s TreeGridView for WinForms](#zubys-treegridview-for-winforms)
   - [ObjectListView](#objectlistview)
@@ -180,7 +181,7 @@ DynamicGrid 的限制：
 
 有關此程式庫的更多細節，也可以在這個 [YouTube 影片](https://www.youtube.com/watch?v=M_pu9_LUfXo) 中找到。
 
-[🔝](#目錄)
+## [🔝](#目錄)
 
 ## AdvancedDataGridView
 
@@ -226,6 +227,8 @@ DynamicGrid 的限制：
 - [ScottPlot 4.1 Cookbook](https://scottplot.net/cookbook/4.1/)
 
 [🔝](#目錄)
+
+---
 
 ## ZedGraph
 
