@@ -1,34 +1,40 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
+# Mermaid
+
+# 目錄
+
+- [Mermaid](#mermaid)
+- [目錄](#目錄)
+  - [Links](#links)
+  - [概述](#概述)
+  - [饼状图](#饼状图)
+  - [流程图](#流程图)
+    - [实例](#实例)
+    - [方向](#方向)
+    - [结点](#结点)
+    - [连线样式](#连线样式)
+    - [连线形式](#连线形式)
+    - [其他](#其他)
+
 ---
 
-# Links
+## Links
 
 - [官方網站](https://mermaid.js.org/)
-    - [Docs](https://mermaid.js.org/intro/)
-- 
+  - [Docs](https://mermaid.js.org/intro/)
 
-# 概述
+## 概述
 
 - 什么是 Mermaid？
   - Mermaid 是一种基于 Javascript 的绘图工具，使用类似于 Markdown 的语法，使用户可以方便快捷地通过代码创建图表。
   - 项目地址：https://github.com/mermaid-js/mermaid（需要将梯子设置成全局模式才能访问）
 
 * 怎么使用 Mermaid？
-
   - 使用特定的 Mermaid 渲染器；
   - **使用集成了 Mermaid 渲染功能的 Markdown 编辑器，如 [Typora](https://www.typora.io/)。**使用时，需要将代码块的语言选择为 Mermaid。
 
   > Typora 是宇宙第一笔记软件，不接受反驳
 
 * Mermaid 能绘制哪些图？
-
   - 饼状图：使用 `pie` 关键字，具体用法后文将详细介绍
   - 流程图：使用 `graph` 关键字，具体用法后文将详细介绍
   - 序列图：使用 `sequenceDiagram` 关键字
@@ -54,9 +60,11 @@ emperor4((朱高炽))--长子-->emperor3
 
 以上是概述，下面详细介绍饼状图和流程图的语法。其他图的语法可访问上文给出的项目地址，自行学习。（记得挂梯子）
 
+[🔝](#目錄)
+
 ---
 
-# 饼状图
+## 饼状图
 
 - 在线渲染器：[Online FlowChart & Diagrams Editor](https://mermaidjs.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoicGllXG5cIkRvZ3NcIiA6IDQyLjk2XG5cIkNhdHNcIiA6IDUwLjA1XG5cIlJhdHNcIiA6IDEwLjAxIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0)（需要梯子）
 - 语法
@@ -77,13 +85,15 @@ pie
     "穷" : 500
 ```
 
+[🔝](#目錄)
+
 ---
 
-# 流程图
+## 流程图
 
 - 在线渲染器：[Online FlowChart & Diagrams Editor](https://mermaidjs.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggVERcbiAgICBBW0hhcmRdIC0tPnxUZXh0fCBCKFJvdW5kKVxuICAgIEIgLS0-IEN7RGVjaXNpb259XG4gICAgQyAtLT58T25lfCBEW1Jlc3VsdCAxXVxuICAgIEMgLS0-fFR3b3wgRVtSZXN1bHQgMl0iLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ)（需要挂梯子）
 
-## 实例
+### 实例
 
 ```mermaid
 graph LR
@@ -94,7 +104,7 @@ graph LR
     B -- No ----> E[End];
 ```
 
-## 方向
+### 方向
 
 用于开头，声明流程图的方向。
 
@@ -103,7 +113,7 @@ graph LR
 - `graph LR`：从左往右
 - `graph RL`：从右往左
 
-## 结点
+### 结点
 
 - 无名字的结点：直接写内容，此时结点边框为方形；节点内容不能有空格
 - 有名字的结点：节点名后书写内容，内容左右有特定符号，结点边框由符号决定；节点内容可以有空格
@@ -131,7 +141,7 @@ graph
     id6[\反向梯形/]
 ```
 
-## 连线样式
+### 连线样式
 
 - 实线箭头：分为无文本箭头和有文本箭头，有文本箭头有 2 种书写格式
 
@@ -189,7 +199,7 @@ graph LR
     B --->|No| E[End];
 ```
 
-## 连线形式
+### 连线形式
 
 - 直链
 
@@ -212,7 +222,7 @@ graph
     Y --> N
 ```
 
-## 其他
+### 其他
 
 - 子图：需要将 `graph` 关键字改为 `flowchart`，在代码段的开始加入 `subgraph`，尾部加入 `end`
 
@@ -279,3 +289,5 @@ classDiagram
         +run()
     }
 ```
+
+[🔝](#目錄)

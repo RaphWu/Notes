@@ -1,24 +1,150 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl:
-tags:
-  - Markdown
----
-
 # Markdown Cheat Sheet
 
-參考來源：
+# 目錄
+
+- [Markdown Cheat Sheet](#markdown-cheat-sheet)
+- [目錄](#目錄)
+- [參考來源](#參考來源)
+- [Basic Syntax](#basic-syntax)
+  - [Overview  概述](#overview概述)
+  - [Headings  標題](#headings標題)
+- [Heading level 1](#heading-level-1)
+  - [Heading level 2](#heading-level-2)
+    - [Heading level 3](#heading-level-3)
+      - [Heading level 4](#heading-level-4)
+        - [Heading level 5](#heading-level-5)
+          - [Heading level 6](#heading-level-6)
+  - [Alternate Syntax 替代語法](#alternate-syntax-替代語法)
+- [H1](#h1)
+  - [H2](#h2)
+  - [Heading Best Practices  標題 最佳實踐 ](#heading-best-practices標題-最佳實踐-)
+- [Paragraphs 段落](#paragraphs-段落)
+  - [Paragraph Best Practices 段落最佳實踐](#paragraph-best-practices-段落最佳實踐)
+- [Line Breaks 換行](#line-breaks-換行)
+  - [Line Break Best Practices 斷行最佳實踐](#line-break-best-practices-斷行最佳實踐)
+- [Emphasis  強調](#emphasis強調)
+  - [Bold 粗體](#bold-粗體)
+    - [Bold Best Practices  粗體最佳實踐 ](#bold-best-practices粗體最佳實踐-)
+  - [Italic 斜體](#italic-斜體)
+    - [Italic Best Practices  斜體最佳實踐](#italic-best-practices斜體最佳實踐)
+  - [Bold and Italic  粗體與斜體](#bold-and-italic粗體與斜體)
+    - [Bold and Italic Best Practices 粗體與斜體最佳實踐](#bold-and-italic-best-practices-粗體與斜體最佳實踐)
+- [Blockquote 區塊引用](#blockquote-區塊引用)
+  - [Blockquotes with Multiple Paragraphs 引用多段落](#blockquotes-with-multiple-paragraphs-引用多段落)
+  - [Nested Blockquotes  嵌套引用](#nested-blockquotes嵌套引用)
+  - [Blockquotes with Other Elements 區塊引言與其他元素](#blockquotes-with-other-elements-區塊引言與其他元素)
+  - [Blockquotes Best Practices 引用區塊最佳實踐](#blockquotes-best-practices-引用區塊最佳實踐)
+  - [Blockquotes with Other Elements 與其他元素的區塊引用](#blockquotes-with-other-elements-與其他元素的區塊引用)
+- [Lists  清單](#lists清單)
+  - [Ordered Lists  有序清單](#ordered-lists有序清單)
+    - [Ordered List Best Practices 有序清單最佳實踐](#ordered-list-best-practices-有序清單最佳實踐)
+  - [Unordered List 無序清單](#unordered-list-無序清單)
+  - [Starting Unordered List Items With Numbers 從數字開始的無序列表項目](#starting-unordered-list-items-with-numbers-從數字開始的無序列表項目)
+  - [Unordered List Best Practices 無序列表最佳實踐](#unordered-list-best-practices-無序列表最佳實踐)
+  - [Adding Elements in Lists](#adding-elements-in-lists)
+    - [Paragraphs](#paragraphs)
+    - [Blockquotes](#blockquotes)
+    - [Code Blocks](#code-blocks)
+    - [Images](#images)
+    - [Lists](#lists)
+  - [Code 代碼](#code-代碼)
+    - [Escaping Backticks 逃逸反引號](#escaping-backticks-逃逸反引號)
+    - [Code Blocks 程式碼區塊](#code-blocks-程式碼區塊)
+- [Horizontal Rule 水平線](#horizontal-rule-水平線)
+  - [Horizontal Rule Best Practices](#horizontal-rule-best-practices)
+  - [Link 鏈接](#link-鏈接)
+  - [Adding Titles  添加標題](#adding-titles添加標題)
+  - [URLs and Email Addresses 網址與電子郵件地址](#urls-and-email-addresses-網址與電子郵件地址)
+  - [Formatting Links 格式化鏈接](#formatting-links-格式化鏈接)
+  - [Reference-style Links 參考樣式鏈接](#reference-style-links-參考樣式鏈接)
+    - [Formatting the First Part of the Link 格式化鏈接的第一部分](#formatting-the-first-part-of-the-link-格式化鏈接的第一部分)
+    - [Formatting the Second Part of the Link 格式化鏈接的第二部分](#formatting-the-second-part-of-the-link-格式化鏈接的第二部分)
+    - [An Example Putting the Parts Together 一個將各部分組合的範例](#an-example-putting-the-parts-together-一個將各部分組合的範例)
+  - [Link Best Practices  鏈接最佳實踐](#link-best-practices鏈接最佳實踐)
+- [Images  圖片](#images圖片)
+  - [Linking Images  圖片鏈接](#linking-images圖片鏈接)
+- [Escaping Characters  轉義字元 ](#escaping-characters轉義字元-)
+  - [Characters You Can Escape 可逃逸的字符](#characters-you-can-escape-可逃逸的字符)
+  - [HTML](#html)
+  - [HTML Best Practices  HTML 最佳實踐](#html-best-practiceshtml-最佳實踐)
+- [Extended Syntax](#extended-syntax)
+  - [Overview 概述](#overview-概述)
+- [Availability  可用性](#availability可用性)
+- [Lightweight Markup Languages 輕量級標記語言](#lightweight-markup-languages-輕量級標記語言)
+- [Markdown Processors  Markdown 處理器 ](#markdown-processorsmarkdown-處理器-)
+- [Table 表格](#table-表格)
+- [Alignment  對齊](#alignment對齊)
+- [Formatting Text in Tables 在表格中格式化文字](#formatting-text-in-tables-在表格中格式化文字)
+- [Escaping Pipe Characters in Tables 在表格中逃逸管狀字符](#escaping-pipe-characters-in-tables-在表格中逃逸管狀字符)
+- [Fenced Code Block 多行程式碼區塊 / 圍欄代碼區塊](#fenced-code-block-多行程式碼區塊--圍欄代碼區塊)
+- [Syntax Highlighting 語法高亮](#syntax-highlighting-語法高亮)
+  - [Language grammars listed 語言語法列表](#language-grammars-listed-語言語法列表)
+  - [Special Languages   特殊語言](#special-languages特殊語言)
+    - [Plain Text   純文字](#plain-text純文字)
+    - [ANSI   美國國家標準協會](#ansi美國國家標準協會)
+  - [一般文字](#一般文字)
+  - [Markdown 語法高亮對一般文字的可用選擇與差異](#markdown-語法高亮對一般文字的可用選擇與差異)
+    - [一、常見標籤與用途](#一常見標籤與用途)
+    - [二、顯示差異總結](#二顯示差異總結)
+    - [三、學習建議](#三學習建議)
+- [Footnote 腳註](#footnote-腳註)
+- [Heading ID 自定義標題 ID (註：在 HTML 中叫做錨點)](#heading-id-自定義標題-id-註在-html-中叫做錨點)
+- [Linking to Heading IDs 連結到自定義標題 ID (註：跳至錨點處)](#linking-to-heading-ids-連結到自定義標題-id-註跳至錨點處)
+- [Definition List 定義列表](#definition-list-定義列表)
+- [Strikethrough 刪除線](#strikethrough-刪除線)
+- [Task List 任務列表](#task-list-任務列表)
+- [Emoji 表情符號](#emoji-表情符號)
+  - [方法 1：複製貼上](#方法-1複製貼上)
+  - [方法 2：短碼加冒號](#方法-2短碼加冒號)
+- [Highlight 強調](#highlight-強調)
+- [Subscript 下標](#subscript-下標)
+- [Superscript 上標](#superscript-上標)
+- [Automatic URL Linking 自動網址連結](#automatic-url-linking-自動網址連結)
+- [Disabling Automatic URL Linking 禁用網址自動連結](#disabling-automatic-url-linking-禁用網址自動連結)
+- [Hacks 小技巧](#hacks-小技巧)
+  - [Underline 底線](#underline-底線)
+  - [Indent (Tab) 縮進（TAB）](#indent-tab-縮進tab)
+  - [Center 置中](#center-置中)
+  - [Color 顏色](#color-顏色)
+  - [Comments 註釋](#comments-註釋)
+  - [Admonitions 警告](#admonitions-警告)
+  - [Image Size 圖片尺寸](#image-size-圖片尺寸)
+  - [Image Captions 圖片說明](#image-captions-圖片說明)
+    - [方法一：使用 HTML](#方法一使用-html)
+    - [方法二：使用強調語法](#方法二使用強調語法)
+  - [Link Targets](#link-targets)
+  - [Symbols 符號](#symbols-符號)
+  - [Table Formatting 表格格式化](#table-formatting-表格格式化)
+    - [Line Breaks Within Table Cells 在表格單元格內換行](#line-breaks-within-table-cells-在表格單元格內換行)
+    - [Lists Within Table Cells 表格單元格內的列表](#lists-within-table-cells-表格單元格內的列表)
+  - [Table of Contents 目錄](#table-of-contents-目錄)
+  - [Videos 影片](#videos-影片)
+    - [Youtube 影片的縮圖](#youtube-影片的縮圖)
+- [Markdown Preview Enhanced](#markdown-preview-enhanced)
+  - [Admonition 警告](#admonition-警告)
+  - [數學](#數學)
+    - [$\\KaTeX$](#katex)
+  - [Last Releases](#last-releases)
+    - [0.7.3](#073)
+    - [0.7.0](#070)
+- [筆記](#筆記)
+  - [Basic](#basic)
+  - [Extras](#extras)
+
+[🔝](#目錄)
+
+---
+
+# 參考來源
 
 - [Markdown Guide](https://www.markdownguide.org/)
-	- [Basic Syntax](https://www.markdownguide.org/basic-syntax/)
-	- [Extended Syntax](https://www.markdownguide.org/extended-syntax/)
-	- [Hacks](https://www.markdownguide.org/hacks/)
+  - [Basic Syntax](https://www.markdownguide.org/basic-syntax/)
+  - [Extended Syntax](https://www.markdownguide.org/extended-syntax/)
+  - [Hacks](https://www.markdownguide.org/hacks/)
 - [CommonMark Spec](https://spec.commonmark.org/)
 - [Markdown Preview Enhanced](https://github.com/shd101wyy/vscode-markdown-preview-enhanced)
+
+---
 
 # Basic Syntax
 
@@ -73,15 +199,13 @@ To create a heading, add number signs (`#`) in front of a word or phrase. The nu
 Alternatively, on the line below the text, add any number of `==` characters for heading level 1 or `--` characters for heading level 2.
 或者，在文字下方的一行中，添加任意數量的 `==` 字元表示一級標題，添加任意數量的 `--` 字元表示二級標題。
 
-H1
-==========
+# H1
 
 | Markdown                                 | HTML                       |
 | ---------------------------------------- | -------------------------- |
 | `Heading level 1`<br>`=‌=‌=‌=‌=‌=‌=‌=‌=` | `<h1>Heading level 1</h1>` |
 
-H2
-----------
+## H2
 
 | Markdown                               | HTML                       |
 | -------------------------------------- | -------------------------- |
@@ -117,9 +241,9 @@ Unless the [paragraph is in a list](#paragraphs), don’t indent paragraphs wit
 若要建立換行符或新行（`\<br\>`），請在行尾新增兩個或更多空格，然後按回車鍵。
 This is the first line.`<br\>`And this is the second line.
 
-| Markdown                                                                                                                                              | HTML                                                                                                                                           |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `This is the first line.`<ins>　</ins> <ins>　</ins><br>`And this is the second line.`<br><br>This is the first line.  <br>And this is the second line. | \<p\>This is the first line.\<br\><br>And this is the second line.\</p\><br><br><p>This is the first line.<br>And this is the second line.</p> |
+| Markdown                                                                                                                                               | HTML                                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `This is the first line.`<ins>　</ins> <ins>　</ins><br>`And this is the second line.`<br><br>This is the first line. <br>And this is the second line. | \<p\>This is the first line.\<br\><br>And this is the second line.\</p\><br><br><p>This is the first line.<br>And this is the second line.</p> |
 
 ## Line Break Best Practices 斷行最佳實踐
 
@@ -147,7 +271,7 @@ To bold text, add two asterisks or underscores before and after a word or phrase
 | Markdown                                                   | HTML                                                                                 |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | `I just love **bold text**.`<br>I just love **bold text**. | `I just love <strong>bold text</strong>.`<br>I just love <strong>bold text</strong>. |
-| `I just love __bold text__.`<br>I just love __bold text__. | `I just love <strong>bold text</strong>.`<br>I just love <strong>bold text</strong>. |
+| `I just love __bold text__.`<br>I just love **bold text**. | `I just love <strong>bold text</strong>.`<br>I just love <strong>bold text</strong>. |
 | `Love**is**bold`<br>Love**is**bold                         | `Love<strong>is</strong>bold`<br>Love<strong>is</strong>bold                         |
 
 ### Bold Best Practices  粗體最佳實踐 [](https://www.markdownguide.org/basic-syntax/#bold-best-practices)
@@ -162,7 +286,7 @@ To italicize text, add one asterisk or underscore before and after a word or phr
 
 | Markdown                                                                       | HTML                                                                                         |
 | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| `Italicized text is the *cat's meow*.`<br>Italicized text is the *cat's meow*. | `Italicized text is the <em>cat's meow</em>.`<br>Italicized text is the <em>cat's meow</em>. |
+| `Italicized text is the *cat's meow*.`<br>Italicized text is the _cat's meow_. | `Italicized text is the <em>cat's meow</em>.`<br>Italicized text is the <em>cat's meow</em>. |
 | `Italicized text is the _cat's meow_.`<br>Italicized text is the _cat's meow_. | `Italicized text is the <em>cat's meow</em>.`<br>Italicized text is the <em>cat's meow</em>. |
 | `A*cat*meow`<br>A*cat*meow<br>                                                 | `A<em>cat</em>meow`<br>A<em>cat</em>meow                                                     |
 | `A_cat_meow`<br>A_cat_meow                                                     |                                                                                              |
@@ -179,9 +303,9 @@ To emphasize text with bold and italics at the same time, add three asterisks or
 
 | Markdown                                                                             | HTML                                                                                                                         |
 | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `This text is ***really important***.`<br>This text is ***really important***.       | `This text is <em><strong>really important</strong></em>.`<br>This text is <em><strong>really important</strong></em>.       |
-| `This text is ___really important___.`<br>This text is ___really important___.       | `This text is <em><strong>really important</strong></em>.`<br>This text is <em><strong>really important</strong></em>.       |
-| `This text is __*really important*__.`<br>This text is __*really important*__.       | `This text is <em><strong>really important</strong></em>.`<br>This text is <em><strong>really important</strong></em>.       |
+| `This text is ***really important***.`<br>This text is **_really important_**.       | `This text is <em><strong>really important</strong></em>.`<br>This text is <em><strong>really important</strong></em>.       |
+| `This text is ___really important___.`<br>This text is **_really important_**.       | `This text is <em><strong>really important</strong></em>.`<br>This text is <em><strong>really important</strong></em>.       |
+| `This text is __*really important*__.`<br>This text is **_really important_**.       | `This text is <em><strong>really important</strong></em>.`<br>This text is <em><strong>really important</strong></em>.       |
 | `This text is **_really important_**.`<br>This text is **_really important_**.       | `This text is <em><strong>really important</strong></em>.`<br>This text is <em><strong>really important</strong></em>.       |
 | `This is really***very***important text.`<br>This is really***very***important text. | `This is really<em><strong>very</strong></em>important text.`<br>This is really<em><strong>very</strong></em>important text. |
 
@@ -266,8 +390,8 @@ The rendered output looks like this:
 >
 > - Revenue was off the chart.
 > - Profits were higher than ever.
-> 
-> _Everything_ is going according to **plan**.
+>
+> *Everything* is going according to **plan**.
 
 ## Blockquotes Best Practices 引用區塊最佳實踐
 
@@ -295,9 +419,10 @@ You can organize items into ordered and unordered lists.
 To create an ordered list, add line items with numbers followed by periods. The numbers don’t have to be in numerical order, but the list should start with the number one.
 要建立有序清單，請加入帶有數字和句點的行項。數字不必按數字順序排列，但清單應從數字一開始。
 
-| Markdown                                                                                                                                             | HTML                                                                                                                                                                                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `1. First item`<br>`2. Second item`<br>`3. Third item`<br>`4. Fourth item`<br><br>1. First item<br>2. Second item<br>3. Third item<br>4. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br>    <li>First item</li><br>    <li>Second item</li><br>    <li>Third item</li><br>    <li>Fourth item</li><br></ol> |
+| Markdown                                                                                                                                             | HTML                                                                                                                                                                                                                                                           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1. First item`<br>`2. Second item`<br>`3. Third item`<br>`4. Fourth item`<br><br>1. First item<br>2. Second item<br>3. Third item<br>4. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br> <li>First item</li><br> <li>Second item</li><br> <li>Third item</li><br> <li>Fourth item</li><br></ol> |
+
 1. First item
 2. Second item
 3. Third item
@@ -310,9 +435,10 @@ To create an ordered list, add line items with numbers followed by periods. The 
     <li>Fourth item</li>
 </ol>
 
-| Markdown                                                                                                                                             | HTML                                                                                                                                                                                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `1. First item`<br>`1. Second item`<br>`1. Third item`<br>`1. Fourth item`<br><br>1. First item<br>1. Second item<br>1. Third item<br>1. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br>    <li>First item</li><br>    <li>Second item</li><br>    <li>Third item</li><br>    <li>Fourth item</li><br></ol> |
+| Markdown                                                                                                                                             | HTML                                                                                                                                                                                                                                                           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1. First item`<br>`1. Second item`<br>`1. Third item`<br>`1. Fourth item`<br><br>1. First item<br>1. Second item<br>1. Third item<br>1. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br> <li>First item</li><br> <li>Second item</li><br> <li>Third item</li><br> <li>Fourth item</li><br></ol> |
+
 1. First item
 2. Second item
 3. Third item
@@ -325,9 +451,10 @@ To create an ordered list, add line items with numbers followed by periods. The 
     <li>Fourth item</li>
 </ol>
 
-| Markdown                                                                                                                                             | HTML                                                                                                                                                                                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `1. First item`<br>`8. Second item`<br>`3. Third item`<br>`5. Fourth item`<br><br>1. First item<br>8. Second item<br>3. Third item<br>5. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br>    <li>First item</li><br>    <li>Second item</li><br>    <li>Third item</li><br>    <li>Fourth item</li><br></ol> |
+| Markdown                                                                                                                                             | HTML                                                                                                                                                                                                                                                           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1. First item`<br>`8. Second item`<br>`3. Third item`<br>`5. Fourth item`<br><br>1. First item<br>8. Second item<br>3. Third item<br>5. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br> <li>First item</li><br> <li>Second item</li><br> <li>Third item</li><br> <li>Fourth item</li><br></ol> |
+
 1. First item
 2. Second item
 3. Third item
@@ -340,14 +467,15 @@ To create an ordered list, add line items with numbers followed by periods. The 
     <li>Fourth item</li>
 </ol>
 
-| Markdown                                                                                                                                                                                                                                                 | HTML                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `1. First item`<br>`2. Second item`<br>`3. Third item`<br>`    1. Indented item`<br>`    2. Indented item`<br>`4. Fourth item`<br><br>1. First item<br>2. Second item<br>3. Third item<br>    1. Indented item<br>    2. Indented item<br>4. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item`<br>`        <ol>`<br>`            <li>Indented item</li>`<br>`            <li>Indented item</li>`<br>`        </ol>`<br>`    </li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br>    <li>First item</li><br>    <li>Second item</li><br>    <li>Third item<br>        <ol><br>            <li>Indented item</li><br>            <li>Indented item</li><br>        </ol><br>    </li><br>    <li>Fourth item</li><br></ol> |
+| Markdown                                                                                                                                                                                                                                           | HTML                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1. First item`<br>`2. Second item`<br>`3. Third item`<br>`    1. Indented item`<br>`    2. Indented item`<br>`4. Fourth item`<br><br>1. First item<br>2. Second item<br>3. Third item<br> 1. Indented item<br> 2. Indented item<br>4. Fourth item | `<ol>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item`<br>`        <ol>`<br>`            <li>Indented item</li>`<br>`            <li>Indented item</li>`<br>`        </ol>`<br>`    </li>`<br>`    <li>Fourth item</li>`<br>`</ol>`<br><br><ol><br> <li>First item</li><br> <li>Second item</li><br> <li>Third item<br> <ol><br> <li>Indented item</li><br> <li>Indented item</li><br> </ol><br> </li><br> <li>Fourth item</li><br></ol> |
+
 1. First item
 2. Second item
 3. Third item
-    1. Indented item
-    2. Indented item
+   1. Indented item
+   2. Indented item
 4. Fourth item
 
 <ol>
@@ -372,9 +500,10 @@ CommonMark 以及其他一些輕量級標記語言允許您使用括號（ `)`�
 To create an unordered list, add dashes (`-`), asterisks (`*`), or plus signs (`+`) in front of line items. Indent one or more items to create a nested list.
 要建立無序列表，請在行項前加上破折號（ `-` ）、星號（ `*` ）或加號（ `+` ）。為了建立嵌套列表，請縮進一個或多個項目。
 
-| Markdown                                                                                                                                     | HTML                                                                                                                                                                                                                                                                       |
-| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `- First item`<br>`- Second item`<br>`- Third item`<br>`- Fourth item`<br><br>- First item<br>- Second item<br>- Third item<br>- Fourth item | `<ul>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ul>`<br><br><ul><br>    <li>First item</li><br>    <li>Second item</li><br>    <li>Third item</li><br>    <li>Fourth item</li><br></ul> |
+| Markdown                                                                                                                                     | HTML                                                                                                                                                                                                                                                           |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `- First item`<br>`- Second item`<br>`- Third item`<br>`- Fourth item`<br><br>- First item<br>- Second item<br>- Third item<br>- Fourth item | `<ul>`<br>`    <li>First item</li>`<br>`    <li>Second item</li>`<br>`    <li>Third item</li>`<br>`    <li>Fourth item</li>`<br>`</ul>`<br><br><ul><br> <li>First item</li><br> <li>Second item</li><br> <li>Third item</li><br> <li>Fourth item</li><br></ul> |
+
 - First item
 - Second item
 - Third item
@@ -387,30 +516,33 @@ To create an unordered list, add dashes (`-`), asterisks (`*`), or plus signs (`
     <li>Fourth item</li>
 </ul>
 
-| Markdown                                                                                                                                     | HTML                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `* First item`<br>`* Second item`<br>`* Third item`<br>`* Fourth item`<br><br>* First item<br>* Second item<br>* Third item<br>* Fourth item | `<ul>`<br>`	<li>First item</li>`<br>`	<li>Second item</li>`<br>`	<li>Third item</li>`<br>`	<li>Fourth item</li>`<br>`</ul>` |
-* First item
-* Second item
-* Third item
-* Fourth item
+| Markdown                                                                                                                                     | HTML                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `* First item`<br>`* Second item`<br>`* Third item`<br>`* Fourth item`<br><br>_ First item<br>_ Second item<br>_ Third item<br>_ Fourth item | `<ul>`<br>`	<li>First item</li>`<br>`	<li>Second item</li>`<br>`	<li>Third item</li>`<br>`	<li>Fourth item</li>`<br>`</ul>` |
 
-| Markdown                                                                                                                                     | HTML                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `+ First item`<br>`+ Second item`<br>`+ Third item`<br>`+ Fourth item`<br><br>+ First item<br>+ Second item<br>+ Third item<br>+ Fourth item | `<ul>`<br>`	<li>First item</li>`<br>`	<li>Second item</li>`<br>`	<li>Third item</li>`<br>`	<li>Fourth item</li>`<br>`</ul>` |
-+ First item
-+ Second item
-+ Third item
-+ Fourth item
-
-| Markdown                                                                                                                                                                                                                                     | HTML                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `- First item`<br>`- Second item`<br>`- Third item`<br>`    - Indented item`<br>`    - Indented item`<br>`- Fourth item`<br><br>- First item<br>- Second item<br>- Third item<br>    - Indented item<br>    - Indented item<br>- Fourth item | `<ul>`<br>`	<li>First item</li>`<br>`	<li>Second item</li>`<br>`	<li>Third item`<br>`	<ul>`<br>`		<li>Indented item</li>`<br>`		<li>Indented item</li>`<br>`	</ul>`<br>`	</li>`<br>`	<li>Fourth item</li>`<br>`</ul>`<br><br><ul><br>	<li>First item</li><br>	<li>Second item</li><br>	<li>Third item<br>	<ul><br>		<li>Indented item</li><br>		<li>Indented item</li><br>	</ul><br>	</li><br>	<li>Fourth item</li><br></ul> |
 - First item
 - Second item
 - Third item
-    - Indented item
-    - Indented item
+- Fourth item
+
+| Markdown                                                                                                                                     | HTML                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `+ First item`<br>`+ Second item`<br>`+ Third item`<br>`+ Fourth item`<br><br>+ First item<br>+ Second item<br>+ Third item<br>+ Fourth item | `<ul>`<br>`	<li>First item</li>`<br>`	<li>Second item</li>`<br>`	<li>Third item</li>`<br>`	<li>Fourth item</li>`<br>`</ul>` |
+
+- First item
+- Second item
+- Third item
+- Fourth item
+
+| Markdown                                                                                                                                                                                                                               | HTML                                                                                                                                                                                                                                                                                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `- First item`<br>`- Second item`<br>`- Third item`<br>`    - Indented item`<br>`    - Indented item`<br>`- Fourth item`<br><br>- First item<br>- Second item<br>- Third item<br> - Indented item<br> - Indented item<br>- Fourth item | `<ul>`<br>`	<li>First item</li>`<br>`	<li>Second item</li>`<br>`	<li>Third item`<br>`	<ul>`<br>`		<li>Indented item</li>`<br>`		<li>Indented item</li>`<br>`	</ul>`<br>`	</li>`<br>`	<li>Fourth item</li>`<br>`</ul>`<br><br><ul><br> <li>First item</li><br> <li>Second item</li><br> <li>Third item<br> <ul><br> <li>Indented item</li><br> <li>Indented item</li><br> </ul><br> </li><br> <li>Fourth item</li><br></ul> |
+
+- First item
+- Second item
+- Third item
+  - Indented item
+  - Indented item
 - Fourth item
 
 ---
@@ -420,9 +552,10 @@ To create an unordered list, add dashes (`-`), asterisks (`*`), or plus signs (`
 If you need to start an unordered list item with a number followed by a period, you can use a backslash (`\`) to [escape](https://www.markdownguide.org/basic-syntax/#escaping-characters) the period.
 若您需要在無序列表項目中開始於數字後跟隨一個句號，可以使用反斜杠（ `\` ）來跳過句號。
 
-| Markdown                                                                                                                       | HTML                                                                                                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `- 1968\. A great year!`<br>`- I think 1969 was second best.`<br><br>- 1968\. A great year!<br>- I think 1969 was second best. | `<ul>`<br>`    <li>1968. A great year!</li>`<br>`    <li>I think 1969 was second best.</li>`<br>`</ul>`<br><br><ul><br>    <li>1968. A great year!</li><br>    <li>I think 1969 was second best.</li><br></ul> |
+| Markdown                                                                                                                       | HTML                                                                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `- 1968\. A great year!`<br>`- I think 1969 was second best.`<br><br>- 1968\. A great year!<br>- I think 1969 was second best. | `<ul>`<br>`    <li>1968. A great year!</li>`<br>`    <li>I think 1969 was second best.</li>`<br>`</ul>`<br><br><ul><br> <li>1968. A great year!</li><br> <li>I think 1969 was second best.</li><br></ul> |
+
 - 1968\. A great year!
 - I think 1969 was second best.
 
@@ -460,8 +593,8 @@ The rendered output looks like this:
 - This is the first list item.
 - Here’s the second list item.
 
-    I need to add another paragraph below the second list item.
-    
+  I need to add another paragraph below the second list item.
+
 - And here’s the third list item.
 
 ### Blockquotes
@@ -475,12 +608,12 @@ The rendered output looks like this:
 * And here's the third list item.
 ```
 
-* This is the first list item.
-* Here's the second list item.
+- This is the first list item.
+- Here's the second list item.
 
-    > A blockquote would look great below the second list item.
+  > A blockquote would look great below the second list item.
 
-* And here's the third list item.
+- And here's the third list item.
 
 ### Code Blocks
 
@@ -500,15 +633,15 @@ Code blocks are normally indented four spaces or one tab. When they’re in a l
 
 The rendered output looks like this:
 
-1. Open the file.
-2. Find the following code block on line 21:
+1.  Open the file.
+2.  Find the following code block on line 21:
 
         <html>
           <head>
             <title>Test</title>
           </head>
 
-3. Update the title to match the name of your website.
+3.  Update the title to match the name of your website.
 
 ### Images
 
@@ -526,8 +659,8 @@ The rendered output looks like this:
 1. Open the file containing the Linux mascot.
 2. Marvel at its beauty.
 
-    ![Tux, the Linux mascot](https://mdg.imgix.net/assets/images/tux.png)
-    
+   ![Tux, the Linux mascot](https://mdg.imgix.net/assets/images/tux.png)
+
 3. Close the file.
 
 ### Lists
@@ -548,8 +681,8 @@ The rendered output looks like this:
 1. First item
 2. Second item
 3. Third item
-    - Indented item
-    - Indented item
+   - Indented item
+   - Indented item
 4. Fourth item
 
 ---
@@ -562,6 +695,7 @@ To denote a word or phrase as code, enclose it in backticks (`` ` ``).
 | Markdown                                                                           | HTML                                                                                                   |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | ``At the command prompt, type `nano`.``<br><br>At the command prompt, type `nano`. | `At the command prompt, type <code>nano</code>.`<br><br>At the command prompt, type <code>nano</code>. |
+
 At the command prompt, type `nano`.
 At the command prompt, type <code>nano</code>.
 
@@ -573,6 +707,7 @@ If the word or phrase you want to denote as code includes one or more backticks,
 | Markdown                                                                                   | HTML                                                                                                     |
 | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
 | ``` ``Use `code` in your Markdown file.`` ```<br><br>``Use `code` in your Markdown file.`` | ``<code>Use `code` in your Markdown file.</code>``<br><br><code>Use `code` in your Markdown file.</code> |
+
 ``Use `code` in your Markdown file.``
 <code>Use `code` in your Markdown file.</code>
 
@@ -611,11 +746,11 @@ To create a horizontal rule, use three or more asterisks (`***`), dashes (`---`)
 _________________
 ```
 
-***
+---
 
 ---
 
-_________________
+---
 
 ## Horizontal Rule Best Practices
 
@@ -639,8 +774,8 @@ The rendered output looks like this:
 
 My favorite search engine is [Duck Duck Go](https://duckduckgo.com/).
 
-> **Note:** To link to an element on the same page, see [linking to heading IDs](https://www.markdownguide.org/extended-syntax/#linking-to-heading-ids). To create a link that opens in a new tab or window, see the section on [link targets](#link-targets).
->注意：要連結到同一頁面的元素，請參考連結到標題 ID 的部分。要建立一個在新標籤或視窗中打開的連結，請參考連結目標的章節。
+>  **Note:** To link to an element on the same page, see [linking to heading IDs](https://www.markdownguide.org/extended-syntax/#linking-to-heading-ids). To create a link that opens in a new tab or window, see the section on [link targets](#link-targets).
+> 注意：要連結到同一頁面的元素，請參考連結到標題 ID 的部分。要建立一個在新標籤或視窗中打開的連結，請參考連結目標的章節。
 
 ## Adding Titles  添加標題
 
@@ -653,7 +788,7 @@ My favorite search engine is [Duck Duck Go](https://duckduckgo.com "The best sea
 
 The rendered output looks like this:
 
-My favorite search engine is [Duck Duck Go](https://duckduckgo.com/ "The best search engine for privacy").
+My favorite search engine is [Duck Duck Go](https://duckduckgo.com/ 'The best search engine for privacy').
 
 ## URLs and Email Addresses 網址與電子郵件地址
 
@@ -684,7 +819,7 @@ See the section on [`code`](#code).
 The rendered output looks like this:
 
 I love supporting the **[EFF](https://eff.org)**.
-This is the *[Markdown Guide](https://www.markdownguide.org)*.
+This is the _[Markdown Guide](https://www.markdownguide.org)_.
 See the section on [`code`](#code).
 
 ## Reference-style Links 參考樣式鏈接
@@ -712,11 +847,11 @@ The second part of a reference-style link is formatted with the following attrib
 參考風格的超連結的第二部分以以下屬性格式化：
 
 1. The label, in brackets, followed immediately by a colon and at least one space (e.g., `[label]:` ).
-    在括號中的標籤，隨即接著冒號和至少一個空格（例如， `[label]:` ）。
+   在括號中的標籤，隨即接著冒號和至少一個空格（例如， `[label]:` ）。
 2. The URL for the link, which you can optionally enclose in angle brackets.
-    超連結的 URL，您可以選擇用尖括號括起來。
+   超連結的 URL，您可以選擇用尖括號括起來。
 3. The optional title for the link, which you can enclose in double quotes, single quotes, or parentheses.
-    超連結的可選標題，您可以將其用雙引號、單引號或括號括起來。
+   超連結的可選標題，您可以將其用雙引號、單引號或括號括起來。
 
 This means the following example formats are all roughly equivalent for the second part of the link:
 這意味著以下範例格式對於鏈接的第二部分來說大致相等：
@@ -757,7 +892,7 @@ eat: it was a [hobbit-hole][1], and that means comfort.
 In both instances above, the rendered output would be identical:
 在上述兩個例子中，渲染的輸出將會完全相同：
 
-> In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a [hobbit-hole](https://en.wikipedia.org/wiki/Hobbit#Lifestyle "Hobbit lifestyles"), and that means comfort.
+> In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a [hobbit-hole](https://en.wikipedia.org/wiki/Hobbit#Lifestyle 'Hobbit lifestyles'), and that means comfort.
 > 在地面的一個洞裡，住著一個霍比特人。不是一個髒亂、濕潤、充滿蠕蟲尾巴和濕滑氣味的洞，也不是一個乾燥、裸露、沙質的洞，裡面沒有東西可以坐或吃：那是一個霍比特洞，這意味著舒適。
 
 and the HTML for the link would be:
@@ -770,14 +905,14 @@ and the HTML for the link would be:
 Markdown applications don’t agree on how to handle spaces in the middle of a URL. For compatibility, try to URL encode any spaces with `%20`. Alternatively, if your Markdown application [supports HTML](https://www.markdownguide.org/basic-syntax/#html), you could use the `a` HTML tag.
 Markdown 應用程式對於 URL 中間的空格處理方式並不一致。為了兼容性，請嘗試使用 `%20` 對空格進行 URL 编碼。另可選，如果您的 Markdown 應用程式支援 HTML，您可以使用 `a` HTML 標籤。
 
-| ✅  Do this                                                                                                            | ❌  Don't do this                                   |
+| ✅  Do this                                                                                                           | ❌  Don't do this                                  |
 | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
 | `[link](https://www.example.com/my%20great%20page)`<br><br>`<a href="https://www.example.com/my great page">link</a>` | `[link](https://www.example.com/my great page)   ` |
 
 Parentheses in the middle of a URL can also be problematic. For compatibility, try to URL encode the opening parenthesis (`(`) with `%28` and the closing parenthesis (`)`) with `%29`. Alternatively, if your Markdown application [supports HTML](https://www.markdownguide.org/basic-syntax/#html), you could use the `a` HTML tag.
 URL 中間的括號也可能會造成問題。為了兼容性，請嘗試使用 `(` 對開啟括號進行 URL 编碼，並使用 `%28` 對關閉括號進行 URL 编碼。另可選，如果您的 Markdown 應用程式支援 HTML，您可以使用 `)` HTML 標籤。
 
-| ✅  Do this                                                                                                                                                                      | ❌  Don't do this                                                             |
+| ✅  Do this                                                                                                                                                                     | ❌  Don't do this                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `[a novel](https://en.wikipedia.org/wiki/The_Milagro_Beanfield_War_%28novel%29)`<br><br>`<a href="https://en.wikipedia.org/wiki/The_Milagro_Beanfield_War_(novel)">a novel</a>` | `[a novel](https://en.wikipedia.org/wiki/The_Milagro_Beanfield_War_(novel))` |
 
@@ -794,9 +929,9 @@ To add an image, add an exclamation mark (`!`), followed by alt text in brackets
 
 The rendered output looks like this:
 
-![The San Juan Mountains are beautiful!](https://mdg.imgix.net/assets/images/san-juan-mountains.jpg "San Juan Mountains")
+![The San Juan Mountains are beautiful!](https://mdg.imgix.net/assets/images/san-juan-mountains.jpg 'San Juan Mountains')
 
-> **Note:** To resize an image, see the section on [image size](https://www.markdownguide.org/hacks/#image-size). To add a caption, see the section on [image captions](https://www.markdownguide.org/hacks/#image-captions).
+>  **Note:** To resize an image, see the section on [image size](https://www.markdownguide.org/hacks/#image-size). To add a caption, see the section on [image captions](https://www.markdownguide.org/hacks/#image-captions).
 > **注意:** 要調整圖片大小，請參考圖片大小相關部分。要加入圖片說明文字，請參考圖片說明文字相關部分。
 
 ## Linking Images  圖片鏈接
@@ -810,7 +945,7 @@ To add a link to an image, enclose the Markdown for the image in brackets, and t
 
 The rendered output looks like this:
 
-[![An old rock in the desert](https://mdg.imgix.net/assets/images/shiprock.jpg "Shiprock, New Mexico by Beau Rogers")
+[![An old rock in the desert](https://mdg.imgix.net/assets/images/shiprock.jpg 'Shiprock, New Mexico by Beau Rogers')
 
 ---
 
@@ -832,22 +967,22 @@ The rendered output looks like this:
 You can use a backslash to escape the following characters.
 您可以使用反斜線來轉義以下字符。
 
-| Character  字符 | Name  名稱                                                                                                                                         |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| \             | backslash  反斜線                                                                                                                                   |
-| `             | backtick (see also [escaping backticks in code](https://www.markdownguide.org/basic-syntax/#escaping-backticks))  <br>反引號（請參考在代碼中逃逸反引號）          |
-| *             | asterisk  星號                                                                                                                                     |
-| _             | underscore  下劃線                                                                                                                                  |
-| { }           | curly braces  花括號                                                                                                                                |
-| [ ]           | brackets  括號                                                                                                                                     |
-| < >  <>       | angle brackets  尖括號                                                                                                                              |
-| ( )           | parentheses  括號                                                                                                                                  |
-| #             | pound sign  井號                                                                                                                                   |
-| +             | plus sign  加號                                                                                                                                    |
-| -             | minus sign (hyphen)  減號（破折號）                                                                                                                     |
-| .             | dot  點                                                                                                                                           |
-| !             | exclamation mark  驚嘆號                                                                                                                            |
-| \|            | pipe (see also [escaping pipe in tables](https://www.markdownguide.org/extended-syntax/#escaping-pipe-characters-in-tables))  <br>管線（參見表格中的管線轉義） |
+| Character  字符 | Name  名稱                                                                                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| \               | backslash  反斜線                                                                                                                                             |
+| `               | backtick (see also [escaping backticks in code](https://www.markdownguide.org/basic-syntax/#escaping-backticks)) <br>反引號（請參考在代碼中逃逸反引號）       |
+| \*              | asterisk  星號                                                                                                                                                |
+| \_              | underscore  下劃線                                                                                                                                            |
+| { }             | curly braces  花括號                                                                                                                                          |
+| [ ]             | brackets  括號                                                                                                                                                |
+| < >  <>         | angle brackets  尖括號                                                                                                                                        |
+| ( )             | parentheses  括號                                                                                                                                             |
+| #               | pound sign  井號                                                                                                                                              |
+| +               | plus sign  加號                                                                                                                                               |
+| -               | minus sign (hyphen)  減號（破折號）                                                                                                                           |
+| .               | dot  點                                                                                                                                                       |
+| !               | exclamation mark  驚嘆號                                                                                                                                      |
+| \|              | pipe (see also [escaping pipe in tables](https://www.markdownguide.org/extended-syntax/#escaping-pipe-characters-in-tables)) <br>管線（參見表格中的管線轉義） |
 
 ---
 
@@ -865,7 +1000,7 @@ This **word** is bold. This <em>word</em> is italic.
 
 The rendered output looks like this:
 
-This **word** is bold. This _word_ is italic.
+This **word** is bold. This *word* is italic.
 
 ## HTML Best Practices  HTML 最佳實踐
 
@@ -899,7 +1034,7 @@ Not all Markdown applications support extended syntax elements. You’ll need to
 
 # Lightweight Markup Languages 輕量級標記語言
 
-There are several lightweight markup languages that are _supersets_ of Markdown. They include basic syntax and build upon it by adding additional elements like tables, code blocks, syntax highlighting, URL auto-linking, and footnotes. Many of the most popular Markdown applications use one of the following lightweight markup languages:
+There are several lightweight markup languages that are *supersets* of Markdown. They include basic syntax and build upon it by adding additional elements like tables, code blocks, syntax highlighting, URL auto-linking, and footnotes. Many of the most popular Markdown applications use one of the following lightweight markup languages:
 有許多輕量級標記語言是 Markdown 的超集。它們包括基本的語法並在其上增加額外的元素，如表格、代碼塊、語法高亮、網址自動鏈接和腳注。許多最受歡迎的 Markdown 應用程序都使用以下輕量級標記語言之一：
 
 - [CommonMark](https://commonmark.org/)
@@ -944,7 +1079,7 @@ Cell widths can vary, as shown below. The rendered output will look the same.
 | Paragraph | Text |
 ```
 
-> **Tip:** Creating tables with hyphens and pipes can be tedious. To speed up the process, try using the [Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables) or [AnyWayData Markdown Export](https://anywaydata.com/). Build a table using the graphical interface, and then copy the generated Markdown-formatted text into your file.
+>  **Tip:** Creating tables with hyphens and pipes can be tedious. To speed up the process, try using the [Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables) or [AnyWayData Markdown Export](https://anywaydata.com/). Build a table using the graphical interface, and then copy the generated Markdown-formatted text into your file.
 > **小技巧:** 使用破折號和管道符號建立表格可能會有些麻煩。為了加速過程，可以嘗試使用 Markdown Tables Generator 或 AnyWayData Markdown Export。使用圖形介面建立表格，然後將產生的 Markdown 格式化文字複製到您的檔案中。
 
 # Alignment  對齊
@@ -974,7 +1109,7 @@ You can format the text within tables. For example, you can add [links](https:/
 You can’t use headings, blockquotes, lists, horizontal rules, images, or most HTML tags.
 您不能使用標題、引言、清單、水平線、圖片或大多數 HTML 標籤。
 
-> **Tip:** You can use HTML to create [line breaks](https://www.markdownguide.org/hacks/#line-breaks-within-table-cells) and add [lists](https://www.markdownguide.org/hacks/#lists-within-table-cells) within table cells.
+>  **Tip:** You can use HTML to create [line breaks](https://www.markdownguide.org/hacks/#line-breaks-within-table-cells) and add [lists](https://www.markdownguide.org/hacks/#lists-within-table-cells) within table cells.
 > **提示:** 您可以使用 HTML 來建立換行並在表格單元格內添加清單。
 
 # Escaping Pipe Characters in Tables 在表格中逃逸管狀字符
@@ -1009,7 +1144,7 @@ The rendered output looks like this:
 }
 ```
 
-> **Tip:** Need to display backticks inside a code block? See [this section](https://www.markdownguide.org/basic-syntax/#escaping-backticks) to learn how to escape them.
+>  **Tip:** Need to display backticks inside a code block? See [this section](https://www.markdownguide.org/basic-syntax/#escaping-backticks) to learn how to escape them.
 > **小貼士:** 需要在程式碼塊中顯示反引號？請參考本節以了解如何跳脫它們。
 
 ---
@@ -1296,7 +1431,7 @@ https://shiki.matsu.io/languages
 | Vue Vine                    | `vue-vine`           |                           |         |
 | Vyper                       | `vyper`              | `vy`                      |         |
 | WebAssembly                 | `wasm`               |                           |         |
-| Wenyan                      | `wenyan`             | `文言`                      |         |
+| Wenyan                      | `wenyan`             | `文言`                    |         |
 | WGSL                        | `wgsl`               |                           |         |
 | Wikitext                    | `wikitext`           | `mediawiki``wiki`         |         |
 | WebAssembly Interface Types | `wit`                |                           |         |
@@ -1356,9 +1491,9 @@ Markdown 的語法高亮是由「程式碼區塊語言標籤」控制的。
 ### 一、常見標籤與用途
 
 1. **plaintext**
-    - 表示純文字，不進行語法高亮。
-    - 顯示效果與預設文字最接近。
-    - 適合展示說明、日誌、命令輸出等。
+   - 表示純文字，不進行語法高亮。
+   - 顯示效果與預設文字最接近。
+   - 適合展示說明、日誌、命令輸出等。
 
 ```plaintext
 This is just text.
@@ -1366,25 +1501,25 @@ No colors, no highlights.
 ```
 
 2. **text**
-    - 有些渲染器與 plaintext 等效。
-    - 可作為兼容標籤，用於簡單文件。
+   - 有些渲染器與 plaintext 等效。
+   - 可作為兼容標籤，用於簡單文件。
 
 ```text
 A plain text block.
 ```
 
 3. **ansi**
-    - 支援 ANSI 顏色轉義序列（如終端機彩色輸出）。
-    - 若渲染器支援，會顯示彩色控制碼效果。
+   - 支援 ANSI 顏色轉義序列（如終端機彩色輸出）。
+   - 若渲染器支援，會顯示彩色控制碼效果。
 
 ```ansi
 [32mGreen text[0m and [31mred text[0m
 ```
 
 4. **asciidoc / ansidoc**
-    - 為 AsciiDoc 文件語法。
-    - 有標題、強調、代碼塊等格式規則。
-    - 顯示時會有簡單的文字結構高亮。
+   - 為 AsciiDoc 文件語法。
+   - 有標題、強調、代碼塊等格式規則。
+   - 顯示時會有簡單的文字結構高亮。
 
 ```asciidoc
 = Document Title
@@ -1393,8 +1528,8 @@ A plain text block.
 ```
 
 5. **markdown**
-    - 會對標準 Markdown 語法加上顏色。
-    - 適合展示 Markdown 文件教學。
+   - 會對標準 Markdown 語法加上顏色。
+   - 適合展示 Markdown 文件教學。
 
 ```markdown
 # Heading
@@ -1402,8 +1537,8 @@ A plain text block.
 ```
 
 6. **none**
-    - 部分系統使用 `none` 或空白作為無高亮模式。
-    - 與 plaintext 類似，但有時樣式略不同。
+   - 部分系統使用 `none` 或空白作為無高亮模式。
+   - 與 plaintext 類似，但有時樣式略不同。
 
 ```none
 Just raw text here.
@@ -1411,14 +1546,14 @@ Just raw text here.
 
 ### 二、顯示差異總結
 
-| 語法標籤                   | 高亮程度  | 用途建議           |
-| ---------------------- | ----- | -------------- |
-| `plaintext`            | 無     | 純說明文字或範例輸出     |
-| `text`                 | 無或極輕微 | 相容用途           |
-| `ansi`                 | 有終端色彩 | 模擬命令列結果        |
-| `asciidoc` / `ansidoc` | 中度    | 文件結構展示         |
-| `markdown`             | 高     | 教學 Markdown 語法 |
-| `none`                 | 無     | 類似 plaintext   |
+| 語法標籤               | 高亮程度   | 用途建議             |
+| ---------------------- | ---------- | -------------------- |
+| `plaintext`            | 無         | 純說明文字或範例輸出 |
+| `text`                 | 無或極輕微 | 相容用途             |
+| `ansi`                 | 有終端色彩 | 模擬命令列結果       |
+| `asciidoc` / `ansidoc` | 中度       | 文件結構展示         |
+| `markdown`             | 高         | 教學 Markdown 語法   |
+| `none`                 | 無         | 類似 plaintext       |
 
 ### 三、學習建議
 
@@ -1442,6 +1577,7 @@ Just raw text here.
 Here's a simple footnote,[^1] and here's a longer one.[^bignote]
 
 [^1]: This is the first footnote.
+
 [^bignote]:
     Here's one with multiple paragraphs and code.
     Indent paragraphs to include them in the footnote.
@@ -1679,7 +1815,7 @@ Markdown 的鏈接不允許您指定目標屬性，但如果您的 Markdown 處�
 
 Markdown 不提供特殊的符號語法。但是，在大多數情況下，您可以將要使用的任何符號複製並粘貼到 Markdown 文檔中。<br/>或者，如果您的 Markdown 應用程序支持 HTML，您可以將 HTML 實體用於您想要使用的任何符號。
 
-| HTML 實體的部分列表             |          |
+| HTML 實體的部分列表      |          |
 | ------------------------ | -------- |
 | Copyright (©)            | \&copy;  |
 | Registered trademark (®) | \&reg;   |

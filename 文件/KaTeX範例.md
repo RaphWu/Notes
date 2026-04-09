@@ -1,14 +1,6 @@
----
-aliases:
-date:
-update:
-author:
-language:
-sourceurl: https://blog.csdn.net/miao0967020148/article/details/78712811
-tags:
----
-
 # LaTeX 大括号公式和一般括号总结
+
+https://blog.csdn.net/miao0967020148/article/details/78712811
 
 ## 大括号显示
 

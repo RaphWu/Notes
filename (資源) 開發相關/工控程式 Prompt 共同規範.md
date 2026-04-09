@@ -66,8 +66,6 @@
 
 ## 全域設計優先順序（強制遵守）
 
-設計衝突時必須遵守以下優先順序：
-
 1. 穩定性（Stability）
 2. 相容性（Compatibility）
 3. 效能（Performance）
@@ -698,7 +696,7 @@ Copilot 專用 Markdown Prompt Pack（工控 Level 5）
 當你只想快速檢查：
 
 ```markdown
-請檢查以下程式碼是否違反工控 Level 5 規範，特別關注：
+請檢查 (XXX 專案 / XXX 程式碼) 是否違反工控 Level 5 規範，特別關注：
 
 - async void（禁止）
 - fire-and-forget（是否未封裝）
@@ -715,7 +713,7 @@ Copilot 專用 Markdown Prompt Pack（工控 Level 5）
 這是你架構中**最容易出事的點**：
 
 ```markdown
-請專門檢查以下程式碼中的 fire-and-forget 使用是否安全：
+請檢查 (XXX 專案 / XXX 程式碼) 中的 fire-and-forget 使用是否安全：
 
 檢查項目：
 - 是否使用 Task.Run 但未封裝（違規）
