@@ -30,3 +30,15 @@
 
 - 扭力 – 電壓轉換，小數位數
 - 扭力監測畫面座標軸、高低峰值、平均值
+
+---
+
+# 建構式注入順序
+
+```csharp
+private readonly ILifetimeScope _scope;
+private readonly INavigation _nav;
+private readonly IProductManager _pm;
+private readonly IProcessRegistry _registry;
+private readonly IStatusBarService _sbService;
+```
