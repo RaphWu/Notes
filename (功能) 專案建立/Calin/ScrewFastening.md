@@ -41,4 +41,17 @@ private readonly INavigation _nav;
 private readonly IProductManager _pm;
 private readonly IProcessRegistry _registry;
 private readonly IStatusBarService _sbService;
+
+private readonly ILifetimeScope _scope;
+private readonly INavigation _nav;
+private readonly IStatusBarService _sbService;
+private readonly IAcm _acm;
+private readonly IAcmService _acmService;
+private readonly IDispService _disp;
+private readonly IDaqService _daq;
+private readonly IPollingService _pollingService;
+private readonly MotionData _motionData;
+private readonly TorqueMeterData _daqData;
+private readonly DisplacementData _dispData;
+private readonly BindingData _bindingData;
 ```
